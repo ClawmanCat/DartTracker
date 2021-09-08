@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartTracker", "DartTracker\DartTracker.csproj", "{0690381A-90A0-4887-B57E-FC7A87227CD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests", "Unit Tests\Unit Tests.csproj", "{72D692FB-51AA-4814-93B5-D7B63C825E45}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0690381A-90A0-4887-B57E-FC7A87227CD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0690381A-90A0-4887-B57E-FC7A87227CD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0690381A-90A0-4887-B57E-FC7A87227CD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0690381A-90A0-4887-B57E-FC7A87227CD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72D692FB-51AA-4814-93B5-D7B63C825E45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D692FB-51AA-4814-93B5-D7B63C825E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D692FB-51AA-4814-93B5-D7B63C825E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D692FB-51AA-4814-93B5-D7B63C825E45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36C34699-9A50-42C3-AC63-3F26E6358771}
+	EndGlobalSection
+EndGlobal
