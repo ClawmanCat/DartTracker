@@ -20,7 +20,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./DartTracker/DartTracker.csproj
     - name: Restore dependencies for test framework
-      run: Install-Package MSTest.TestAdapter -Project UnitTests
+      run: Get-Project *UnitTests* | Install-Package MSTest.TestAdapter
     - name: Build
       run: dotnet build --no-restore
     - name: Test
