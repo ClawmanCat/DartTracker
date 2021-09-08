@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: windows-2019
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -20,7 +20,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./DartTracker/DartTracker.csproj
     - name: Restore dependencies for test framework
-      run: dotnet restore ./UnitTests/UnitTests.csproj
+      run: Install-Package MSTest.TestAdapter -ProjectName UnitTests
     - name: Build
       run: dotnet build --no-restore
     - name: Test
