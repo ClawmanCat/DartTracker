@@ -18,9 +18,7 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore ./DartTracker/DartTracker.csproj
-    - name: Restore dependencies for test framework
-      run: Install-Package MSTest.TestAdapter -ProjectName UnitTests
+      run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
