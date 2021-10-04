@@ -25,9 +25,9 @@ namespace DartTracker.Models
 
     public enum SegmentModifier
     {
-        SINGLE,
-        DOUBLE,
-        TRIPLE
+        SINGLE = 1,
+        DOUBLE = 2,
+        TRIPLE = 3
     }
 
     public enum NamedSegmentType
@@ -39,60 +39,62 @@ namespace DartTracker.Models
 
     public class Tournament
     {
-        public Player[] Players { get; set; }
-        public Game[] Games { get; set; }
-        public int GamesToWin { get; set; }
-        public Player? Winner { get; set; }
+        public Player[] Players;
+        public Game[] Games;
+        public int GamesToWin;
+        public Player Winner;
     }
 
     public class Player
     {
-        public string Name { get; set; }
+        public string Name;
     }
 
     public class Game
     {
-        public Player? Winner { get; set; }
+        public Player Winner;
     }
 
     public class GameSet : Game
     {
-        public Leg[] legs { get; set; }
-        public int LegsToWin { get; set; }
+        public GameLeg[] legs;
+        public int LegsToWin;
     }
 
-    public class Leg : Game
+    public class GameLeg : Game
     {
-        public Tuple<Player, Triplet[]>[] history { get; set; }
-        public Tuple<Player, int> Scores { get; set; }
-        public Player turn { get; set; }
+        public Dictionary<Player, Triplet[]>[] history;
+        public Dictionary<Player, int> Scores;
+        public Player turn;
     }
 
     public class Triplet
     {
-        public Throw[] Throws { get; set; }
+        public Throw[] Throws;
     }
-    /// <summary>
-    /// TODO: maak virtuele classes
-    /// </summary>
+    
     public class Throw
     {
-        public BoardSegment boardSegment { get; set; }
+        public BoardSegment boardSegment;
     }
 
     public class BoardSegment
     {
-        public bool normalSegment { get; set; }
+        public virtual int Score
+        {
+            get;set;
+        }
     }
     
     public class NormalSegment : BoardSegment
     {
-        public int value { get; set; }
-        public SegmentModifier modifier { get; set; }
+        public int value;
+        public SegmentModifier modifier;
+        public override int Score { get => base.Score; set => base.Score = value; }
     }
     public class NamedSegment : BoardSegment
     {
-        public int value { get; set; }
-        public NamedSegmentType segment { get; set; }
+        public NamedSegmentType segment;
+        public override int Score { get => base.Score; set => base.Score = value; }
     }
 }
