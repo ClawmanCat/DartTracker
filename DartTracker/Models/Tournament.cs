@@ -49,7 +49,7 @@ namespace DartTracker.Models
     public abstract class Game
     {
         public Player Winner;
-        public GameSet[] gameSets;
+        public List<GameSet> gameSets;
     }
 
     public class GameSet 
@@ -62,12 +62,12 @@ namespace DartTracker.Models
     {
         public List<Dictionary<Player, List<Triplet>>> history;
         public Dictionary<Player, int> Scores;
-        public Player turn;
+        public Player Winner;
     }
 
     public class Triplet
     {
-        public Throw[] Throws;
+        public List<Throw> Throws;
     }
     
     public class Throw
