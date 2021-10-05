@@ -25,9 +25,8 @@ namespace DartTracker
         public MainWindow(Tournament mainWindowTournament)
         {
             InitializeComponent();
-            this.Closed += MainWindow_Closed;
+            Closed += MainWindow_Closed;
             tn = mainWindowTournament;
-            testlbl.Text = mainWindowTournament.Players[0].Name;
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
