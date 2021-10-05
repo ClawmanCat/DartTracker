@@ -6,20 +6,16 @@ using System.Threading.Tasks;
 
 namespace DartTracker.Models
 {
-    /// <summary>
-    /// Unused code
-    /// </summary>
     public class Score
     {
         private int _score = 501;
-        public int getScore()
-        {
-            return _score;
-        }
+        
+        public static explicit operator int(Score s) => s._score;
 
-        public void substractFromScore(int value)
-        {
-            _score = _score - value;
+        public static Score operator -(Score s, int amount) {
+            Score result = new Score();
+            result._score = s._score = amount;
+            return result;
         }
     }
 
