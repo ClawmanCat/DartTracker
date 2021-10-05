@@ -55,7 +55,7 @@ namespace DartTracker.Models
     public class GameSet 
     {
         public List<GameLeg> legs;
-        public int LegsToWin;
+        public Player Winner;
     }
 
     public class GameLeg
