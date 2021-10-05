@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DartTracker.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,18 @@ namespace DartTracker
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public Tournament tn;
+        public MainWindow(Tournament mainWindowTournament)
         {
             InitializeComponent();
+            this.Closed += MainWindow_Closed;
+            tn = mainWindowTournament;
+            testlbl.Text = mainWindowTournament.Players[0].Name;
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            App.Current.Shutdown();
         }
     }
 }

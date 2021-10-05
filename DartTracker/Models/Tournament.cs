@@ -53,15 +53,16 @@ namespace DartTracker.Models
     public class Game
     {
         public Player Winner;
+        public GameSet[] gameSets;
     }
 
-    public class GameSet : Game
+    public class GameSet
     {
         public GameLeg[] legs;
-        public int LegsToWin;
+        public Player Winner;
     }
 
-    public class GameLeg : Game
+    public class GameLeg
     {
         public Dictionary<Player, Triplet[]>[] history;
         public Dictionary<Player, int> Scores;
