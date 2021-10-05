@@ -7,6 +7,35 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+          <Grid.ColumnDefinitions>
+               <ColumnDefinition></ColumnDefinition>
+               <ColumnDefinition></ColumnDefinition>
+          </Grid.ColumnDefinitions>
 
-    </Grid>
+          <Grid.RowDefinitions>
+               <RowDefinition Height="1*"></RowDefinition>
+               <RowDefinition Height="4*"></RowDefinition>
+               <RowDefinition Height="1*"></RowDefinition>
+          </Grid.RowDefinitions>
+
+          <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="0">
+               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Scores for player 1"></TextBlock>
+          </Border>
+
+          <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="1">
+               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Scores for player 2"></TextBlock>
+          </Border>
+
+          <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0">
+               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Header for player 1"></TextBlock>
+          </Border>
+
+          <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1">
+               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Header for player 2"></TextBlock>
+          </Border>
+
+          <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.ColumnSpan="2">
+               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Data Entry Panel"></TextBlock>
+          </Border>
+     </Grid>
 </Window>
