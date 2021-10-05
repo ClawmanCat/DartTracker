@@ -40,7 +40,7 @@ namespace DartTracker.Models
     public class Tournament
     {
         public Player[] Players;
-        public Game[] Games;
+        public List<Game> Games;
         public int GamesToWin;
         public Player Winner;
     }
@@ -50,20 +50,20 @@ namespace DartTracker.Models
         public string Name;
     }
 
-    public class Game
+    public abstract class Game
     {
         public Player Winner;
     }
 
     public class GameSet : Game
     {
-        public GameLeg[] legs;
+        public List<GameLeg> legs;
         public int LegsToWin;
     }
 
     public class GameLeg : Game
     {
-        public Dictionary<Player, Triplet[]>[] history;
+        public List<Dictionary<Player, List<Triplet>>> history;
         public Dictionary<Player, int> Scores;
         public Player turn;
     }
@@ -80,21 +80,20 @@ namespace DartTracker.Models
 
     public class BoardSegment
     {
-        public virtual int Score
-        {
-            get;set;
-        }
+        public virtual int Score { get; }
     }
     
     public class NormalSegment : BoardSegment
     {
         public int value;
         public SegmentModifier modifier;
-        public override int Score { get => base.Score; set => base.Score = value; }
+
+        public override int Score { get => value * (int) modifier; }
     }
     public class NamedSegment : BoardSegment
     {
         public NamedSegmentType segment;
-        public override int Score { get => base.Score; set => base.Score = value; }
+
+        public override int Score { get => (int) segment; }
     }
 }
