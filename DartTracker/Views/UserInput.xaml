@@ -1,0 +1,52 @@
+﻿<Window x:Class="DartTracker.Views.UserInput"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DartTracker.Views"
+        mc:Ignorable="d"
+        Title="UserInput" Height="225" Width="450">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="110" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+
+
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+
+            <Label VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1">Voer de spelers in:</Label>
+            <Label Grid.Column="0" Grid.Row="1">Speler 1:</Label>
+            <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="player1"  Grid.Column="1" Grid.Row="1"></TextBox>
+            <Label Grid.Column="0" Grid.Row="2">Speler 2:</Label>
+            <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="player2" Grid.Column="1" Grid.Row="2"></TextBox>
+
+
+        </Grid>
+        <WrapPanel Grid.Row="1">
+            <Label HorizontalContentAlignment="Center">Hoeveel sets worden er gespeeld?</Label>
+            <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="OnlyNumbersTextInput" Name="amountOfSets" Width="200" />
+        </WrapPanel>
+        <WrapPanel Grid.Row="2">
+            <Label HorizontalContentAlignment="Center">Hoeveel legs worden er gespeeld?</Label>
+            <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="OnlyNumbersTextInput" Name="amountOfLegs" Width="200"></TextBox>
+        </WrapPanel>
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3">
+            <Button IsDefault="True" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
+            <Button IsCancel="True" MinWidth="60" Click="Button_Click">Cancel</Button>
+        </WrapPanel>
+    </Grid>
+</Window>

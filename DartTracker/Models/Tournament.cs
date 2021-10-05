@@ -35,7 +35,7 @@ namespace DartTracker.Models
 
     public class Tournament
     {
-        public Player[] Players;
+        public List<Player> Players;
         public List<Game> Games;
         public int GamesToWin;
         public Player Winner;
@@ -46,7 +46,7 @@ namespace DartTracker.Models
         public string Name;
     }
 
-    public abstract class Game
+    public class Game
     {
         public Player Winner;
         public List<GameSet> gameSets;
