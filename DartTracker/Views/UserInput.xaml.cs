@@ -28,22 +28,13 @@ namespace DartTracker.Views
         }
 
         /// <summary>
-        /// This regex will only allow numbers.
-        /// </summary>
-        private static readonly Regex _regex = new Regex("[^0-9.-]+");
-        private static bool IsTextAllowed(string text)
-        {
-            return !_regex.IsMatch(text);
-        }
-
-        /// <summary>
         /// This function uses a regex to make it possible to only insert numbers inside a Textbox.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnlyNumbersTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !IsTextAllowed(e.Text);
+            e.Handled = !int.TryParse(e.Text, out _);
         }
 
         private void btnDialogOk_Click(object sender, RoutedEventArgs e)
