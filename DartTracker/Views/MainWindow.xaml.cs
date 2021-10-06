@@ -21,11 +21,10 @@ namespace DartTracker
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Tournament mainWindowTournamentObject;
-        public MainWindow(Tournament tournament)
+        public App currentApp = Application.Current as App;
+        public MainWindow()
         {
             InitializeComponent();
-            mainWindowTournamentObject = tournament;
             Closed += MainWindow_Closed;
             setBindings();
         }
@@ -37,8 +36,8 @@ namespace DartTracker
 
         public void setBindings()
         {
-            string playerOne = mainWindowTournamentObject.Players[0].Name;
-            string playerTwo = mainWindowTournamentObject.Players[1].Name;
+            string playerOne = currentApp.tournament.Players[0].Name;
+            string playerTwo = currentApp.tournament.Players[1].Name;
 
             p1label.Text = playerOne;
             p2label.Text = playerTwo;

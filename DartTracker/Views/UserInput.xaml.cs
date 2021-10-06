@@ -21,12 +21,10 @@ namespace DartTracker.Views
     /// </summary>
     public partial class UserInput : Window
     {
-        Tournament userInputTournament;
-
-        public UserInput(Tournament tournament)
+        public App currentApp = Application.Current as App;
+        public UserInput()
         {
             InitializeComponent();
-            userInputTournament = tournament;
         }
 
         /// <summary>
@@ -68,8 +66,8 @@ namespace DartTracker.Views
                 Player p2 = new Player();
                 p1.Name = player1.Text;
                 p2.Name = player2.Text;
-                userInputTournament.Players.Add(p1);
-                userInputTournament.Players.Add(p2);
+                currentApp.tournament.Players.Add(p1);
+                currentApp.tournament.Players.Add(p2);
                 try
                 {
                     // variables to be used for setting legs and sets
@@ -79,7 +77,6 @@ namespace DartTracker.Views
                     Game game = new Game();
                     game.Winner = null;
                     // Creating empty Gamesets objects
-                    // game.gameSets 
                     game.gameSets = new List<GameSet>(setsAmount);
                     for (int i = 0; i < setsAmount; i++)
                     {
@@ -98,7 +95,7 @@ namespace DartTracker.Views
                     }
 
                     // Adding the Game to the game array in the global model.
-                    userInputTournament.Games.Add(game);
+                    currentApp.tournament.Games.Add(game);
                     // 
                     DialogResult = true;
                     Close();

@@ -15,7 +15,7 @@ namespace DartTracker
     /// </summary>
     public partial class App : Application
     {
-        public Tournament tournament;
+        public Tournament tournament { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -28,14 +28,14 @@ namespace DartTracker
             tournament.Winner = null;
 
             // Initializing the UserInput
-            UserInput userInput = new UserInput(tournament);
+            UserInput userInput = new UserInput();
             // Opening the UserInput Window
             bool? res = userInput.ShowDialog();
             // If the UserInput Window is closed, open the next Window
             if (res == true)
             {
                 // Opening the MainWindow
-                MainWindow main = new MainWindow(tournament);
+                MainWindow main = new MainWindow();
                 main.Show();
             }
             else
