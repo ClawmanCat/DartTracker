@@ -67,24 +67,9 @@ namespace DartTracker.Views
                     // Setting Game
                     Game game = new Game();
                     game.Winner = null;
-                    // Creating empty Gamesets objects
-                    game.gameSets = new List<GameSet>(setsAmount);
-                    for (int i = 0; i < setsAmount; i++)
-                    {
-                        GameSet gameSet = new GameSet();
-                        gameSet.Winner = null;
-                        gameSet.legs = new List<GameLeg>(legsAmount);
-                        for(int j = 0; j < legsAmount; j++)
-                        {
-                            GameLeg leg = new GameLeg();
-                            leg.history = null;
-                            leg.Scores = null;
-                            leg.Winner = null;
-                            gameSet.legs.Add(leg);
-                        }
-                        game.gameSets.Add(gameSet);
-                    }
-
+                    game.setsAmount = setsAmount;
+                    game.legsAmount = legsAmount;
+                    
                     // Adding the Game to the game array in the global model.
                     currentApp.tournament.Games.Add(game);
                     // 
