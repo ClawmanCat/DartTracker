@@ -53,12 +53,8 @@ namespace DartTracker.Views
             }
             else
             {
-                Player p1 = new Player();
-                Player p2 = new Player();
-                p1.Name = player1.Text;
-                p2.Name = player2.Text;
-                currentApp.tournament.Players.Add(p1);
-                currentApp.tournament.Players.Add(p2);
+                currentApp.tournament.Players.Add(new Player() { Name = player1.Text });
+                currentApp.tournament.Players.Add(new Player() { Name = player2.Text });
                 try
                 {
                     // variables to be used for setting legs and sets
