@@ -53,23 +53,24 @@ namespace DartTracker.Views
             }
             else
             {
-                currentApp.tournament.Players.Add(new Player() { Name = player1.Text });
-                currentApp.tournament.Players.Add(new Player() { Name = player2.Text });
+                
                 try
                 {
-                    // variables to be used for setting legs and sets
-                    int setsAmount = Convert.ToInt32(amountOfSets.Text);
-                    int legsAmount = Convert.ToInt32(amountOfLegs.Text);
-                    // Setting Game
-                    Game game = new Game();
-                    game.Winner = null;
-                    game.setsAmount = setsAmount;
-                    game.legsAmount = legsAmount;
-                    
+                    // Setting the players in the Tournament object
+                    currentApp.tournament.Players.Add(new Player() { Name = player1.Text });
+                    currentApp.tournament.Players.Add(new Player() { Name = player2.Text });
+                    // Setting the Game in the Tournament object
+                    Game game = new Game(){
+                        Winner = null,
+                        setsAmount = Convert.ToInt32(amountOfSets.Text),
+                        legsAmount = Convert.ToInt32(amountOfLegs.Text),
+                        gameSets = null
+                    };
                     // Adding the Game to the game array in the global model.
                     currentApp.tournament.Games.Add(game);
-                    // 
+                    // This tells App.xaml.cs to continue to the next window
                     DialogResult = true;
+                    // Closes the Window
                     Close();
                 }
                 catch(Exception exc)
