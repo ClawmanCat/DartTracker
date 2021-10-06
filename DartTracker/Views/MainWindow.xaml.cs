@@ -26,8 +26,15 @@ namespace DartTracker
         {
             InitializeComponent();
             mainWindowTournamentObject = tournament;
+            Closed += MainWindow_Closed;
             setBindings();
         }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            App.Current.Shutdown();
+        }
+
         public void setBindings()
         {
             string playerOne = mainWindowTournamentObject.Players[0].Name;
