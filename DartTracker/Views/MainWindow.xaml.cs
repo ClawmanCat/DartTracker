@@ -37,8 +37,16 @@ namespace DartTracker
 
         public void setBindings()
         {
-            string playerOne = currentApp.tournament.Players[0].Name;
-            string playerTwo = currentApp.tournament.Players[1].Name;
+            Tournament tournament = currentApp.tournament;
+            var currentLeg = tournament.Games[0].gameSets[0].legs[0]; // use Tournament View model to pass trough current legg
+            string playerOne = tournament.Players[0].Name;
+            string playerTwo = tournament.Players[1].Name;
+
+            DataContext = new
+            {
+                leg = new GameLegViewModel(tournament.Players, currentLeg)
+                // prefevrably use the tournament also this way; 
+            };
 
             p1label.Text = playerOne;
             p2label.Text = playerTwo;
