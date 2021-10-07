@@ -1,4 +1,5 @@
 ﻿using DartTracker.Models;
+using DartTracker.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,18 @@ namespace DartTracker
 
             p1label.Text = playerOne;
             p2label.Text = playerTwo;
+
+
+            // test
+            Player currentPlayer = currentApp.tournament.Players[0];
+            GameSetViewModel main = new GameSetViewModel(0, null, null);
+
+            // true
+            bool a = main.loadTestData(5);
+            // false
+            bool b = main.loadTestData(6);
+            // false
+            bool c = main.loadTestData(7);
         }
     }
 }
