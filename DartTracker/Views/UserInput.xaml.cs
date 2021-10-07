@@ -59,12 +59,23 @@ namespace DartTracker.Views
                     // Setting the players in the Tournament object
                     currentApp.tournament.Players.Add(new Player() { Name = player1.Text });
                     currentApp.tournament.Players.Add(new Player() { Name = player2.Text });
+
+
+
+                    var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
+                        new GameLeg() {
+                            history=new List<Dictionary<Player, List<Triplet>>>(),
+                            Scores=new Dictionary<Player,int>(),
+                            Winner=null,
+                            CurrentTurn=null
+                        } } } };
+
                     // Setting the Game in the Tournament object
-                    Game game = new Game(){
+                    Game game = new Game() {
                         Winner = null,
                         setsAmount = Convert.ToInt32(amountOfSets.Text),
                         legsAmount = Convert.ToInt32(amountOfLegs.Text),
-                        gameSets = null
+                        gameSets = gameSets
                     };
                     // Adding the Game to the game array in the global model.
                     currentApp.tournament.Games.Add(game);
