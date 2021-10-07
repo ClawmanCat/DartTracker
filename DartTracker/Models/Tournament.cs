@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,9 +42,22 @@ namespace DartTracker.Models
         public Player Winner;
     }
 
-    public class Player
+    public class Player : INotifyPropertyChanged
     {
-        public string Name;
+        private string _Name;
+        public string Name
+        {
+            get { return _Name; }
+            set { _Name = value; OnPropertyChanged("Name"); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string porprtyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(porprtyName));
+        }
     }
 
     public class Game
@@ -60,11 +74,26 @@ namespace DartTracker.Models
         public Player Winner;
     }
 
-    public class GameLeg
+    public class GameLeg : INotifyPropertyChanged
     {
+        public Player _currentTurn;
         public List<Dictionary<Player, List<Triplet>>> history;
         public Dictionary<Player, int> Scores;
         public Player Winner;
+        public Player CurrentTurn
+        {
+            get { return _currentTurn; }
+            set { _currentTurn = value; OnPropertyChanged("CurrentTurn"); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string porprtyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(porprtyName));
+        }
+
     }
 
     public class Triplet
