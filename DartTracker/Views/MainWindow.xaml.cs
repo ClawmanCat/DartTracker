@@ -51,7 +51,6 @@ namespace DartTracker
             p1label.Text = playerOne;
             p2label.Text = playerTwo;
 
-
             // test(janek) 
             Player currentPlayer = currentApp.tournament.Players[0];
             GameSetViewModel main = new GameSetViewModel(0, null, null);
