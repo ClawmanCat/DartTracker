@@ -46,7 +46,7 @@ namespace DartTracker
             // Temporary data, remove me later!
             Throw t10 = new Throw(new NormalSegment(10, SegmentModifier.SINGLE));
             Throw t60 = new Throw(new NormalSegment(20, SegmentModifier.TRIPLE));
-            Throw tbs = new Throw(new NamedSegment(NamedSegmentType.INNER_BULLSEYE));
+            Throw tbs = new Throw(new NamedSegment(NamedSegmentType.OUTSIDE_BOARD));
 
             currentLeg.p1History.Add(new Triplet(t10, t10, t60));
             currentLeg.p1History.Add(new Triplet(t10, t60, tbs));
