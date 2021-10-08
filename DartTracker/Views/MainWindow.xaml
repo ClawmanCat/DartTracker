@@ -6,6 +6,26 @@
         xmlns:local="clr-namespace:DartTracker" xmlns:models="clr-namespace:DartTracker.Models" d:DataContext="{d:DesignInstance Type=models:GameLeg}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+          <!-- Template for displaying a score triplet. -->
+          <DataTemplate x:Key="TripletPanel">
+               <ItemsControl x:Name="ThrowView" ItemsSource="{Binding Path=throws}">
+                    <ItemsControl.ItemsPanel>
+                         <ItemsPanelTemplate>
+                              <StackPanel Orientation="Horizontal"/>
+                         </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                         <DataTemplate>
+                              <TextBlock Text="{Binding Path=segment.Display}" Margin="10, 5, 10, 5" TextAlignment="Center" HorizontalAlignment="Center"/>
+                         </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+               </ItemsControl>
+          </DataTemplate>
+     </Window.Resources>
+     
+     
     <Grid>
           <Grid.ColumnDefinitions>
                <ColumnDefinition></ColumnDefinition>
@@ -19,11 +39,11 @@
           </Grid.RowDefinitions>
 
           <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="0">
-               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Scores for player 1"></TextBlock>
+               <ListView ItemsSource="{Binding Path=leg.gameLeg.p1History}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
           </Border>
 
           <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="1">
-               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Scores for player 2"></TextBlock>
+               <ListView ItemsSource="{Binding Path=leg.gameLeg.p2History}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
           </Border>
 
           <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0">
