@@ -14,6 +14,7 @@ namespace DartTracker.ViewModels
         private Queue<Player> players;
         private GameLeg _gameLeg;
         public GameLeg gameLeg => _gameLeg;
+        private int _dartCounter = 0;
 
         public GameLegViewModel(List<Player> participatingPlayers, GameLeg leg)
         {
@@ -32,7 +33,14 @@ namespace DartTracker.ViewModels
         
         public void RegisterShot()
         {
-            _gameLeg.CurrentTurn = NextPlayer();
+            // add score to history
+            _dartCounter++;
+            if (_dartCounter == 3)
+            {
+                _dartCounter = 0;
+                _gameLeg.CurrentTurn = NextPlayer();
+            }
+            
         }
         public Player NextPlayer()
         {
