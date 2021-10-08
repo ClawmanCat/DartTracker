@@ -183,7 +183,7 @@ namespace DartTracker.Models
             {
                 if (segment == NamedSegmentType.OUTER_BULLSEYE) return "B";
                 if (segment == NamedSegmentType.INNER_BULLSEYE) return "BS";
-                if (segment == NamedSegmentType.OUTSIDE_BOARD)  return "MISS";
+                if (segment == NamedSegmentType.OUTSIDE_BOARD)  return "X";
                 return "?";
             }
         }
