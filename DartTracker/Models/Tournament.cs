@@ -97,17 +97,13 @@ namespace DartTracker.Models
             }
         }
 
+        public Dictionary<Player, ObservableCollection<Triplet>> history { get; set; }
+
 
         public GameSet parent;
 
-        
         public Dictionary<Player, int> Scores;
         public Player Winner;
-
-
-
-        public Dictionary<Player, ObservableCollection<Triplet>> history { get; set; }
-
 
         private Player _currentTurn;
         public Player CurrentTurn
