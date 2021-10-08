@@ -38,9 +38,20 @@ namespace DartTracker
         public void setBindings()
         {
             Tournament tournament = currentApp.tournament;
-            var currentLeg = tournament.Games[0].gameSets[0].legs[0]; // use Tournament View model to pass trough current legg
+            var currentLeg = tournament.Games.Last().gameSets.Last().legs.Last(); // use Tournament View model to pass trough current legg
             string playerOne = tournament.Players[0].Name;
             string playerTwo = tournament.Players[1].Name;
+
+
+            // Temporary data, remove me later!
+            Throw t10 = new Throw(new NormalSegment(10, SegmentModifier.SINGLE));
+            Throw t60 = new Throw(new NormalSegment(20, SegmentModifier.TRIPLE));
+            Throw tbs = new Throw(new NamedSegment(NamedSegmentType.INNER_BULLSEYE));
+
+            currentLeg.p1History.Add(new Triplet(t10, t10, t60));
+            currentLeg.p1History.Add(new Triplet(t10, t60, tbs));
+            currentLeg.p2History.Add(new Triplet(t10, tbs, tbs));
+
 
             DataContext = new
             {
@@ -50,6 +61,17 @@ namespace DartTracker
 
             p1label.Text = playerOne;
             p2label.Text = playerTwo;
+
+            // test(janek) 
+            Player currentPlayer = currentApp.tournament.Players[0];
+            GameSetViewModel main = new GameSetViewModel(0, null, null);
+
+            // true
+            bool a = main.loadTestData(5);
+            // false
+            bool b = main.loadTestData(6);
+            // false
+            bool c = main.loadTestData(7);
         }
     }
 }

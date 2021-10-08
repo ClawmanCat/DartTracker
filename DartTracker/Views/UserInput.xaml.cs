@@ -1,6 +1,7 @@
 ﻿using DartTracker.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -74,15 +75,24 @@ namespace DartTracker.Views
                     // Finally, the time gets added to the full datetime
                     datetime = datetime.Date + time;
 
+
                     currentApp.tournament.TimeAndDate = datetime;
+
+
 
                     var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
                         new GameLeg() {
-                            history=new List<Dictionary<Player, List<Triplet>>>(),
+                            history=new Dictionary<Player, ObservableCollection<Triplet>>(),
                             Scores=new Dictionary<Player,int>(),
                             Winner=null,
                             CurrentTurn=null
                         } } } };
+
+                    foreach (Player p in currentApp.tournament.Players)
+                    {
+                        gameSets.Last().legs.Last().history.Add(p, new ObservableCollection<Triplet>());
+                    }
+
 
                     // Setting the Game in the Tournament object
                     Game game = new Game() {
@@ -91,6 +101,20 @@ namespace DartTracker.Views
                         legsAmount = Convert.ToInt32(amountOfLegs.Text),
                         gameSets = gameSets
                     };
+
+                    foreach (GameSet set in game.gameSets)
+                    {
+                        foreach (GameLeg leg in set.legs)
+                        {
+                            leg.parent = set;
+                        }
+
+                        set.parent = game;
+                    }
+
+                    game.parent = currentApp.tournament;
+
+
                     // Adding the Game to the game array in the global model.
                     currentApp.tournament.Games.Add(game);
                     // This tells App.xaml.cs to continue to the next window
