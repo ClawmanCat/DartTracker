@@ -54,11 +54,11 @@ namespace DartTracker.Models
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string porprtyName)
+        private void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
-                handler(this, new PropertyChangedEventArgs(porprtyName));
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
@@ -98,17 +98,13 @@ namespace DartTracker.Models
             }
         }
 
+        public Dictionary<Player, ObservableCollection<Triplet>> history { get; set; }
+
 
         public GameSet parent;
 
-        
         public Dictionary<Player, int> Scores;
         public Player Winner;
-
-
-
-        public Dictionary<Player, ObservableCollection<Triplet>> history { get; set; }
-
 
         private Player _currentTurn;
         public Player CurrentTurn
