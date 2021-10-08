@@ -22,12 +22,25 @@ namespace DartTracker
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private string playerOne;
+        private string playerTwo;
+
         public App currentApp = Application.Current as App;
         public MainWindow()
         {
             InitializeComponent();
             Closed += MainWindow_Closed;
             setBindings();
+        }
+
+        private void TextChangedEventHandler1(object sender, TextChangedEventArgs args)
+        {
+            playerOne = p1label.Text;
+        }
+        private void TextChangedEventHandler2(object sender, TextChangedEventArgs args)
+        {
+            playerTwo = p2label.Text;
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -39,8 +52,8 @@ namespace DartTracker
         {
             Tournament tournament = currentApp.tournament;
             var currentLeg = tournament.Games[0].gameSets[0].legs[0]; // use Tournament View model to pass trough current legg
-            string playerOne = tournament.Players[0].Name;
-            string playerTwo = tournament.Players[1].Name;
+            playerOne = tournament.Players[0].Name;
+            playerTwo = tournament.Players[1].Name;
 
             DataContext = new
             {
@@ -51,5 +64,6 @@ namespace DartTracker
             p1label.Text = playerOne;
             p2label.Text = playerTwo;
         }
+
     }
 }
