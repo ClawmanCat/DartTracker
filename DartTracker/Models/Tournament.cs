@@ -41,6 +41,7 @@ namespace DartTracker.Models
         public List<Game> Games;
         public int GamesToWin;
         public Player Winner;
+        public DateTime TimeAndDate;
     }
 
     public class Player : INotifyPropertyChanged
