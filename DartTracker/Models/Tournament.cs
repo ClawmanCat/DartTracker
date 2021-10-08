@@ -53,11 +53,11 @@ namespace DartTracker.Models
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string porprtyName)
+        private void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
-                handler(this, new PropertyChangedEventArgs(porprtyName));
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

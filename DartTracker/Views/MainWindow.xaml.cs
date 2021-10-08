@@ -56,7 +56,7 @@ namespace DartTracker
             DataContext = new
             {
                 leg = new GameLegViewModel(tournament.Players, currentLeg)
-                // prefevrably use the tournament also this way; 
+                // preferably use the tournament also this way; 
             };
 
             p1label.Text = playerOne;

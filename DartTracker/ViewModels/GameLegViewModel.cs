@@ -15,10 +15,10 @@ namespace DartTracker.ViewModels
         private GameLeg _gameLeg;
         public GameLeg gameLeg => _gameLeg;
 
-        public GameLegViewModel(List<Player> partispatingPlayers, GameLeg leg)
+        public GameLegViewModel(List<Player> participatingPlayers, GameLeg leg)
         {
             registerShotCommand = new RegisterShotCommand(this);
-            players = new Queue<Player>(partispatingPlayers);
+            players = new Queue<Player>(participatingPlayers);
             _gameLeg = leg;
             _gameLeg.CurrentTurn = NextPlayer();
         }
