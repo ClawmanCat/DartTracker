@@ -16,10 +16,12 @@ namespace DartTracker
     public partial class App : Application
     {
         public Tournament tournament { get; set; }
-
+        public Score score { get; set; }
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            //setup score
+            score = new Score();
             // Tournament setup
             tournament = new Tournament();
             tournament.GamesToWin = 1;
