@@ -1,8 +1,10 @@
 ﻿using DartTracker.Commands;
 using DartTracker.Models;
+using DartTracker.Utility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,13 +12,18 @@ using System.Windows.Input;
 
 namespace DartTracker.ViewModels
 {
-    class GameLegViewModel
+    class GameLegViewModel : INotifyPropertyChanged
     {
         private Queue<Player> players;
         private GameLeg _gameLeg;
-        private List<Throw> _currentThrows;
+
         public GameLeg gameLeg => _gameLeg;
-        private int _dartCounter = 0;
+
+        private string[] throw_inputs = { "", "", "" };
+        public string first  { get => throw_inputs[0]; set { throw_inputs[0] = value; OnPropertyChanged("first"); } }
+        public string second { get => throw_inputs[1]; set { throw_inputs[1] = value; OnPropertyChanged("second"); } }
+        public string third  { get => throw_inputs[2]; set { throw_inputs[2] = value; OnPropertyChanged("third"); } }
+
 
         public GameLegViewModel(List<Player> participatingPlayers, GameLeg leg)
         {
@@ -24,7 +31,6 @@ namespace DartTracker.ViewModels
             players = new Queue<Player>(participatingPlayers);
             _gameLeg = leg;
             _gameLeg.CurrentTurn = NextPlayer();
-            _currentThrows = new List<Throw>();
         }
         
         public ICommand registerShotCommand
@@ -36,28 +42,31 @@ namespace DartTracker.ViewModels
         
         public void RegisterShot()
         {
-            // make this dynamic of course 
-            Throw tesThrow = new Throw(new NormalSegment(10, SegmentModifier.SINGLE));
-            _currentThrows.Add(tesThrow);
-            // add score to history
-            _dartCounter++;
-            if (_dartCounter == 3)
-            {
-                _dartCounter = 0;
-                var currentPlayer = NextPlayer();
-                _gameLeg.CurrentTurn = currentPlayer;
-                var currentHistory= _gameLeg.history[currentPlayer];
-                currentHistory.Add(new Triplet(_currentThrows[0], _currentThrows[1], _currentThrows[2]));
-                _gameLeg.history[currentPlayer] = currentHistory;
-                _currentThrows = new List<Throw>();
-            }
-            
+            _gameLeg.history[gameLeg.CurrentTurn].Add(new Triplet(
+                new Throw(SegmentParser.parse(first)),
+                new Throw(SegmentParser.parse(second)),
+                new Throw(SegmentParser.parse(third))
+            ));
+
+            first = second = third = "";
+
+
+            _gameLeg.CurrentTurn = NextPlayer();
         }
+        
         public Player NextPlayer()
         {
             Player currentPlayer = players.Dequeue();
             players.Enqueue(currentPlayer);
             return currentPlayer;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

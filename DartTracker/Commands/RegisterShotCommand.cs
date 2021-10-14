@@ -1,6 +1,8 @@
-﻿using DartTracker.ViewModels;
+﻿using DartTracker.Utility;
+using DartTracker.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,15 +17,29 @@ namespace DartTracker.Commands
         public RegisterShotCommand(GameLegViewModel viewModel)
         {
             _viewModel = viewModel;
+
+            // The input may become valid when it is changed, so listen for changes.
+            viewModel.PropertyChanged += (object sender, PropertyChangedEventArgs args) => {
+                if (args.PropertyName == "first" || args.PropertyName == "second" || args.PropertyName == "third")
+                {
+                    EventHandler handler = CanExecuteChanged;
+                    if (handler != null) handler(this, new EventArgs());
+                }
+            };
         }
+
 
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
-            // implement the conditions when a shot counts ect.
-            return true;
+            return (
+                SegmentParser.is_valid_segment(_viewModel.first)  &&
+                SegmentParser.is_valid_segment(_viewModel.second) &&
+                SegmentParser.is_valid_segment(_viewModel.third)
+            );
         }
+
 
         public void Execute(object parameter)
         {
