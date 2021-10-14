@@ -11,11 +11,7 @@ namespace DartTracker.Models
     public class Score
     {
         private int _score = 501;
-        public void setScore(int value)
-        {
-            _score = value;
-        }
-        
+        public void SetScore(GameType value) => _score = (int)value;
         public static explicit operator int(Score s) => s._score;
 
         public static Score operator -(Score s, int amount) {
@@ -53,7 +49,6 @@ namespace DartTracker.Models
         public int GamesToWin;
         public Player Winner;
         public DateTime TimeAndDate;
-        public GameType gameType;
     }
 
     public class Player : INotifyPropertyChanged

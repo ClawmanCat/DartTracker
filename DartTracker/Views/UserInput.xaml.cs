@@ -64,9 +64,10 @@ namespace DartTracker.Views
                     // Setting the players in the Tournament object
                     currentApp.tournament.Players.Add(new Player() { Name = player1.Text });
                     currentApp.tournament.Players.Add(new Player() { Name = player2.Text });
-                    currentApp.tournament.gameType = (GameType)pickGame.SelectedItem;
+                    GameType initialGameType = (GameType)pickGame.SelectedItem;
+                    currentApp.score.SetScore(initialGameType);
                     // changing the default score according to an enumerator(301,501,701)
-                    currentApp.score.setScore((int)(GameType)pickGame.SelectedItem);
+                    //currentApp.score.setScore((int)(GameType)pickGame.SelectedItem);
                     // full DateTime
                     DateTime datetime = new DateTime();
                     // This datetime only fills the date
