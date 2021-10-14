@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DartTracker.Utility;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,7 +9,10 @@ using System.Threading.Tasks;
 
 namespace DartTracker.Models
 {
-    public class Score
+    public abstract class GameModel : CompareFields { }
+
+
+    public class Score : GameModel
     {
         private int _score = 501;
         
@@ -35,7 +39,7 @@ namespace DartTracker.Models
         OUTSIDE_BOARD = 0
     }
 
-    public class Tournament
+    public class Tournament : GameModel
     {
         public List<Player> Players;
         public List<Game> Games;
@@ -44,7 +48,7 @@ namespace DartTracker.Models
         public DateTime TimeAndDate;
     }
 
-    public class Player : INotifyPropertyChanged
+    public class Player : GameModel, INotifyPropertyChanged
     {
         private string _Name;
         public string Name
@@ -62,7 +66,7 @@ namespace DartTracker.Models
         }
     }
 
-    public class Game
+    public class Game : GameModel
     {
         public Tournament parent;
 
@@ -72,7 +76,7 @@ namespace DartTracker.Models
         public int legsAmount;
     }
 
-    public class GameSet 
+    public class GameSet : GameModel
     {
         public Game parent;
 
@@ -80,7 +84,7 @@ namespace DartTracker.Models
         public Player Winner;
     }
 
-    public class GameLeg : INotifyPropertyChanged
+    public class GameLeg : GameModel, INotifyPropertyChanged
     {
         public ObservableCollection<Triplet> p1History
         {
@@ -124,19 +128,19 @@ namespace DartTracker.Models
 
     }
 
-    public class Triplet
+    public class Triplet : GameModel
     {
         public Triplet(Throw first, Throw second, Throw third) { throws = new ObservableCollection<Throw> { first, second, third }; }
         public ObservableCollection<Throw> throws { get; set; }
     }
     
-    public class Throw
+    public class Throw : GameModel
     {
         public Throw(BoardSegment segment) { this.segment = segment; }
         public BoardSegment segment { get; set; }
     }
 
-    public class BoardSegment
+    public class BoardSegment : GameModel
     {
         public virtual int Score { get; }
         public virtual string Display { get;  }

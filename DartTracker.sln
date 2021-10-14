@@ -5,7 +5,10 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartTracker", "DartTracker\DartTracker.csproj", "{0690381A-90A0-4887-B57E-FC7A87227CD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{6E5E0AAB-E713-431C-934F-0D713BDD117E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{6E5E0AAB-E713-431C-934F-0D713BDD117E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0690381A-90A0-4887-B57E-FC7A87227CD3} = {0690381A-90A0-4887-B57E-FC7A87227CD3}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

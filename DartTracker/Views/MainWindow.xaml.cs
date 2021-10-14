@@ -43,16 +43,6 @@ namespace DartTracker
             string playerTwo = tournament.Players[1].Name;
 
 
-            // Temporary data, remove me later!
-            Throw t10 = new Throw(new NormalSegment(10, SegmentModifier.SINGLE));
-            Throw t60 = new Throw(new NormalSegment(20, SegmentModifier.TRIPLE));
-            Throw tbs = new Throw(new NamedSegment(NamedSegmentType.OUTSIDE_BOARD));
-
-            currentLeg.p1History.Add(new Triplet(t10, t10, t60));
-            currentLeg.p1History.Add(new Triplet(t10, t60, tbs));
-            currentLeg.p2History.Add(new Triplet(t10, tbs, tbs));
-
-
             DataContext = new
             {
                 leg = new GameLegViewModel(tournament.Players, currentLeg)

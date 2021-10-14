@@ -55,12 +55,32 @@
           </Border>
 
           <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.ColumnSpan="2">
-            <StackPanel>
-                <Button Command="{Binding leg.registerShotCommand}">next turn</Button>
-                <TextBlock Text="{Binding Path=leg.gameLeg.CurrentTurn.Name, Mode=TwoWay}"></TextBlock>
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Data Entry Panel"></TextBlock>
-            </StackPanel>
-                
+               <Grid>
+                    <Grid.ColumnDefinitions>
+                         <ColumnDefinition Width="*"/>
+                         <ColumnDefinition Width="1.5*"/>
+                         <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                         <RowDefinition Height="*"/>
+                         <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0">
+                         <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_First"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.first,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                         <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_Second" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                         <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_Third"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.third,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
+                         <Label VerticalAlignment="Center">Current Player:</Label>
+                         <TextBlock Width="125" VerticalAlignment="Center" Text="{Binding Path=leg.gameLeg.CurrentTurn.Name, Mode=TwoWay}"></TextBlock>
+
+                         <Button Height="20" Command="{Binding leg.registerShotCommand}">End Turn</Button>
+                    </StackPanel>
+               </Grid>
           </Border>
      </Grid>
 </Window>
