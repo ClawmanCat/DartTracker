@@ -20,7 +20,7 @@ namespace DartTracker.Models
 
         public static Score operator -(Score s, int amount) {
             Score result = new Score();
-            result._score = s._score = amount;
+            result._score = s._score -= amount;
             return result;
         }
     }
@@ -62,6 +62,13 @@ namespace DartTracker.Models
         {
             get { return _Name; }
             set { _Name = value; OnPropertyChanged("Name"); }
+        }
+
+        private Score _score = new Score();
+        public Score score
+        {
+            get { return _score; }
+            set { _score = value; OnPropertyChanged("score"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

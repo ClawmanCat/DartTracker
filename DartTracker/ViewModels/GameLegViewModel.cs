@@ -48,8 +48,10 @@ namespace DartTracker.ViewModels
                 new Throw(SegmentParser.parse(third))
             ));
 
-            first = second = third = "";
+            int totalScore = SegmentParser.parse(first).Score + SegmentParser.parse(second).Score + SegmentParser.parse(third).Score;
+            _gameLeg.CurrentTurn.score -= totalScore;
 
+            first = second = third = "";
 
             _gameLeg.CurrentTurn = NextPlayer();
         }
