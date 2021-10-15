@@ -115,12 +115,28 @@ namespace DartTracker.Models
             }
         }
 
+        public ObservableCollection<int> p1Score
+        {
+            get
+            {
+                return scoreHistory.Where(kv => kv.Key == parent.parent.parent.Players[0]).Select(kv => kv.Value).First();
+            }
+        }
+
+        public ObservableCollection<int> p2Score
+        {
+            get
+            {
+                return scoreHistory.Where(kv => kv.Key == parent.parent.parent.Players[1]).Select(kv => kv.Value).First();
+            }
+        }
+
         public Dictionary<Player, ObservableCollection<Triplet>> history { get; set; }
 
+        public Dictionary<Player, ObservableCollection<int>> scoreHistory { get; set; }
 
         public GameSet parent;
 
-        public Dictionary<Player, int> Scores;
         public Player Winner;
 
         private Player _currentTurn;
