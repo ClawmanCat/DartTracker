@@ -47,11 +47,11 @@
           </Border>
 
           <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0">
-               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p1label" Text="Header for player1"></TextBlock>
+            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Name="p1label" Text="Header for player1" BorderThickness="0" LostFocus="p1_LostFocus"></TextBox>
           </Border>
 
           <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1">
-               <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p2label" Text="Header for player 2"></TextBlock>
+            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Name="p2label" Text="Header for player 2" BorderThickness="0" LostFocus="p2_LostFocus"></TextBox>
           </Border>
 
           <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.ColumnSpan="2">

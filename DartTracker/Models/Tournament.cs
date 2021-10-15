@@ -58,10 +58,22 @@ namespace DartTracker.Models
     public class Player : GameModel, INotifyPropertyChanged
     {
         private string _Name;
+        private int _Id;
+
+        public Player()
+        {
+            //Voor data inladen: Als de naam al bestaat krijgt de speler hetzelfde ID als hij in de data heeft, anders random
+            Random rnd = new Random();
+            _Id = rnd.Next();
+        }
         public string Name
         {
             get { return _Name; }
             set { _Name = value; OnPropertyChanged("Name"); }
+        }
+        public int Id
+        {
+            get { return _Id; }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
