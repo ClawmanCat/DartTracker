@@ -15,7 +15,7 @@ namespace DartTracker.Models
     public class Score : GameModel
     {
         private int _score = 501;
-        
+        public void SetScore(GameType value) => _score = (int)value;
         public static explicit operator int(Score s) => s._score;
 
         public static Score operator -(Score s, int amount) {
@@ -30,6 +30,13 @@ namespace DartTracker.Models
         SINGLE = 1,
         DOUBLE = 2,
         TRIPLE = 3
+    }
+
+    public enum GameType
+    {
+        SHORT = 301,
+        NORMAL = 501,
+        LONG = 701
     }
 
     public enum NamedSegmentType
@@ -69,7 +76,6 @@ namespace DartTracker.Models
     public class Game : GameModel
     {
         public Tournament parent;
-
         public Player Winner;
         public List<GameSet> gameSets;
         public int setsAmount;

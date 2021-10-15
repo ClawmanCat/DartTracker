@@ -28,7 +28,9 @@ namespace DartTracker.Views
         public UserInput()
         {
             InitializeComponent();
+            pickGame.ItemsSource = Enum.GetValues(typeof(GameType));
         }
+
 
         /// <summary>
         /// This function uses a regex to make it possible to only insert numbers inside a Textbox.
@@ -62,6 +64,10 @@ namespace DartTracker.Views
                     // Setting the players in the Tournament object
                     currentApp.tournament.Players.Add(new Player() { Name = player1.Text });
                     currentApp.tournament.Players.Add(new Player() { Name = player2.Text });
+                    GameType initialGameType = (GameType)pickGame.SelectedItem;
+                    currentApp.score.SetScore(initialGameType);
+                    // changing the default score according to an enumerator(301,501,701)
+                    //currentApp.score.setScore((int)(GameType)pickGame.SelectedItem);
                     // full DateTime
                     DateTime datetime = new DateTime();
                     // This datetime only fills the date
@@ -158,5 +164,9 @@ namespace DartTracker.Views
             }
         }
 
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
