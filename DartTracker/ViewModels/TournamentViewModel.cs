@@ -76,6 +76,8 @@ namespace DartTracker.ViewModels
             setting.TypeNameHandling = TypeNameHandling.Auto;
             string jsonString = JsonConvert.SerializeObject(_tournament, Formatting.Indented);
             File.WriteAllText("..\\..\\..\\tournament.json", jsonString);
+            var t3 = JsonConvert.DeserializeObject<Tournament>(jsonString);
+            var x = 0;
         }
         
     }

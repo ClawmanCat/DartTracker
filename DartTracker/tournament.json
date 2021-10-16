@@ -1,11 +1,7 @@
 {
   "Players": [
-    {
-      "Name": "test 1"
-    },
-    {
-      "Name": "test 2"
-    }
+    "test",
+    "test2"
   ],
   "Games": [
     {
@@ -14,111 +10,46 @@
         {
           "legs": [
             {
-              "Scores": {},
-              "Winner": null,
-              "p1History": [
-                {
-                  "throws": [
-                    {
-                      "segment": {
-                        "value": 20,
-                        "modifier": 1,
-                        "Score": 20,
-                        "Display": "20S"
-                      }
-                    },
-                    {
-                      "segment": {
-                        "value": 20,
-                        "modifier": 1,
-                        "Score": 20,
-                        "Display": "20S"
-                      }
-                    },
-                    {
-                      "segment": {
-                        "value": 3,
-                        "modifier": 1,
-                        "Score": 3,
-                        "Display": "3S"
-                      }
-                    }
-                  ]
-                }
-              ],
-              "p2History": [
-                {
-                  "throws": [
-                    {
-                      "segment": {
-                        "value": 20,
-                        "modifier": 1,
-                        "Score": 20,
-                        "Display": "20S"
-                      }
-                    },
-                    {
-                      "segment": {
-                        "value": 20,
-                        "modifier": 1,
-                        "Score": 20,
-                        "Display": "20S"
-                      }
-                    },
-                    {
-                      "segment": {
-                        "value": 12,
-                        "modifier": 1,
-                        "Score": 12,
-                        "Display": "12S"
-                      }
-                    }
-                  ]
-                }
-              ],
-              "CurrentTurn": {
-                "Name": "test 1"
-              },
               "history": {
-                "DartTracker.Models.Player": [
+                "test": [
                   {
                     "throws": [
                       {
                         "segment": {
-                          "value": 20,
+                          "value": 10,
                           "modifier": 1,
-                          "Score": 20,
-                          "Display": "20S"
+                          "Score": 10,
+                          "Display": "10S"
                         }
                       },
                       {
                         "segment": {
-                          "value": 20,
+                          "value": 10,
                           "modifier": 1,
-                          "Score": 20,
-                          "Display": "20S"
+                          "Score": 10,
+                          "Display": "10S"
                         }
                       },
                       {
                         "segment": {
-                          "value": 3,
+                          "value": 10,
                           "modifier": 1,
-                          "Score": 3,
-                          "Display": "3S"
+                          "Score": 10,
+                          "Display": "10S"
                         }
                       }
                     ]
                   }
                 ],
-                "DartTracker.Models.Player": [
+                "test2": [
                   {
                     "throws": [
                       {
                         "segment": {
-                          "value": 20,
+                          "value": 10,
                           "modifier": 1,
-                          "Score": 20,
-                          "Display": "20S"
+                          "Score": 10,
+                          "Display": "10S"
                         }
                       },
                       {
@@ -131,16 +62,79 @@
                       },
                       {
                         "segment": {
-                          "value": 12,
+                          "value": 10,
                           "modifier": 1,
-                          "Score": 12,
-                          "Display": "12S"
+                          "Score": 10,
+                          "Display": "10S"
                         }
                       }
                     ]
                   }
                 ]
-              }
+              },
+              "Scores": {},
+              "Winner": null,
+              "historyPlayerOne": [
+                {
+                  "throws": [
+                    {
+                      "segment": {
+                        "value": 10,
+                        "modifier": 1,
+                        "Score": 10,
+                        "Display": "10S"
+                      }
+                    },
+                    {
+                      "segment": {
+                        "value": 10,
+                        "modifier": 1,
+                        "Score": 10,
+                        "Display": "10S"
+                      }
+                    },
+                    {
+                      "segment": {
+                        "value": 10,
+                        "modifier": 1,
+                        "Score": 10,
+                        "Display": "10S"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "historyPlayerTwo": [
+                {
+                  "throws": [
+                    {
+                      "segment": {
+                        "value": 10,
+                        "modifier": 1,
+                        "Score": 10,
+                        "Display": "10S"
+                      }
+                    },
+                    {
+                      "segment": {
+                        "value": 20,
+                        "modifier": 1,
+                        "Score": 20,
+                        "Display": "20S"
+                      }
+                    },
+                    {
+                      "segment": {
+                        "value": 10,
+                        "modifier": 1,
+                        "Score": 10,
+                        "Display": "10S"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "CurrentTurn": "test"
             }
           ],
           "Winner": null
@@ -152,5 +146,5 @@
   ],
   "GamesToWin": 1,
   "Winner": null,
-  "TimeAndDate": "0001-01-01T13:57:04"
+  "TimeAndDate": "0001-01-01T16:44:05"
 }

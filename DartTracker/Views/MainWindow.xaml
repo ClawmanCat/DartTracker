@@ -39,11 +39,11 @@
           </Grid.RowDefinitions>
 
           <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="0">
-               <ListView ItemsSource="{Binding Path=leg.gameLeg.p1History}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+            <ListView ItemsSource="{Binding Path=leg.gameLeg.historyPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
           </Border>
 
           <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="1">
-               <ListView ItemsSource="{Binding Path=leg.gameLeg.p2History}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+            <ListView ItemsSource="{Binding Path=leg.gameLeg.historyPlayerTwo}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
           </Border>
 
           <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0">

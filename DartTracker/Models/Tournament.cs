@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,6 +57,35 @@ namespace DartTracker.Models
         public DateTime TimeAndDate;
     }
 
+    public class PlayerClassConverter : TypeConverter
+    {
+
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        {
+            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        {
+            var casted = value as string;
+            return casted != null
+                ? new Player { Name = casted.ToString()}
+                : base.ConvertFrom(context, culture, value);
+        }
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        {
+            var casted = value as Player;
+            return destinationType == typeof(string) && casted != null
+                ? String.Join("", casted.Name)
+                : base.ConvertTo(context, culture, value, destinationType);
+        }
+    }
+
+
+
+
+
+    [TypeConverter(typeof (PlayerClassConverter))]
     public class Player :  INotifyPropertyChanged
     {
         private string _Name;
@@ -71,6 +101,10 @@ namespace DartTracker.Models
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public override string ToString()
+        {
+            return Name;
         }
     }
 
@@ -93,23 +127,12 @@ namespace DartTracker.Models
 
     public class GameLeg : INotifyPropertyChanged
     {
-        public ObservableCollection<Triplet> p1History
-        {
-            get
-            {
-                return history.Where(kv => kv.Key == parent.parent.parent.Players[0]).Select(kv => kv.Value).First();
-            }
-        }
 
-        public ObservableCollection<Triplet> p2History
-        {
-            get
-            {
-                return history.Where(kv => kv.Key == parent.parent.parent.Players[1]).Select(kv => kv.Value).First();
-            }
-        }
-
-        public Dictionary<Player, ObservableCollection<Triplet>> history { get; set; }
+        private Dictionary<Player, ObservableCollection<Triplet>> _history; 
+        [JsonProperty(Order = -2)]
+        public Dictionary<Player, ObservableCollection<Triplet>> history { get { return _history; } set { _history = value; OnPropertyChanged("history");} }
+        public ObservableCollection<Triplet> historyPlayerOne { get { return history.Values.ToArray()[0]; } }
+        public ObservableCollection<Triplet> historyPlayerTwo { get { return history.Values.ToArray()[1]; } }
 
 
         [JsonIgnore] public GameSet parent;
