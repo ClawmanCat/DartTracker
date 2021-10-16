@@ -1,0 +1,156 @@
+{
+  "Players": [
+    {
+      "Name": "test 1"
+    },
+    {
+      "Name": "test 2"
+    }
+  ],
+  "Games": [
+    {
+      "Winner": null,
+      "gameSets": [
+        {
+          "legs": [
+            {
+              "Scores": {},
+              "Winner": null,
+              "p1History": [
+                {
+                  "throws": [
+                    {
+                      "segment": {
+                        "value": 20,
+                        "modifier": 1,
+                        "Score": 20,
+                        "Display": "20S"
+                      }
+                    },
+                    {
+                      "segment": {
+                        "value": 20,
+                        "modifier": 1,
+                        "Score": 20,
+                        "Display": "20S"
+                      }
+                    },
+                    {
+                      "segment": {
+                        "value": 3,
+                        "modifier": 1,
+                        "Score": 3,
+                        "Display": "3S"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "p2History": [
+                {
+                  "throws": [
+                    {
+                      "segment": {
+                        "value": 20,
+                        "modifier": 1,
+                        "Score": 20,
+                        "Display": "20S"
+                      }
+                    },
+                    {
+                      "segment": {
+                        "value": 20,
+                        "modifier": 1,
+                        "Score": 20,
+                        "Display": "20S"
+                      }
+                    },
+                    {
+                      "segment": {
+                        "value": 12,
+                        "modifier": 1,
+                        "Score": 12,
+                        "Display": "12S"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "CurrentTurn": {
+                "Name": "test 1"
+              },
+              "history": {
+                "DartTracker.Models.Player": [
+                  {
+                    "throws": [
+                      {
+                        "segment": {
+                          "value": 20,
+                          "modifier": 1,
+                          "Score": 20,
+                          "Display": "20S"
+                        }
+                      },
+                      {
+                        "segment": {
+                          "value": 20,
+                          "modifier": 1,
+                          "Score": 20,
+                          "Display": "20S"
+                        }
+                      },
+                      {
+                        "segment": {
+                          "value": 3,
+                          "modifier": 1,
+                          "Score": 3,
+                          "Display": "3S"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "DartTracker.Models.Player": [
+                  {
+                    "throws": [
+                      {
+                        "segment": {
+                          "value": 20,
+                          "modifier": 1,
+                          "Score": 20,
+                          "Display": "20S"
+                        }
+                      },
+                      {
+                        "segment": {
+                          "value": 20,
+                          "modifier": 1,
+                          "Score": 20,
+                          "Display": "20S"
+                        }
+                      },
+                      {
+                        "segment": {
+                          "value": 12,
+                          "modifier": 1,
+                          "Score": 12,
+                          "Display": "12S"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "Winner": null
+        }
+      ],
+      "setsAmount": 1,
+      "legsAmount": 1
+    }
+  ],
+  "GamesToWin": 1,
+  "Winner": null,
+  "TimeAndDate": "0001-01-01T13:57:04"
+}

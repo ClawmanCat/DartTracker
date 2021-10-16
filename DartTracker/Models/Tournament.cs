@@ -1,4 +1,5 @@
 ﻿using DartTracker.Utility;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ namespace DartTracker.Models
     public abstract class GameModel : CompareFields { }
 
 
-    public class Score : GameModel
+    public class Score
     {
         private int _score = 501;
         public void SetScore(GameType value) => _score = (int)value;
@@ -46,7 +47,7 @@ namespace DartTracker.Models
         OUTSIDE_BOARD = 0
     }
 
-    public class Tournament : GameModel
+    public class Tournament
     {
         public List<Player> Players;
         public List<Game> Games;
@@ -55,7 +56,7 @@ namespace DartTracker.Models
         public DateTime TimeAndDate;
     }
 
-    public class Player : GameModel, INotifyPropertyChanged
+    public class Player :  INotifyPropertyChanged
     {
         private string _Name;
         public string Name
@@ -73,24 +74,24 @@ namespace DartTracker.Models
         }
     }
 
-    public class Game : GameModel
+    public class Game
     {
-        public Tournament parent;
+        [JsonIgnore] public Tournament parent;
         public Player Winner;
         public List<GameSet> gameSets;
         public int setsAmount;
         public int legsAmount;
     }
 
-    public class GameSet : GameModel
+    public class GameSet
     {
-        public Game parent;
+        [JsonIgnore] public Game parent;
 
         public List<GameLeg> legs;
         public Player Winner;
     }
 
-    public class GameLeg : GameModel, INotifyPropertyChanged
+    public class GameLeg : INotifyPropertyChanged
     {
         public ObservableCollection<Triplet> p1History
         {
@@ -111,7 +112,7 @@ namespace DartTracker.Models
         public Dictionary<Player, ObservableCollection<Triplet>> history { get; set; }
 
 
-        public GameSet parent;
+        [JsonIgnore] public GameSet parent;
 
         public Dictionary<Player, int> Scores;
         public Player Winner;
@@ -134,13 +135,13 @@ namespace DartTracker.Models
 
     }
 
-    public class Triplet : GameModel
+    public class Triplet
     {
         public Triplet(Throw first, Throw second, Throw third) { throws = new ObservableCollection<Throw> { first, second, third }; }
         public ObservableCollection<Throw> throws { get; set; }
     }
     
-    public class Throw : GameModel
+    public class Throw
     {
         public Throw(BoardSegment segment) { this.segment = segment; }
         public BoardSegment segment { get; set; }

@@ -79,7 +79,10 @@
                          <TextBlock Width="125" VerticalAlignment="Center" Text="{Binding Path=leg.gameLeg.CurrentTurn.Name, Mode=TwoWay}"></TextBlock>
 
                          <Button Height="20" Command="{Binding leg.registerShotCommand}">End Turn</Button>
+                    <Button Height="20" Command="{Binding tournament.SerializeTournamentCommand}">serialize</Button>
+                    <!-- temperary for test purpeses--> 
                     </StackPanel>
+                    
                </Grid>
           </Border>
      </Grid>
