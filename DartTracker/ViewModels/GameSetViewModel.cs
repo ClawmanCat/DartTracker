@@ -20,7 +20,7 @@ namespace DartTracker.ViewModels
         {
             _legsAmount = amountOfLegs;
             _player = player;
-            SaveTurnCommand = new CheckSetWinnerCommand(o => checkIfSetWinner(_set, _player), o => checkIfSetWinner(_set, _player));
+            SaveTurnCommand = new NextTurnCommand(o => checkIfSetWinner(_set, _player), o => checkIfSetWinner(_set, _player));
         }
 
         public bool loadTestData(int amountOfLegs)
