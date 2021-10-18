@@ -162,7 +162,6 @@ namespace DartTracker.Models
             }
         }
 
-        public Dictionary<Player, ObservableCollection<Triplet>> history { get; set; }
         public Dictionary<Player, ObservableCollection<int>> scoreHistory { get; set; }
 
         [JsonIgnore] public GameSet parent;
