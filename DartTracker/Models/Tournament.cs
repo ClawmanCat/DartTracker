@@ -25,7 +25,7 @@ namespace DartTracker.Models
         public static Score operator -(Score s, int amount)
         {
             Score result = new Score();
-            result._score = s._score = amount;
+            result._score = s._score -= amount;
             return result;
         }
     }
@@ -74,6 +74,13 @@ namespace DartTracker.Models
                 _Name = value;
                 OnPropertyChanged("Name");
             }
+        }
+
+        private Score _score = new Score();
+        public Score score
+        {
+            get { return _score; }
+            set { _score = value; OnPropertyChanged("score"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -139,11 +146,27 @@ namespace DartTracker.Models
         {
             get { return history.Values.ToArray()[1]; }
         }
+        public ObservableCollection<int> p1Score
+        {
+            get
+            {
+                return scoreHistory.Where(kv => kv.Key == parent.parent.parent.Players[0]).Select(kv => kv.Value).First();
+            }
+        }
 
+        public ObservableCollection<int> p2Score
+        {
+            get
+            {
+                return scoreHistory.Where(kv => kv.Key == parent.parent.parent.Players[1]).Select(kv => kv.Value).First();
+            }
+        }
+
+        public Dictionary<Player, ObservableCollection<Triplet>> history { get; set; }
+        public Dictionary<Player, ObservableCollection<int>> scoreHistory { get; set; }
 
         [JsonIgnore] public GameSet parent;
 
-        public Dictionary<Player, int> Scores;
         public Player Winner;
 
         private Player _currentTurn;
