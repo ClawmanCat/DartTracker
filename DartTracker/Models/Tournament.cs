@@ -57,35 +57,8 @@ namespace DartTracker.Models
         public DateTime TimeAndDate;
     }
 
-    public class PlayerClassConverter : TypeConverter
-    {
 
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
-        }
-
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            var casted = value as string;
-            return casted != null
-                ? new Player { Name = casted.ToString()}
-                : base.ConvertFrom(context, culture, value);
-        }
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
-        {
-            var casted = value as Player;
-            return destinationType == typeof(string) && casted != null
-                ? String.Join("", casted.Name)
-                : base.ConvertTo(context, culture, value, destinationType);
-        }
-    }
-
-
-
-
-
-    [TypeConverter(typeof (PlayerClassConverter))]
+ ///   [TypeConverter(typeof (PlayerClassConverter))]
     public class Player :  INotifyPropertyChanged
     {
         private string _Name;
@@ -128,10 +101,18 @@ namespace DartTracker.Models
     public class GameLeg : INotifyPropertyChanged
     {
 
-        private Dictionary<Player, ObservableCollection<Triplet>> _history; 
+ /*       private Dictionary<Player, ObservableCollection<Triplet>> _history; 
         [JsonProperty(Order = -2)]
-        public Dictionary<Player, ObservableCollection<Triplet>> history { get { return _history; } set { _history = value; OnPropertyChanged("history");} }
+        public Dictionary<Player, ObservableCollection<Triplet>> history { get { return _history; } set { _history = value; OnPropertyChanged("history");} }*/
+
+        private Dictionary<string, ObservableCollection<Triplet>> _history;
+        [JsonProperty(Order = -2)]
+        public Dictionary<string, ObservableCollection<Triplet>> history { get { return _history; } set { _history = value; OnPropertyChanged("history"); } }
+
+
+        [JsonIgnore]
         public ObservableCollection<Triplet> historyPlayerOne { get { return history.Values.ToArray()[0]; } }
+        [JsonIgnore]
         public ObservableCollection<Triplet> historyPlayerTwo { get { return history.Values.ToArray()[1]; } }
 
 

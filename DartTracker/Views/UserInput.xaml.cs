@@ -1,7 +1,9 @@
 ﻿using DartTracker.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -44,6 +46,7 @@ namespace DartTracker.Views
 
         private void btnDialogOk_Click(object sender, RoutedEventArgs e)
         {
+
             if (string.IsNullOrEmpty(player1.Text) && string.IsNullOrEmpty(player2.Text))
             {
                 MessageBox.Show("Both players are empty.");
@@ -88,7 +91,7 @@ namespace DartTracker.Views
 
                     var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
                         new GameLeg() {
-                            history=new Dictionary<Player, ObservableCollection<Triplet>>(),
+                            history=new Dictionary<string, ObservableCollection<Triplet>>(),
                             Scores=new Dictionary<Player,int>(),
                             Winner=null,
                             CurrentTurn=null
@@ -96,7 +99,7 @@ namespace DartTracker.Views
 
                     foreach (Player p in currentApp.tournament.Players)
                     {
-                        gameSets.Last().legs.Last().history.Add(p, new ObservableCollection<Triplet>());
+                        gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
                     }
 
 
@@ -134,8 +137,6 @@ namespace DartTracker.Views
                 }
             }
         }
-
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
@@ -167,6 +168,17 @@ namespace DartTracker.Views
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void LoadJson_Click(object sender, RoutedEventArgs e)
+        {
+            string jsonString = File.ReadAllText("..\\..\\..\\tournament.json");
+            Tournament tournament = JsonConvert.DeserializeObject<Tournament>(jsonString, new JsonSerializerSettings { 
+                TypeNameHandling = TypeNameHandling.All,           
+            });
+            currentApp.tournament = tournament;
+            DialogResult = true;
+            Close();
         }
     }
 }

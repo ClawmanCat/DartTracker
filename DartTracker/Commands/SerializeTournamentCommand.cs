@@ -10,13 +10,14 @@ namespace DartTracker.Commands
         private TournamentViewModel _viewModel;
         public SerializeTournamentCommand(TournamentViewModel viewModel)
         {
-            _viewModel = viewModel;
+            _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
         }
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            
+            return _viewModel.CanSerializeTournament();
         }
 
         public void Execute(object parameter)

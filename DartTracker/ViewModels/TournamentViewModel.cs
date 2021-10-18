@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using DartTracker.Utility;
+using System;
 
 namespace DartTracker.ViewModels
 {
@@ -27,13 +28,18 @@ namespace DartTracker.ViewModels
             get;
             private set;
         }
+        public ICommand LoadTournamentCommand
+        {
+            get;
+            private set;
+        }
 
 
 
 
         public void Serialize()
         {
-            var t = new Tournament
+           /* var t = new Tournament
             {
                 GamesToWin = 1,
                 Players = new List<Player> { new Player { Name = "Henk" }, new Player { Name = "Piet" } },
@@ -69,16 +75,25 @@ namespace DartTracker.ViewModels
                 }
                 }
                 }
-                }
-            };
+                }*/
+            //};
 
             JsonSerializerSettings setting = new JsonSerializerSettings();
             setting.TypeNameHandling = TypeNameHandling.Auto;
-            string jsonString = JsonConvert.SerializeObject(_tournament, Formatting.Indented);
-            File.WriteAllText("..\\..\\..\\tournament.json", jsonString);
-            var t3 = JsonConvert.DeserializeObject<Tournament>(jsonString);
-            var x = 0;
+            string jsonString = JsonConvert.SerializeObject(_tournament, Formatting.Indented, new JsonSerializerSettings() {
+                TypeNameHandling = TypeNameHandling.All,
+                TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
+            });
+
+            File.WriteAllText("..\\..\\..\\tournament.json", jsonString); // add file explorer later for ease of use 
         }
-        
+
+        public bool CanSerializeTournament()
+        {
+            if (Tournament.Players[0] == Tournament.Players[1])
+                return false;
+            return true;
+        }
+
     }
 }
