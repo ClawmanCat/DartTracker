@@ -65,7 +65,8 @@
 
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5">
             <Button IsDefault="True" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
-            <Button IsCancel="True" MinWidth="60" Click="Button_Click">Cancel</Button>
+            <Button IsCancel="True" MinWidth="60"  Margin="0,0,10,0" Click="Button_Click">Cancel</Button>
+            <Button IsCancel="True" MinWidth="60" Name="LoadJson" Click="LoadJson_Click">load Json</Button> <!-- load json needs to be moved to somewhere else -->
         </WrapPanel>
     </Grid>
 </Window>

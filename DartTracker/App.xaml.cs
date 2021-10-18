@@ -2,6 +2,7 @@
 using DartTracker.Views;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Linq;
@@ -13,10 +14,23 @@ namespace DartTracker
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : Application , INotifyPropertyChanged
     {
-        public Tournament tournament { get; set; }
+        private Tournament _tournament;
+        public Tournament tournament { get { return _tournament; } set { _tournament = value; OnPropertyChanged("tournament"); }  }
         public Score score { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
