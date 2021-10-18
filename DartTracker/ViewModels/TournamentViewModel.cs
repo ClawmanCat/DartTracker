@@ -23,16 +23,7 @@ namespace DartTracker.ViewModels
         }
 
 
-        public ICommand SerializeTournamentCommand
-        {
-            get;
-            private set;
-        }
-        public ICommand LoadTournamentCommand
-        {
-            get;
-            private set;
-        }
+        public ICommand SerializeTournamentCommand { get; private set; }
 
         public void SaveJson()
         {
@@ -45,10 +36,12 @@ namespace DartTracker.ViewModels
         {
             JsonSerializerSettings setting = new JsonSerializerSettings();
             setting.TypeNameHandling = TypeNameHandling.Auto;
-            string jsonString = JsonConvert.SerializeObject(_tournament, Formatting.Indented, new JsonSerializerSettings() {
-                TypeNameHandling = TypeNameHandling.All,
-                TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
-            });       
+            string jsonString = JsonConvert.SerializeObject(_tournament, Formatting.Indented,
+                new JsonSerializerSettings()
+                {
+                    TypeNameHandling = TypeNameHandling.All,
+                    TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
+                });
             return jsonString;
         }
 

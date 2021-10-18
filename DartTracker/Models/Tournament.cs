@@ -11,16 +11,19 @@ using System.Threading.Tasks;
 
 namespace DartTracker.Models
 {
-    public abstract class GameModel : CompareFields { }
+    public abstract class GameModel : CompareFields
+    {
+    }
 
 
     public class Score
     {
         private int _score = 501;
-        public void SetScore(GameType value) => _score = (int)value;
+        public void SetScore(GameType value) => _score = (int) value;
         public static explicit operator int(Score s) => s._score;
 
-        public static Score operator -(Score s, int amount) {
+        public static Score operator -(Score s, int amount)
+        {
             Score result = new Score();
             result._score = s._score = amount;
             return result;
@@ -58,23 +61,30 @@ namespace DartTracker.Models
     }
 
 
- ///   [TypeConverter(typeof (PlayerClassConverter))]
-    public class Player :  INotifyPropertyChanged
+    ///   [TypeConverter(typeof (PlayerClassConverter))]
+    public class Player : INotifyPropertyChanged
     {
         private string _Name;
+
         public string Name
         {
             get { return _Name; }
-            set { _Name = value; OnPropertyChanged("Name"); }
+            set
+            {
+                _Name = value;
+                OnPropertyChanged("Name");
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
         public override string ToString()
         {
             return Name;
@@ -100,20 +110,35 @@ namespace DartTracker.Models
 
     public class GameLeg : INotifyPropertyChanged
     {
-
- /*       private Dictionary<Player, ObservableCollection<Triplet>> _history; 
-        [JsonProperty(Order = -2)]
-        public Dictionary<Player, ObservableCollection<Triplet>> history { get { return _history; } set { _history = value; OnPropertyChanged("history");} }*/
+        /*       private Dictionary<Player, ObservableCollection<Triplet>> _history; 
+               [JsonProperty(Order = -2)]
+               public Dictionary<Player, ObservableCollection<Triplet>> history { get { return _history; } set { _history = value; OnPropertyChanged("history");} }*/
 
         private Dictionary<string, ObservableCollection<Triplet>> _history;
+
         [JsonProperty(Order = -2)]
-        public Dictionary<string, ObservableCollection<Triplet>> history { get { return _history; } set { _history = value; OnPropertyChanged("history"); } }
+        public Dictionary<string, ObservableCollection<Triplet>> history
+        {
+            get { return _history; }
+            set
+            {
+                _history = value;
+                OnPropertyChanged("history");
+            }
+        }
 
 
         [JsonIgnore]
-        public ObservableCollection<Triplet> historyPlayerOne { get { return history.Values.ToArray()[0]; } }
+        public ObservableCollection<Triplet> historyPlayerOne
+        {
+            get { return history.Values.ToArray()[0]; }
+        }
+
         [JsonIgnore]
-        public ObservableCollection<Triplet> historyPlayerTwo { get { return history.Values.ToArray()[1]; } }
+        public ObservableCollection<Triplet> historyPlayerTwo
+        {
+            get { return history.Values.ToArray()[1]; }
+        }
 
 
         [JsonIgnore] public GameSet parent;
@@ -122,49 +147,69 @@ namespace DartTracker.Models
         public Player Winner;
 
         private Player _currentTurn;
+
         public Player CurrentTurn
         {
             get { return _currentTurn; }
-            set { _currentTurn = value; OnPropertyChanged("CurrentTurn"); }
+            set
+            {
+                _currentTurn = value;
+                OnPropertyChanged("CurrentTurn");
+            }
         }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void OnPropertyChanged(string porprtyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(porprtyName));
         }
-
     }
 
     public class Triplet
     {
-        public Triplet(Throw first, Throw second, Throw third) { throws = new ObservableCollection<Throw> { first, second, third }; }
+        public Triplet(Throw first, Throw second, Throw third)
+        {
+            throws = new ObservableCollection<Throw> {first, second, third};
+        }
+
         public ObservableCollection<Throw> throws { get; set; }
     }
-    
+
     public class Throw
     {
-        public Throw(BoardSegment segment) { this.segment = segment; }
+        public Throw(BoardSegment segment)
+        {
+            this.segment = segment;
+        }
+
         public BoardSegment segment { get; set; }
     }
 
     public class BoardSegment : GameModel
     {
         public virtual int Score { get; }
-        public virtual string Display { get;  }
+        public virtual string Display { get; }
     }
-    
+
     public class NormalSegment : BoardSegment
     {
-        public NormalSegment(int value, SegmentModifier modifier) { this.value = value; this.modifier = modifier; }
+        public NormalSegment(int value, SegmentModifier modifier)
+        {
+            this.value = value;
+            this.modifier = modifier;
+        }
 
         public int value;
         public SegmentModifier modifier;
 
-        public override int Score { get => value * (int) modifier; }
+        public override int Score
+        {
+            get => value * (int) modifier;
+        }
 
         public override string Display
         {
@@ -180,13 +225,20 @@ namespace DartTracker.Models
             }
         }
     }
+
     public class NamedSegment : BoardSegment
     {
-        public NamedSegment(NamedSegmentType type) { this.segment = type; }
+        public NamedSegment(NamedSegmentType type)
+        {
+            this.segment = type;
+        }
 
         public NamedSegmentType segment;
 
-        public override int Score { get => (int) segment; }
+        public override int Score
+        {
+            get => (int) segment;
+        }
 
 
         public override string Display
@@ -195,7 +247,7 @@ namespace DartTracker.Models
             {
                 if (segment == NamedSegmentType.OUTER_BULLSEYE) return "B";
                 if (segment == NamedSegmentType.INNER_BULLSEYE) return "BS";
-                if (segment == NamedSegmentType.OUTSIDE_BOARD)  return "X";
+                if (segment == NamedSegmentType.OUTSIDE_BOARD) return "X";
                 return "?";
             }
         }

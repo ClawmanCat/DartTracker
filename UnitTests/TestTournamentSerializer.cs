@@ -14,7 +14,6 @@ using ExpectedObjects;
 
 namespace UnitTests
 {
-
     [TestClass]
     public class TestTournamentSerializer
     {
@@ -27,41 +26,59 @@ namespace UnitTests
             var tournament = new Tournament
             {
                 GamesToWin = 1,
-                Players = new List<Player> { new Player { Name = "Henk" }, new Player { Name = "Piet" } },
-                Winner = new Player { Name = "Henk" },
-                Games = new List<Game> { new Game() {
-                        Winner = new Player{Name = "Henk"},
+                Players = new List<Player> {new Player {Name = "Henk"}, new Player {Name = "Piet"}},
+                Winner = new Player {Name = "Henk"},
+                Games = new List<Game>
+                {
+                    new Game()
+                    {
+                        Winner = new Player {Name = "Henk"},
                         setsAmount = 1,
                         legsAmount = 1,
-                        gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
-                        new GameLeg() {
-                           Winner= new Player{Name = "Henk"},
-                           CurrentTurn= new Player{Name = "Henk"},
-                           history=new Dictionary<string, ObservableCollection<Triplet>>(){
-                               {
-                                   "Henk",
-                                   new ObservableCollection<Triplet>{ new Triplet(
-                                    new Throw(SegmentParser.parse("10T")),
-                                    new Throw(SegmentParser.parse("10D")),
-                                    new Throw(SegmentParser.parse("10"))
-                                    )}
-                               },
-                               {
-                                   "Piet",
-                                   new ObservableCollection<Triplet>{ new Triplet(
-                                    new Throw(SegmentParser.parse("20T")),
-                                    new Throw(SegmentParser.parse("20D")),
-                                    new Throw(SegmentParser.parse("20"))
-                                    )}
-                               }
-                           }
+                        gameSets = new List<GameSet>()
+                        {
+                            new GameSet()
+                            {
+                                legs = new List<GameLeg>()
+                                {
+                                    new GameLeg()
+                                    {
+                                        Winner = new Player {Name = "Henk"},
+                                        CurrentTurn = new Player {Name = "Henk"},
+                                        history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                        {
+                                            {
+                                                "Henk",
+                                                new ObservableCollection<Triplet>
+                                                {
+                                                    new Triplet(
+                                                        new Throw(SegmentParser.parse("10T")),
+                                                        new Throw(SegmentParser.parse("10D")),
+                                                        new Throw(SegmentParser.parse("10"))
+                                                    )
+                                                }
+                                            },
+                                            {
+                                                "Piet",
+                                                new ObservableCollection<Triplet>
+                                                {
+                                                    new Triplet(
+                                                        new Throw(SegmentParser.parse("20T")),
+                                                        new Throw(SegmentParser.parse("20D")),
+                                                        new Throw(SegmentParser.parse("20"))
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-                }
-                }
-                }
             };
+
+            // mabey make a factory so that you automaticaly generate a correct tournament but that is a bit overkill for the size of this project
             context = tournament;
             viewModel = new TournamentViewModel(tournament);
         }
@@ -72,13 +89,15 @@ namespace UnitTests
             var jsonString = viewModel.Serialize();
             Assert.IsNotNull(jsonString);
             Assert.IsTrue(IsValidJson(jsonString));
-            
-
         }
 
         private static bool IsValidJson(string input)
         {
-            if (string.IsNullOrWhiteSpace(input)) { return false; }
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return false;
+            }
+
             input = input.Trim();
             if ((input.StartsWith("{") && input.EndsWith("}")) || //For object
                 (input.StartsWith("[") && input.EndsWith("]"))) //For array
@@ -111,15 +130,11 @@ namespace UnitTests
             var jsonString = viewModel.Serialize();
             var tournament = LoadTournamentJson.LoadTournament(jsonString).ToExpectedObject();
             tournament.ShouldEqual(context);
-/*            Assert.AreSame(tournament.Players, context.Players);
-            Assert.AreEqual(tournament.GamesToWin, context.GamesToWin);
-            Assert.AreEqual(tournament.GamesToWin, context.GamesToWin);
-            Assert.AreEqual(tournament.Games, context.Games);
-            Assert.AreEqual(tournament.Games[0].gameSets[0].legs[0].history, context.Games[0].gameSets[0].legs[0].history);
-            Assert.AreEqual(tournament.Winner, context.Winner);*/
-
         }
+
         [TestCleanup]
-        public void TestCleanup(){}
+        public void TestCleanup()
+        {
+        }
     }
 }
