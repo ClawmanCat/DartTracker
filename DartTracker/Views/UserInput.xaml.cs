@@ -1,4 +1,5 @@
 ﻿using DartTracker.Models;
+using DartTracker.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -172,11 +173,7 @@ namespace DartTracker.Views
 
         private void LoadJson_Click(object sender, RoutedEventArgs e)
         {
-            string jsonString = File.ReadAllText("..\\..\\..\\tournament.json");
-            Tournament tournament = JsonConvert.DeserializeObject<Tournament>(jsonString, new JsonSerializerSettings { 
-                TypeNameHandling = TypeNameHandling.All,           
-            });
-            currentApp.tournament = tournament;
+            currentApp.tournament = LoadTournamentJson.LoadJson();
             DialogResult = true;
             Close();
         }

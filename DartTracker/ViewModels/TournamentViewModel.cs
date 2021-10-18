@@ -10,7 +10,7 @@ using System;
 
 namespace DartTracker.ViewModels
 {
-    class TournamentViewModel
+    public class TournamentViewModel
     {
         private Tournament _tournament;
 
@@ -34,58 +34,22 @@ namespace DartTracker.ViewModels
             private set;
         }
 
-
-
-
-        public void Serialize()
+        public void SaveJson()
         {
-           /* var t = new Tournament
-            {
-                GamesToWin = 1,
-                Players = new List<Player> { new Player { Name = "Henk" }, new Player { Name = "Piet" } },
-                Winner = new Player { Name = "Henk" },
-                Games = new List<Game> { new Game() {
-                        Winner = new Player{Name = "Henk"},
-                        setsAmount = 1,
-                        legsAmount = 1,
-                        gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
-                        new GameLeg() {
-                           Winner= new Player{Name = "Henk"},
-                           CurrentTurn= new Player{Name = "Henk"},
-                           history=new Dictionary<Player, ObservableCollection<Triplet>>(){
-                               {
-                                   new Player{Name = "Henk"},
-                                   new ObservableCollection<Triplet>{ new Triplet(
-                                    new Throw(SegmentParser.parse("10")),
-                                    new Throw(SegmentParser.parse("10")),
-                                    new Throw(SegmentParser.parse("10"))
-                                    )}
-                               },
-                               {
-                                   new Player{Name = "Piet"},
-                                   new ObservableCollection<Triplet>{ new Triplet(
-                                    new Throw(SegmentParser.parse("10")),
-                                    new Throw(SegmentParser.parse("10")),
-                                    new Throw(SegmentParser.parse("10"))
-                                    )}
-                               }
-                           }
-                        }
-                    }
-                }
-                }
-                }
-                }*/
-            //};
+            string jsonString = Serialize();
+            File.WriteAllText("..\\..\\..\\tournament.json", jsonString); // add file explorer later for ease of use 
+        }
 
+
+        public string Serialize()
+        {
             JsonSerializerSettings setting = new JsonSerializerSettings();
             setting.TypeNameHandling = TypeNameHandling.Auto;
             string jsonString = JsonConvert.SerializeObject(_tournament, Formatting.Indented, new JsonSerializerSettings() {
                 TypeNameHandling = TypeNameHandling.All,
                 TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
-            });
-
-            File.WriteAllText("..\\..\\..\\tournament.json", jsonString); // add file explorer later for ease of use 
+            });       
+            return jsonString;
         }
 
         public bool CanSerializeTournament()
@@ -94,6 +58,5 @@ namespace DartTracker.ViewModels
                 return false;
             return true;
         }
-
     }
 }

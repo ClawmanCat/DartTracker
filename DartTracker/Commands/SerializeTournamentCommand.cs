@@ -22,7 +22,7 @@ namespace DartTracker.Commands
 
         public void Execute(object parameter)
         {
-            _viewModel.Serialize();
+            _viewModel.SaveJson();
         }
     }
 }
