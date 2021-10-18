@@ -136,33 +136,19 @@ namespace DartTracker.Models
 
 
         [JsonIgnore]
-        public ObservableCollection<Triplet> historyPlayerOne
-        {
-            get { return history.Values.ToArray()[0]; }
-        }
+        public ObservableCollection<Triplet> HistoryPlayerOne => history.Values.ToArray()[0];
 
         [JsonIgnore]
-        public ObservableCollection<Triplet> historyPlayerTwo
-        {
-            get { return history.Values.ToArray()[1]; }
-        }
-        public ObservableCollection<int> p1Score
-        {
-            get
-            {
-                return scoreHistory.Where(kv => kv.Key == parent.parent.parent.Players[0]).Select(kv => kv.Value).First();
-            }
-        }
+        public ObservableCollection<Triplet> HistoryPlayerTwo => history.Values.ToArray()[1];
 
-        public ObservableCollection<int> p2Score
-        {
-            get
-            {
-                return scoreHistory.Where(kv => kv.Key == parent.parent.parent.Players[1]).Select(kv => kv.Value).First();
-            }
-        }
+        [JsonIgnore]
+        public ObservableCollection<int> ScorePlayerOne => ScoreHistory.Values.ToArray()[0];
 
-        public Dictionary<Player, ObservableCollection<int>> scoreHistory { get; set; }
+        [JsonIgnore]
+        public ObservableCollection<int> ScorePlayerTwo => ScoreHistory.Values.ToArray()[1];
+
+        [JsonProperty(Order = -2)]
+        public Dictionary<string, ObservableCollection<int>> ScoreHistory { get; set; }
 
         [JsonIgnore] public GameSet parent;
 

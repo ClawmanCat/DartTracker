@@ -50,7 +50,7 @@ namespace DartTracker.ViewModels
 
             int totalScore = SegmentParser.parse(first).Score + SegmentParser.parse(second).Score + SegmentParser.parse(third).Score;
             _gameLeg.CurrentTurn.score -= totalScore;
-            _gameLeg.scoreHistory[_gameLeg.CurrentTurn].Add((int)_gameLeg.CurrentTurn.score);
+            _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
 
             first = second = third = "";
 

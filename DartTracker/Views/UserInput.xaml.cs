@@ -93,7 +93,7 @@ namespace DartTracker.Views
                     var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
                         new GameLeg() {
                             history=new Dictionary<string, ObservableCollection<Triplet>>(),
-                            scoreHistory=new Dictionary<Player, ObservableCollection<int>>(),
+                            ScoreHistory=new Dictionary<string, ObservableCollection<int>>(),
                             Winner=null,
                             CurrentTurn=null
                         } } } };
@@ -101,7 +101,7 @@ namespace DartTracker.Views
                     foreach (Player p in currentApp.tournament.Players)
                     {
                         gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
-                        gameSets.Last().legs.Last().scoreHistory.Add(p, new ObservableCollection<int>());
+                        gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
                     }
 
 

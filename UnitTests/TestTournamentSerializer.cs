@@ -69,6 +69,27 @@ namespace UnitTests
                                                     )
                                                 }
                                             }
+                                        },
+                                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                        {
+                                            {
+                                                "Henk",
+                                                new ObservableCollection<int>()
+                                                {
+                                                    10,
+                                                    20,
+                                                    30,
+                                                }
+                                            },
+                                            {
+                                                "Piet",
+                                                new ObservableCollection<int>()
+                                                {
+                                                    10,
+                                                    20,
+                                                    30,
+                                                }
+                                            }
                                         }
                                     }
                                 }
