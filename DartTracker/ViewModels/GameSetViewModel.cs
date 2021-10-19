@@ -31,21 +31,21 @@ namespace DartTracker.ViewModels
             GameLeg leg1 = new GameLeg()
             {
                 history = null,
-                Scores = null,
+                ScoreHistory = null,
                 Winner = _player
             };
 
             GameLeg leg2 = new GameLeg()
             {
                 history = null,
-                Scores = null,
+                ScoreHistory = null,
                 Winner = _player
             };
 
             GameLeg leg3 = new GameLeg()
             {
                 history = null,
-                Scores = null,
+                ScoreHistory = null,
                 Winner = _player
             };
 

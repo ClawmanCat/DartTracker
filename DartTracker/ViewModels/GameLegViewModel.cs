@@ -42,14 +42,17 @@ namespace DartTracker.ViewModels
         
         public void RegisterShot()
         {
-            _gameLeg.history[gameLeg.CurrentTurn].Add(new Triplet(
+            _gameLeg.history[gameLeg.CurrentTurn.Name].Add(new Triplet(
                 new Throw(SegmentParser.parse(first)),
                 new Throw(SegmentParser.parse(second)),
                 new Throw(SegmentParser.parse(third))
             ));
 
-            first = second = third = "";
+            int totalScore = SegmentParser.parse(first).Score + SegmentParser.parse(second).Score + SegmentParser.parse(third).Score;
+            _gameLeg.CurrentTurn.score -= totalScore;
+            _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
 
+            first = second = third = "";
 
             _gameLeg.CurrentTurn = NextPlayer();
         }
