@@ -57,11 +57,33 @@
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="2">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p1label" Text="Header for player1"></TextBlock>
+            <Grid>
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p1label" Text="Header for player1"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
+                    <Label Content="SETS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="nrOfSetsWonP1" Content="0" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="LEGS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="nrOfLegsWonP1" Content="0" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Grid>
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.ColumnSpan="2">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p2label" Text="Header for player 2"></TextBlock>
+            <Grid>
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p2label" Text="Header for player 2"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
+                    <Label Content="SETS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="nrOfSetsWonP2" Content="0" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="LEGS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="nrOfLegsWonP2" Content="0" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Grid>
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.ColumnSpan="4">
