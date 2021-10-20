@@ -14,13 +14,13 @@ namespace DartTracker.ViewModels
         private int _legsAmount;
         private GameSet _set;
         private Player _player;
-        public ICommand SaveTurnCommand;
+        public ICommand NextTurnCommand;
 
         public GameSetViewModel(int amountOfLegs, GameSet set, Player player)
         {
             _legsAmount = amountOfLegs;
             _player = player;
-            SaveTurnCommand = new NextTurnCommand(o => checkIfSetWinner(_set, _player), o => checkIfSetWinner(_set, _player));
+            NextTurnCommand = new NextTurnCommand(o => checkIfSetWinner(_set, _player), o => checkIfSetWinner(_set, _player));
         }
 
         public bool loadTestData(int amountOfLegs)

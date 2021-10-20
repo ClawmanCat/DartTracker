@@ -1,7 +1,9 @@
-﻿using DartTracker.Models;
+﻿using DartTracker.Commands;
+using DartTracker.Models;
 using DartTracker.Utility;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -10,17 +12,35 @@ using System.Windows.Input;
 
 namespace DartTracker.ViewModels 
 {
-    class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private Player currentPlayer;
-
         private Queue<Player> players;
-        private Game _currentGame;
-        private GameLeg _currentLeg;
-        private GameSet _currentSet;
-        public GameLeg currentLeg => _currentLeg;
-        public GameSet currentSet => _currentSet;
+        
+        private GameLeg _gameLeg;
+        private GameSet _gameSet;
+        private Game _game;
+        private int _legsAmount;
+        private int _setsAmount;
 
+        //public GameLeg gameLeg => _gameLeg;
+        public GameLeg gameLeg
+        {
+            get => _gameLeg;
+            set
+            {
+                _gameLeg = value;
+                OnPropertyChanged("gameLeg");
+            }
+        }
+        public GameSet gameSet
+        {
+            get => _gameSet;
+            set
+            {
+                _gameSet = value;
+                OnPropertyChanged("gameSet");
+            }
+        }
 
         private string[] throw_inputs = { "", "", "" };
         public string first { get => throw_inputs[0]; set { throw_inputs[0] = value; OnPropertyChanged("first"); } }
@@ -33,53 +53,99 @@ namespace DartTracker.ViewModels
             private set;
         }
 
-        public MainWindowViewModel(Game currentGame, List<Player> participatingPlayers, GameLeg currentLeg, GameSet currentSet)
-        {
-            players = new Queue<Player>(participatingPlayers);
-            _currentLeg = currentLeg;
-            _currentLeg.CurrentTurn = NextPlayer();
-            _currentSet = currentSet;
-            _currentGame = currentGame;
+        private List<Player> _participatingPlayers;
+        public List<Player> participatingPlayers { get => _participatingPlayers; set { _participatingPlayers = value; OnPropertyChanged("participatingPlayers"); } }
 
-            // command
+        public MainWindowViewModel(List<Player> participatingPlayers, GameLeg leg, GameSet set, Game game, int legsAmount, int setsAmount)
+        {
+            _participatingPlayers = participatingPlayers;
+            players = new Queue<Player>(_participatingPlayers);
+            _gameLeg = leg;
+            _gameSet = set;
+            _game = game;
+            _legsAmount = legsAmount;
+            _setsAmount = setsAmount;
+            _gameLeg.CurrentTurn = NextPlayer();
             NextTurnCommand = new NextTurnCommand(o => RegisterShot());
         }
 
-        public void checkIfLegWinner()
+        public void checkIfLegWinner(Player player, Score currentScore)
         {
-            var currentScore = _currentLeg.Scores[currentPlayer];
-
-            if (currentScore == 0)
+            if (((int)currentScore) == 0)
             {
-                _currentLeg.Winner = currentPlayer;
-                checkIfSetWinner();
-                // ga naar volgende leg
+                gameLeg.Winner = player;
+                player.legsWon = gameSet.legs.Count(x => x.Winner == _gameLeg.CurrentTurn);
+
+                // ga naar volgende leg of set..
+                if (checkIfSetWinner(player, player.legsWon))
+                {
+                    List<GameLeg> legs = gameSet.legs;
+                    gameSet = new GameSet();
+                    gameSet.parent = this._game;
+                    gameSet.legs = legs;
+                }
+
+                var history = new Dictionary<string, ObservableCollection<Triplet>>();
+                var scoreHistory = new Dictionary<string, ObservableCollection<int>>();
+
+                foreach (Player p in _participatingPlayers)
+                {
+                    p.score = new Score();
+                    history.Add(p.Name, new ObservableCollection<Triplet>());
+                    scoreHistory.Add(p.Name, new ObservableCollection<int>());
+                }
+
+                gameLeg = new GameLeg()
+                {
+                    parent = gameSet,
+                    history = history,
+                    ScoreHistory = scoreHistory,
+                    Winner = null,
+                    CurrentTurn = null
+                };
+
+                gameSet.legs.Add(gameLeg);
             }
         }
 
-        public void checkIfSetWinner()
+        public bool checkIfSetWinner(Player player, int legsWon)
         {
-            int timesWon = _currentSet.legs.Count(x => x.Winner == currentPlayer);
-
-            if (timesWon > (_currentGame.legsAmount / 2))
+            if (legsWon > (_legsAmount / 2))
             {
-                _currentSet.Winner = currentPlayer;
-                // ga naar volgende set
+                gameSet.Winner = player;
+
+                // reset legs to zero
+                foreach (Player p in participatingPlayers)
+                {
+                    p.legsWon = 0;
+                }
+                gameLeg.CurrentTurn.setsWon = _game.gameSets.Count(x => x.Winner == _gameLeg.CurrentTurn);
+
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
-
 
         public void RegisterShot()
         {
-            _currentLeg.history[currentLeg.CurrentTurn].Add(new Triplet(
+            _gameLeg.history[gameLeg.CurrentTurn.Name].Add(new Triplet(
                 new Throw(SegmentParser.parse(first)),
                 new Throw(SegmentParser.parse(second)),
                 new Throw(SegmentParser.parse(third))
             ));
 
+            int totalScore = SegmentParser.parse(first).Score + SegmentParser.parse(second).Score + SegmentParser.parse(third).Score;
+            _gameLeg.CurrentTurn.score -= totalScore;
+            _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
+
             first = second = third = "";
 
-            _currentLeg.CurrentTurn = NextPlayer();
+            checkIfLegWinner(_gameLeg.CurrentTurn, _gameLeg.CurrentTurn.score);
+
+            _gameLeg.CurrentTurn = NextPlayer();
         }
 
         public Player NextPlayer()

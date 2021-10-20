@@ -2,14 +2,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DartTracker" xmlns:models="clr-namespace:DartTracker.Models" d:DataContext="{d:DesignInstance Type=models:GameLeg}"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:DartTracker.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <!-- Template for displaying a score triplet. -->
         <DataTemplate x:Key="TripletPanel">
-            <ItemsControl x:Name="ThrowView" ItemsSource="{Binding Path=throws}">
+            <ItemsControl x:Name="ThrowView" ItemsSource="{Binding Path=leg.throws}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
@@ -41,19 +40,19 @@
         </Grid.RowDefinitions>
 
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="0">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.p1History}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+            <ListView ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="1">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.p1Score}"></ListView>
+            <ListView ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerOne}"></ListView>
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="2">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.p2History}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+            <ListView ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerTwo}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="3">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.p2Score}"></ListView>
+            <ListView ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerTwo}"></ListView>
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="2">
@@ -64,9 +63,9 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
                     <Label Content="SETS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfSetsWonP1" Content="0" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="nrOfSetsWonP1" Content="{Binding Path=leg.participatingPlayers[0].setsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <Label Content="LEGS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfLegsWonP1" Content="0" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="nrOfLegsWonP1" Content="{Binding Path=leg.participatingPlayers[0].legsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -79,9 +78,9 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
                     <Label Content="SETS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfSetsWonP2" Content="0" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="nrOfSetsWonP2" Content="{Binding Path=leg.participatingPlayers[1].setsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <Label Content="LEGS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfLegsWonP2" Content="0" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="nrOfLegsWonP2" Content="{Binding Path=leg.participatingPlayers[1].legsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -109,7 +108,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
                     <Label VerticalAlignment="Center">Current Player:</Label>
                     <TextBlock Width="125" VerticalAlignment="Center" Text="{Binding Path=leg.gameLeg.CurrentTurn.Name, Mode=TwoWay}"></TextBlock>
-                    <Button Height="20" Command="{Binding leg.registerShotCommand}">End Turn</Button>
+                    <Button Height="20" Command="{Binding leg.NextTurnCommand}">End Turn</Button>
                     <Button Height="20" Command="{Binding tournament.SerializeTournamentCommand}">serialize</Button>
                     <!-- temperary for test purpeses--> 
                 </StackPanel>

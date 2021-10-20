@@ -39,13 +39,14 @@ namespace DartTracker
         {
             Tournament tournament = currentApp.tournament;
             var currentLeg = tournament.Games.Last().gameSets.Last().legs.Last(); // use Tournament View model to pass trough current legg
+            var currentSet = tournament.Games.Last().gameSets.Last();
+            var currentGame = tournament.Games.Last();
             string playerOne = tournament.Players[0].Name;
             string playerTwo = tournament.Players[1].Name;
 
-
             DataContext = new
             {
-                leg = new GameLegViewModel(tournament.Players, currentLeg),
+                leg = new MainWindowViewModel(tournament.Players, currentLeg, currentSet, currentGame, tournament.Games[0].legsAmount, tournament.Games[0].setsAmount),
                 tournament = new TournamentViewModel(tournament),
                 // preferably use the tournament also this way; 
             };
@@ -54,15 +55,15 @@ namespace DartTracker
             p2label.Text = playerTwo;
 
             // test(janek) 
-            Player currentPlayer = currentApp.tournament.Players[0];
-            GameSetViewModel main = new GameSetViewModel(0, null, null);
+            //Player currentPlayer = currentApp.tournament.Players[0];
+            //GameSetViewModel main = new GameSetViewModel(0, null, null);
 
-            // true
-            bool a = main.loadTestData(5);
-            // false
-            bool b = main.loadTestData(6);
-            // false
-            bool c = main.loadTestData(7);
+            //// true
+            //bool a = main.loadTestData(5);
+            //// false
+            //bool b = main.loadTestData(6);
+            //// false
+            //bool c = main.loadTestData(7);
         }
     }
 }
