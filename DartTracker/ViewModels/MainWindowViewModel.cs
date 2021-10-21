@@ -47,7 +47,7 @@ namespace DartTracker.ViewModels
         public string second { get => throw_inputs[1]; set { throw_inputs[1] = value; OnPropertyChanged("second"); } }
         public string third { get => throw_inputs[2]; set { throw_inputs[2] = value; OnPropertyChanged("third"); } }
 
-        public ICommand NextTurnCommand
+        public ICommand registerShotCommand
         {
             get;
             private set;
@@ -66,7 +66,7 @@ namespace DartTracker.ViewModels
             _legsAmount = game.legsAmount;
             _setsAmount = game.setsAmount;
             _gameLeg.CurrentTurn = NextPlayer();
-            NextTurnCommand = new NextTurnCommand(o => RegisterShot());
+            registerShotCommand = new RegisterShotCommand(this);
         }
 
         public void checkWinner(Player player)
