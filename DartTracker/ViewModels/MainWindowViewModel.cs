@@ -67,9 +67,6 @@ namespace DartTracker.ViewModels
             _setsAmount = game.setsAmount;
             _gameLeg.CurrentTurn = NextPlayer();
             NextTurnCommand = new NextTurnCommand(o => RegisterShot());
-
-
-            participatingPlayers[0].legsWon = 44;
         }
 
         public void checkIfLegWinner(Player player)

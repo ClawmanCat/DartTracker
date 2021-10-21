@@ -46,24 +46,13 @@ namespace DartTracker
 
             DataContext = new
             {
-                leg = new MainWindowViewModel(tournament.Players, currentLeg, currentSet, currentGame, tournament.Games[0].legsAmount, tournament.Games[0].setsAmount),
+                leg = new MainWindowViewModel(tournament.Players, currentLeg, currentSet, currentGame),
                 tournament = new TournamentViewModel(tournament),
                 // preferably use the tournament also this way; 
             };
 
             p1label.Text = playerOne;
             p2label.Text = playerTwo;
-
-            // test(janek) 
-            //Player currentPlayer = currentApp.tournament.Players[0];
-            //GameSetViewModel main = new GameSetViewModel(0, null, null);
-
-            //// true
-            //bool a = main.loadTestData(5);
-            //// false
-            //bool b = main.loadTestData(6);
-            //// false
-            //bool c = main.loadTestData(7);
         }
     }
 }

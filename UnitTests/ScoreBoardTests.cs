@@ -15,12 +15,17 @@ namespace UnitTests
         private Tournament context;
         private MainWindowViewModel viewModel;
         private List<Player> players;
+        private GameLeg gameLeg;
+        private GameLeg gameLeg2;
+        private GameSet gameSet;
+        private Score score1;
+        private Game game;
 
         [TestInitialize]
         public void TestInitialize()
         {
             // the scores
-            var score1 = new Score();
+            score1 = new Score();
             score1.SetScore(GameType.NORMAL);
             score1 -= 501;
             var score2 = new Score();
@@ -32,16 +37,27 @@ namespace UnitTests
                 new Player { Name = "Piet", legsWon = 0, score = score2 } 
             };
 
-            var gameLeg = new GameLeg
+
+        }
+
+        private MainWindowViewModel createTestCode(int setsAmount, int legsAmount)
+        {
+            gameLeg = new GameLeg
             {
-                Winner = null,
+                Winner = players[0],
+            };
+
+            gameLeg2 = new GameLeg
+            {
+                Winner = players[0],
             };
 
             var legs = new List<GameLeg>();
 
             legs.Add(gameLeg);
+            legs.Add(gameLeg2);
 
-            var gameSet = new GameSet
+            gameSet = new GameSet
             {
                 legs = legs,
                 Winner = null,
@@ -49,50 +65,46 @@ namespace UnitTests
 
             var sets = new List<GameSet>();
 
-            var game = new Game
+            sets.Add(gameSet);
+
+            game = new Game
             {
                 gameSets = sets,
                 Winner = null,
+                setsAmount = setsAmount,
+                legsAmount = legsAmount,
             };
 
-            
-            //  3 GameLegs
-            
-            // var gameLeg2 = new GameLeg
-            // {
-            //     Winner = null,
-            // };
-            // var gameLeg3 = new GameLeg
-            // {
-            //     Winner = null,
-            // };
-            // Tournament
-            //var tournament = new Tournament
-            //{
-            //    GamesToWin = 1,
-            //    Players = players,
-            //    Winner = null,
-            //};
 
-            viewModel = new MainWindowViewModel(players, gameLeg, gameSet, game);
+            return new MainWindowViewModel(players, gameLeg, gameSet, game);
         }
 
         [TestMethod]
         public void doesLegScoreIncreaseByOneIfMoreThanHalfOfLegsWon()
         {
-            // Henk
+            viewModel = createTestCode(5,5);
+
+            //Henk
             viewModel.checkIfLegWinner(players[0]);
             // Piet
             viewModel.checkIfLegWinner(players[1]);
 
-            Assert.AreEqual("Henk", viewModel.gameLeg.Winner.Name);
-            //Assert.AreEqual(0, players[1].legsWon);
+            Assert.AreEqual(2, players[0].legsWon);
+            Assert.AreEqual(0, players[1].legsWon);
         }
 
         [TestMethod]
         public void doesSetScoreIncreaseByOneIfMoreThanHalfOfSetsWon()
         {
+            viewModel = createTestCode(3, 3);
 
+            // Henk
+            viewModel.checkIfLegWinner(players[0]);
+            // Piet
+            viewModel.checkIfLegWinner(players[1]);
+
+            Assert.AreEqual(1, players[0].setsWon);
+            Assert.AreEqual(0, players[1].setsWon);
         }
     }
 }
