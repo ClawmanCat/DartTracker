@@ -69,7 +69,7 @@ namespace DartTracker.ViewModels
             NextTurnCommand = new NextTurnCommand(o => RegisterShot());
         }
 
-        public void checkIfLegWinner(Player player)
+        public void checkWinner(Player player)
         {
             if (((int)player.score) == 0)
             {
@@ -77,7 +77,7 @@ namespace DartTracker.ViewModels
                 player.legsWon = gameSet.legs.Count(x => x.Winner == _gameLeg.CurrentTurn);
 
                 // ga naar volgende leg of set..
-                if (checkIfSetWinner(player, player.legsWon))
+                if (checkSetWinner(player, player.legsWon))
                 {
                     List<GameLeg> legs = gameSet.legs;
                     gameSet = new GameSet();
@@ -108,7 +108,7 @@ namespace DartTracker.ViewModels
             }
         }
 
-        public bool checkIfSetWinner(Player player, int legsWon)
+        public bool checkSetWinner(Player player, int legsWon)
         {
             if (legsWon > (_legsAmount / 2))
             {
@@ -132,18 +132,19 @@ namespace DartTracker.ViewModels
         public void RegisterShot()
         {
             _gameLeg.history[gameLeg.CurrentTurn.Name].Add(new Triplet(
+
                 new Throw(SegmentParser.parse(first)),
                 new Throw(SegmentParser.parse(second)),
                 new Throw(SegmentParser.parse(third))
             ));
 
             int totalScore = SegmentParser.parse(first).Score + SegmentParser.parse(second).Score + SegmentParser.parse(third).Score;
-            _gameLeg.CurrentTurn.score -= totalScore;
-            _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
+
+            CheckScore(totalScore);
+
+            checkWinner(_gameLeg.CurrentTurn);
 
             first = second = third = "";
-
-            checkIfLegWinner(_gameLeg.CurrentTurn);
 
             _gameLeg.CurrentTurn = NextPlayer();
         }
@@ -153,6 +154,45 @@ namespace DartTracker.ViewModels
             Player currentPlayer = players.Dequeue();
             players.Enqueue(currentPlayer);
             return currentPlayer;
+        }
+
+        public void CheckScore(int totalScore)
+        {
+            int futureScore = (int)_gameLeg.CurrentTurn.score - totalScore;
+            if (futureScore < 0 || futureScore == 1)
+            {
+                _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
+            }
+            else if (futureScore == 0)
+            {
+                foreach (var t in throw_inputs.Reverse())
+                {
+                    BoardSegment segment = SegmentParser.parse(t);
+
+                    if ((segment is not NamedSegment) || ((NamedSegment)segment).segment != NamedSegmentType.OUTSIDE_BOARD)
+                    {
+                        if (segment is NamedSegment && ((NamedSegment)segment).segment == NamedSegmentType.INNER_BULLSEYE
+                            || segment is NormalSegment && ((NormalSegment)segment).modifier == SegmentModifier.DOUBLE)
+                        {
+                            // Player won
+                            _gameLeg.CurrentTurn.score -= totalScore;
+                            _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
+                            return;
+                        }
+                        else
+                        {
+                            _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
+                            return;
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                _gameLeg.CurrentTurn.score -= totalScore;
+                _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

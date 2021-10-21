@@ -85,9 +85,9 @@ namespace UnitTests
             viewModel = createTestCode(5,5);
 
             //Henk
-            viewModel.checkIfLegWinner(players[0]);
+            viewModel.checkWinner(players[0]);
             // Piet
-            viewModel.checkIfLegWinner(players[1]);
+            viewModel.checkWinner(players[1]);
 
             Assert.AreEqual(2, players[0].legsWon);
             Assert.AreEqual(0, players[1].legsWon);
@@ -99,9 +99,9 @@ namespace UnitTests
             viewModel = createTestCode(3, 3);
 
             // Henk
-            viewModel.checkIfLegWinner(players[0]);
+            viewModel.checkWinner(players[0]);
             // Piet
-            viewModel.checkIfLegWinner(players[1]);
+            viewModel.checkWinner(players[1]);
 
             Assert.AreEqual(1, players[0].setsWon);
             Assert.AreEqual(0, players[1].setsWon);
