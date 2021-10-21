@@ -56,22 +56,25 @@ namespace DartTracker.ViewModels
         private List<Player> _participatingPlayers;
         public List<Player> participatingPlayers { get => _participatingPlayers; set { _participatingPlayers = value; OnPropertyChanged("participatingPlayers"); } }
 
-        public MainWindowViewModel(List<Player> participatingPlayers, GameLeg leg, GameSet set, Game game, int legsAmount, int setsAmount)
+        public MainWindowViewModel(List<Player> participatingPlayers, GameLeg leg, GameSet set, Game game)
         {
             _participatingPlayers = participatingPlayers;
             players = new Queue<Player>(_participatingPlayers);
             _gameLeg = leg;
             _gameSet = set;
             _game = game;
-            _legsAmount = legsAmount;
-            _setsAmount = setsAmount;
+            _legsAmount = game.legsAmount;
+            _setsAmount = game.setsAmount;
             _gameLeg.CurrentTurn = NextPlayer();
             NextTurnCommand = new NextTurnCommand(o => RegisterShot());
+
+
+            participatingPlayers[0].legsWon = 44;
         }
 
-        public void checkIfLegWinner(Player player, Score currentScore)
+        public void checkIfLegWinner(Player player)
         {
-            if (((int)currentScore) == 0)
+            if (((int)player.score) == 0)
             {
                 gameLeg.Winner = player;
                 player.legsWon = gameSet.legs.Count(x => x.Winner == _gameLeg.CurrentTurn);
@@ -143,7 +146,7 @@ namespace DartTracker.ViewModels
 
             first = second = third = "";
 
-            checkIfLegWinner(_gameLeg.CurrentTurn, _gameLeg.CurrentTurn.score);
+            checkIfLegWinner(_gameLeg.CurrentTurn);
 
             _gameLeg.CurrentTurn = NextPlayer();
         }
