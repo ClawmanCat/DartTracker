@@ -66,6 +66,8 @@ namespace DartTracker.ViewModels
                     NextSet();
                 }
 
+                legs = new Queue<GameLeg>(_gameSet.legs);
+
                 NextLeg();
             }
         }
