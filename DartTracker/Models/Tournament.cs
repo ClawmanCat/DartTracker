@@ -51,13 +51,50 @@ namespace DartTracker.Models
         OUTSIDE_BOARD = 0
     }
 
-    public class Tournament
+    public class Tournament : INotifyPropertyChanged
     {
-        public List<Player> Players;
-        public List<Game> Games;
-        public int GamesToWin;
-        public Player Winner;
-        public DateTime TimeAndDate;
+        private Player _winner;
+        private DateTime _timeAndDate;
+        private List<Player> _players;
+
+        public List<Player> Players
+        {
+            get { return _players; }
+            set { _players = value; OnPropertyChanged("Players"); }
+        }
+        private List<Game> _games;
+
+        public List<Game> Games
+        {
+            get { return _games; }
+            set { _games = value; OnPropertyChanged("Games"); }
+        }
+        private int _gamesToWin;
+
+        public int GamesToWin
+        {
+            get { return _gamesToWin; }
+            set { _gamesToWin = value; OnPropertyChanged("GamesToWin"); }
+        }
+        public Player Winner
+        {
+            get { return _winner; }
+            set { _winner = value; OnPropertyChanged("Winner"); }
+        }
+        public DateTime TimeAndDate
+        {
+            get { return _timeAndDate; }
+            set { _timeAndDate = value; OnPropertyChanged("TimeAndDate"); }
+        }
+        #region PropertyChanged Members
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 
 

@@ -66,8 +66,8 @@ namespace DartTracker.Views
                 try
                 {
                     // Setting the players in the Tournament object
-                    currentApp.tournament.Players.Add(new Player() { Name = player1.Text });
-                    currentApp.tournament.Players.Add(new Player() { Name = player2.Text });
+                    //currentApp.tournament.Players.Add(new Player() { Name = player1.Text });
+                    //currentApp.tournament.Players.Add(new Player() { Name = player2.Text });
                     GameType initialGameType = (GameType)pickGame.SelectedItem;
                     currentApp.score.SetScore(initialGameType);
                     // changing the default score according to an enumerator(301,501,701)
@@ -75,18 +75,18 @@ namespace DartTracker.Views
                     // full DateTime
                     DateTime datetime = new DateTime();
                     // This datetime only fills the date
-                    DateTime? selectedDate = _datePicker1.SelectedDate;
-                    if (selectedDate.HasValue)
-                    {
-                        datetime = selectedDate.Value;
-                    }
+                    //DateTime? selectedDate = _datePicker1.SelectedDate;
+                    //if (selectedDate.HasValue)
+                    //{
+                    //    datetime = selectedDate.Value;
+                    //}
                     //This timespan gets the time from the custom control and fills it with the hours, minutes and seconds filled in by the user.
                     TimeSpan time = new TimeSpan(startTime.Value.Hours, startTime.Value.Minutes, startTime.Value.Seconds);
                     // Finally, the time gets added to the full datetime
                     datetime = datetime.Date + time;
 
 
-                    currentApp.tournament.TimeAndDate = datetime;
+                    //currentApp.tournament.TimeAndDate = datetime;
 
 
 
@@ -145,32 +145,27 @@ namespace DartTracker.Views
             Close();
         }
 
-        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (_datePicker1.SelectedDate != null) return;
+        //private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (_datePicker1.SelectedDate != null) return;
 
-            FieldInfo fiTextBox = typeof(DatePicker).GetField("_textBox", BindingFlags.Instance | BindingFlags.NonPublic);
+        //    FieldInfo fiTextBox = typeof(DatePicker).GetField("_textBox", BindingFlags.Instance | BindingFlags.NonPublic);
 
-            if (fiTextBox != null)
-            {
-                DatePickerTextBox dateTextBox =
-                 (DatePickerTextBox)fiTextBox.GetValue(_datePicker1);
+        //    if (fiTextBox != null)
+        //    {
+        //        DatePickerTextBox dateTextBox =
+        //         (DatePickerTextBox)fiTextBox.GetValue(_datePicker1);
 
-                if (dateTextBox != null)
-                {
-                    PropertyInfo piWatermark = dateTextBox.GetType().GetProperty("Watermark", BindingFlags.Instance | BindingFlags.NonPublic);
-                    if (piWatermark != null)
-                    {
-                        piWatermark.SetValue(dateTextBox, "...", null);
-                    }
-                }
-            }
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        //        if (dateTextBox != null)
+        //        {
+        //            PropertyInfo piWatermark = dateTextBox.GetType().GetProperty("Watermark", BindingFlags.Instance | BindingFlags.NonPublic);
+        //            if (piWatermark != null)
+        //            {
+        //                piWatermark.SetValue(dateTextBox, "...", null);
+        //            }
+        //        }
+        //    }
+        //}
 
         private void LoadJson_Click(object sender, RoutedEventArgs e)
         {

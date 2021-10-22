@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DartTracker.Views" xmlns:ctrl1="clr-namespace:DartTracker.Controls"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="UserInput" Height="300" Width="450">
     <Window.Resources>
@@ -11,7 +12,9 @@
             <Setter Property="Text" Value="Selecteer een datum"/>
         </Style>
     </Window.Resources>
-    
+    <Window.CommandBindings>
+        
+    </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="110" />
@@ -33,13 +36,12 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-
-
+            
             <Label VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1">Voer de spelers in:</Label>
             <Label Grid.Column="0" Grid.Row="1">Speler 1:</Label>
-            <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="player1"  Grid.Column="1" Grid.Row="1"></TextBox>
+            <TextBox HorizontalContentAlignment="Center" Text="{Binding Players[0].Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalContentAlignment="Center"  Name="player1"  Grid.Column="1" Grid.Row="1"></TextBox>
             <Label Grid.Column="0" Grid.Row="2">Speler 2:</Label>
-            <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="player2" Grid.Column="1" Grid.Row="2"></TextBox>
+            <TextBox HorizontalContentAlignment="Center" Text="{Binding Players[1].Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Name="player2" Grid.Column="1" Grid.Row="2"></TextBox>
 
 
         </Grid>
@@ -53,7 +55,7 @@
         </WrapPanel>
         <WrapPanel HorizontalAlignment="Left" Grid.Row="3">
             <Label Width="191">Selecteer een datum en een tijd: </Label>
-            <DatePicker SelectedDateChanged="DatePicker_SelectedDateChanged" x:Name="_datePicker1"></DatePicker>
+            <DatePicker SelectedDate="{Binding TournamentDateTime, Mode=TwoWay}"/>
             <ctrl1:TimeControl Value="{Binding StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="startTime"/>
             <!-- TODO: Add Timepicker-->
         </WrapPanel>
