@@ -36,15 +36,19 @@ namespace DartTracker.ViewModels
             private set;
         }
 
+        private List<Player> _participatingPlayers;
+        public List<Player> participatingPlayers { get => _participatingPlayers; set { _participatingPlayers = value; OnPropertyChanged("participatingPlayers"); } }
+
         public MainWindowViewModel(List<Player> participatingPlayers,/* GameLeg leg, GameSet set,*/ Game game)
         {
+            _participatingPlayers = participatingPlayers;
             players = new Queue<Player>(participatingPlayers);
             sets = new Queue<GameSet>(game.gameSets);
             legs = new Queue<GameLeg>(sets.Peek().legs);
 
 
-            _gameLeg = legs.Peek();
-            _gameSet = sets.Peek();
+            _gameLeg = NextLeg();
+            _gameSet = NextSet();
             _game = game;
             _gameLeg.CurrentTurn = NextPlayer();
             registerShotCommand = new RegisterShotCommand(this);
@@ -73,7 +77,7 @@ namespace DartTracker.ViewModels
             {
                 _gameSet.Winner = player;
 
-                foreach(Player p in players)
+                foreach(Player p in participatingPlayers)
                 {
                     p.legsWon = 0;
                 }
