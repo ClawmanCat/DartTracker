@@ -98,8 +98,6 @@ namespace DartTracker.Views
                             CurrentTurn=null
                         } } } };
 
-
-
                     foreach (Player p in currentApp.tournament.Players)
                     {
                         gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
