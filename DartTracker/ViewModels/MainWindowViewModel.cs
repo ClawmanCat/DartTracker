@@ -46,7 +46,6 @@ namespace DartTracker.ViewModels
             sets = new Queue<GameSet>(game.gameSets);
             legs = new Queue<GameLeg>(sets.Peek().legs);
 
-
             _gameLeg = NextLeg();
             _gameSet = NextSet();
             _game = game;
