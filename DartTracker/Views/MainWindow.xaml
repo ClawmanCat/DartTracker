@@ -7,80 +7,91 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
-          <!-- Template for displaying a score triplet. -->
-          <DataTemplate x:Key="TripletPanel">
-               <ItemsControl x:Name="ThrowView" ItemsSource="{Binding Path=throws}">
-                    <ItemsControl.ItemsPanel>
-                         <ItemsPanelTemplate>
-                              <StackPanel Orientation="Horizontal"/>
-                         </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+        <!-- Template for displaying a score triplet. -->
+        <DataTemplate x:Key="TripletPanel">
+            <ItemsControl x:Name="ThrowView" ItemsSource="{Binding Path=throws}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-                    <ItemsControl.ItemTemplate>
-                         <DataTemplate>
-                              <TextBlock Text="{Binding Path=segment.Display}" Margin="10, 5, 10, 5" TextAlignment="Center" HorizontalAlignment="Center"/>
-                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-               </ItemsControl>
-          </DataTemplate>
-     </Window.Resources>
-     
-     
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=segment.Display}" Margin="10, 5, 10, 5" TextAlignment="Center" HorizontalAlignment="Center"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </DataTemplate>
+
+    </Window.Resources>
+
     <Grid>
-          <Grid.ColumnDefinitions>
-               <ColumnDefinition></ColumnDefinition>
-               <ColumnDefinition></ColumnDefinition>
-          </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
-          <Grid.RowDefinitions>
-               <RowDefinition Height="1*"></RowDefinition>
-               <RowDefinition Height="4*"></RowDefinition>
-               <RowDefinition Height="1*"></RowDefinition>
-          </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
 
-          <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="0">
-               <ListView ItemsSource="{Binding Path=leg.gameLeg.p1History}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
-          </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="0">
+            <ListView ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+        </Border>
 
-          <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="1">
-               <ListView ItemsSource="{Binding Path=leg.gameLeg.p2History}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
-          </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="1">
+            <ListView ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerOne}"></ListView>
+        </Border>
 
-          <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0">
-            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Name="p1label" Text="Header for player1" BorderThickness="0" LostFocus="p1_LostFocus"></TextBox>
-          </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="2">
+            <ListView ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerTwo}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+        </Border>
 
-          <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1">
-            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Name="p2label" Text="Header for player 2" BorderThickness="0" LostFocus="p2_LostFocus"></TextBox>
-          </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="3">
+            <ListView ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerTwo}"></ListView>
+        </Border>
 
-          <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.ColumnSpan="2">
-               <Grid>
-                    <Grid.ColumnDefinitions>
-                         <ColumnDefinition Width="*"/>
-                         <ColumnDefinition Width="1.5*"/>
-                         <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p1label" Text="Header for player1"></TextBlock>
+        </Border>
 
-                    <Grid.RowDefinitions>
-                         <RowDefinition Height="*"/>
-                         <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.ColumnSpan="2">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p2label" Text="Header for player 2"></TextBlock>
+        </Border>
+
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.ColumnSpan="4">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0">
-                         <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_First"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.first,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                         <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_Second" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                         <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_Third"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.third,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0">
+                    <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_First"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.first,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_Second" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_Third"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.third,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
-                         <Label VerticalAlignment="Center">Current Player:</Label>
-                         <TextBlock Width="125" VerticalAlignment="Center" Text="{Binding Path=leg.gameLeg.CurrentTurn.Name, Mode=TwoWay}"></TextBlock>
-
-                         <Button Height="20" Command="{Binding leg.registerShotCommand}">End Turn</Button>
-                    </StackPanel>
-               </Grid>
-          </Border>
-     </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
+                    <Label VerticalAlignment="Center">Current Player:</Label>
+                    <TextBlock Width="125" VerticalAlignment="Center" Text="{Binding Path=leg.gameLeg.CurrentTurn.Name, Mode=TwoWay}"></TextBlock>
+                    <Button Height="20" Command="{Binding leg.registerShotCommand}">End Turn</Button>
+                    <Button Height="20" Command="{Binding tournament.SerializeTournamentCommand}">serialize</Button>
+                    <!-- temperary for test purpeses--> 
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
 </Window>
