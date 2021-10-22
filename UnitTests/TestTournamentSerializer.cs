@@ -45,7 +45,7 @@ namespace UnitTests
                                     {
                                         Winner = new Player {Name = "Henk"},
                                         CurrentTurn = new Player {Name = "Henk"},
-                                        history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                        history = new Dictionary<Player, ObservableCollection<Triplet>>()
                                         {
                                             {
                                                 "Henk",
