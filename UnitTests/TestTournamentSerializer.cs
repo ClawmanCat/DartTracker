@@ -23,16 +23,18 @@ namespace UnitTests
         [TestInitialize]
         public void TestInitialize()
         {
+            Player Henk = new Player("Henk", 22);
+            Player Piet = new Player("Piet", 23);
             var tournament = new Tournament
             {
                 GamesToWin = 1,
-                Players = new List<Player> {new Player {Name = "Henk"}, new Player {Name = "Piet"}},
-                Winner = new Player {Name = "Henk"},
+                Players = new List<Player> { Henk, Piet },
+                Winner = Henk,
                 Games = new List<Game>
                 {
                     new Game()
                     {
-                        Winner = new Player {Name = "Henk"},
+                        Winner = Henk,
                         setsAmount = 1,
                         legsAmount = 1,
                         gameSets = new List<GameSet>()
@@ -43,12 +45,12 @@ namespace UnitTests
                                 {
                                     new GameLeg()
                                     {
-                                        Winner = new Player {Name = "Henk"},
-                                        CurrentTurn = new Player {Name = "Henk"},
+                                        Winner = Henk,
+                                        CurrentTurn = Henk,
                                         history = new Dictionary<Player, ObservableCollection<Triplet>>()
                                         {
                                             {
-                                                "Henk",
+                                                Henk,
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -59,7 +61,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                Piet,
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -70,10 +72,10 @@ namespace UnitTests
                                                 }
                                             }
                                         },
-                                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                        ScoreHistory = new Dictionary<Player, ObservableCollection<int>>()
                                         {
                                             {
-                                                "Henk",
+                                                Henk,
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,
@@ -82,7 +84,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                Piet,
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,

@@ -67,11 +67,16 @@ namespace DartTracker.Models
         private string _Name;
         private int _Id;
 
+        // Constructor voor het namen invoeren in user input
         public Player()
         {
-            //Voor data inladen: Als de naam al bestaat krijgt de speler hetzelfde ID als hij in de data heeft, anders random
             Random rnd = new Random();
             _Id = rnd.Next();
+        }
+        // Constructor voor het invoeren van namen en IDs van een JSON 
+        public Player(string name, int id)
+        {
+
         }
         public string Name
         {
