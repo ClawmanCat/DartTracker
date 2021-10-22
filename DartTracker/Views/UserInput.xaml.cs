@@ -85,10 +85,7 @@ namespace DartTracker.Views
                     // Finally, the time gets added to the full datetime
                     datetime = datetime.Date + time;
 
-
                     currentApp.tournament.TimeAndDate = datetime;
-
-
 
                     var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
                         new GameLeg() {
@@ -96,12 +93,13 @@ namespace DartTracker.Views
                             ScoreHistory=new Dictionary<string, ObservableCollection<int>>(),
                             Winner=null,
                             CurrentTurn=null
-                        } } } };
+                        } } },
+                    };
 
                     foreach (Player p in currentApp.tournament.Players)
                     {
-                        gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
-                        gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
+                        gameSets.Last().legs[0].history.Add(p.Name, new ObservableCollection<Triplet>());
+                        gameSets.Last().legs[0].ScoreHistory.Add(p.Name, new ObservableCollection<int>());
                     }
 
 

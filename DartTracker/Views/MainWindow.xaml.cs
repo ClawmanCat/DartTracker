@@ -44,9 +44,11 @@ namespace DartTracker
             string playerOne = tournament.Players[0].Name;
             string playerTwo = tournament.Players[1].Name;
 
+
+
             DataContext = new
             {
-                leg = new MainWindowViewModel(tournament.Players, currentLeg, currentSet, currentGame),
+                leg = new MainWindowViewModel(tournament.Players,/* currentLeg, currentSet,*/ currentGame),
                 tournament = new TournamentViewModel(tournament),
                 // preferably use the tournament also this way; 
             };

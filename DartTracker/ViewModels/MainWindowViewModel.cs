@@ -15,37 +15,20 @@ namespace DartTracker.ViewModels
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private Queue<Player> players;
-        
-        private GameLeg _gameLeg;
-        private GameSet _gameSet;
+        private Queue<GameLeg> legs;
+        private Queue<GameSet> sets;
         private Game _game;
-        private int _legsAmount;
-        private int _setsAmount;
-
-        //public GameLeg gameLeg => _gameLeg;
-        public GameLeg gameLeg
-        {
-            get => _gameLeg;
-            set
-            {
-                _gameLeg = value;
-                OnPropertyChanged("gameLeg");
-            }
-        }
-        public GameSet gameSet
-        {
-            get => _gameSet;
-            set
-            {
-                _gameSet = value;
-                OnPropertyChanged("gameSet");
-            }
-        }
 
         private string[] throw_inputs = { "", "", "" };
         public string first { get => throw_inputs[0]; set { throw_inputs[0] = value; OnPropertyChanged("first"); } }
         public string second { get => throw_inputs[1]; set { throw_inputs[1] = value; OnPropertyChanged("second"); } }
         public string third { get => throw_inputs[2]; set { throw_inputs[2] = value; OnPropertyChanged("third"); } }
+
+        private GameLeg _gameLeg;
+        private GameSet _gameSet;
+
+        public GameLeg gameLeg => _gameLeg;
+        public GameSet gameSet => _gameSet;
 
         public ICommand registerShotCommand
         {
@@ -53,18 +36,16 @@ namespace DartTracker.ViewModels
             private set;
         }
 
-        private List<Player> _participatingPlayers;
-        public List<Player> participatingPlayers { get => _participatingPlayers; set { _participatingPlayers = value; OnPropertyChanged("participatingPlayers"); } }
-
-        public MainWindowViewModel(List<Player> participatingPlayers, GameLeg leg, GameSet set, Game game)
+        public MainWindowViewModel(List<Player> participatingPlayers,/* GameLeg leg, GameSet set,*/ Game game)
         {
-            _participatingPlayers = participatingPlayers;
-            players = new Queue<Player>(_participatingPlayers);
-            _gameLeg = leg;
-            _gameSet = set;
+            players = new Queue<Player>(participatingPlayers);
+            sets = new Queue<GameSet>(game.gameSets);
+            legs = new Queue<GameLeg>(sets.Peek().legs);
+
+
+            _gameLeg = legs.Peek();
+            _gameSet = sets.Peek();
             _game = game;
-            _legsAmount = game.legsAmount;
-            _setsAmount = game.setsAmount;
             _gameLeg.CurrentTurn = NextPlayer();
             registerShotCommand = new RegisterShotCommand(this);
         }
@@ -73,53 +54,31 @@ namespace DartTracker.ViewModels
         {
             if (((int)player.score) == 0)
             {
-                gameLeg.Winner = player;
-                player.legsWon = gameSet.legs.Count(x => x.Winner == _gameLeg.CurrentTurn);
+                _gameLeg.Winner = player;
+                player.legsWon = _gameSet.legs.Count(x => x.Winner == _gameLeg.CurrentTurn);
 
                 // ga naar volgende leg of set..
                 if (checkSetWinner(player, player.legsWon))
                 {
-                    List<GameLeg> legs = gameSet.legs;
-                    gameSet = new GameSet();
-                    gameSet.parent = this._game;
-                    gameSet.legs = legs;
+                    NextSet();
                 }
 
-                var history = new Dictionary<string, ObservableCollection<Triplet>>();
-                var scoreHistory = new Dictionary<string, ObservableCollection<int>>();
-
-                foreach (Player p in _participatingPlayers)
-                {
-                    p.score = new Score();
-                    history.Add(p.Name, new ObservableCollection<Triplet>());
-                    scoreHistory.Add(p.Name, new ObservableCollection<int>());
-                }
-
-                gameLeg = new GameLeg()
-                {
-                    parent = gameSet,
-                    history = history,
-                    ScoreHistory = scoreHistory,
-                    Winner = null,
-                    CurrentTurn = null
-                };
-
-                gameSet.legs.Add(gameLeg);
+                NextLeg();
             }
         }
 
         public bool checkSetWinner(Player player, int legsWon)
         {
-            if (legsWon > (_legsAmount / 2))
+            if (legsWon > (_game.legsAmount / 2))
             {
-                gameSet.Winner = player;
+                _gameSet.Winner = player;
 
-                // reset legs to zero
-                foreach (Player p in participatingPlayers)
+                foreach(Player p in players)
                 {
                     p.legsWon = 0;
                 }
-                gameLeg.CurrentTurn.setsWon = _game.gameSets.Count(x => x.Winner == _gameLeg.CurrentTurn);
+
+                _gameLeg.CurrentTurn.setsWon = _game.gameSets.Count(x => x.Winner == _gameLeg.CurrentTurn);
 
                 return true;
             }
@@ -131,7 +90,7 @@ namespace DartTracker.ViewModels
 
         public void RegisterShot()
         {
-            _gameLeg.history[gameLeg.CurrentTurn.Name].Add(new Triplet(
+            _gameLeg.history[_gameLeg.CurrentTurn.Name].Add(new Triplet(
 
                 new Throw(SegmentParser.parse(first)),
                 new Throw(SegmentParser.parse(second)),
@@ -154,6 +113,20 @@ namespace DartTracker.ViewModels
             Player currentPlayer = players.Dequeue();
             players.Enqueue(currentPlayer);
             return currentPlayer;
+        }
+
+        public GameSet NextSet()
+        {
+            GameSet currentSet = sets.Dequeue();
+            sets.Enqueue(currentSet);
+            return currentSet;
+        }
+
+        public GameLeg NextLeg()
+        {
+            GameLeg currentLeg = legs.Dequeue();
+            legs.Enqueue(currentLeg);
+            return currentLeg;
         }
 
         public void CheckScore(int totalScore)

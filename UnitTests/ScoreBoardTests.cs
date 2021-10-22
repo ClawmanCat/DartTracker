@@ -12,7 +12,6 @@ namespace UnitTests
     [TestClass]
     public class ScoreBoardTests
     {
-        private Tournament context;
         private MainWindowViewModel viewModel;
         private List<Player> players;
         private GameLeg gameLeg;
@@ -36,8 +35,6 @@ namespace UnitTests
                 new Player { Name = "Henk", legsWon = 0, score = score1 }, 
                 new Player { Name = "Piet", legsWon = 0, score = score2 } 
             };
-
-
         }
 
         private MainWindowViewModel createTestCode(int setsAmount, int legsAmount)
@@ -75,15 +72,14 @@ namespace UnitTests
                 legsAmount = legsAmount,
             };
 
-
-            return new MainWindowViewModel(players, gameLeg, gameSet, game);
+            return new MainWindowViewModel(players, game);
         }
 
         [TestMethod]
         public void doesLegScoreIncreaseByOneIfMoreThanHalfOfLegsWon()
         {
+            // 5 legs, 5 sets
             viewModel = createTestCode(5,5);
-
             //Henk
             viewModel.checkWinner(players[0]);
             // Piet
@@ -96,8 +92,8 @@ namespace UnitTests
         [TestMethod]
         public void doesSetScoreIncreaseByOneIfMoreThanHalfOfSetsWon()
         {
+            // 3 legs, 3 sets
             viewModel = createTestCode(3, 3);
-
             // Henk
             viewModel.checkWinner(players[0]);
             // Piet
