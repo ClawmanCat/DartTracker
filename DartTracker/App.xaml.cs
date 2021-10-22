@@ -42,7 +42,7 @@ namespace DartTracker
             tournament.GamesToWin = 1;
             tournament.Games = new List<Game>(1);
             tournament.Players = new List<Player>(2) { new Player(), new Player() };
-            //tournament.TimeAndDate = new DateTime(2021, 11, 22);
+            //tournament.TimeAndDate = DateTime.Now;
             tournament.Winner = null;
 
             // Initializing the UserInput

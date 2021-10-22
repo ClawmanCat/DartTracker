@@ -31,7 +31,7 @@ namespace DartTracker.Views
         public UserInput()
         {
             InitializeComponent();
-            pickGame.ItemsSource = Enum.GetValues(typeof(GameType));
+            //pickGame.ItemsSource = Enum.GetValues(typeof(GameType));
         }
 
 
@@ -65,70 +65,6 @@ namespace DartTracker.Views
                 
                 try
                 {
-                    // Setting the players in the Tournament object
-                    //currentApp.tournament.Players.Add(new Player() { Name = player1.Text });
-                    //currentApp.tournament.Players.Add(new Player() { Name = player2.Text });
-                    GameType initialGameType = (GameType)pickGame.SelectedItem;
-                    currentApp.score.SetScore(initialGameType);
-                    // changing the default score according to an enumerator(301,501,701)
-                    //currentApp.score.setScore((int)(GameType)pickGame.SelectedItem);
-                    // full DateTime
-                    DateTime datetime = new DateTime();
-                    // This datetime only fills the date
-                    //DateTime? selectedDate = _datePicker1.SelectedDate;
-                    //if (selectedDate.HasValue)
-                    //{
-                    //    datetime = selectedDate.Value;
-                    //}
-                    //This timespan gets the time from the custom control and fills it with the hours, minutes and seconds filled in by the user.
-                    TimeSpan time = new TimeSpan(startTime.Value.Hours, startTime.Value.Minutes, startTime.Value.Seconds);
-                    // Finally, the time gets added to the full datetime
-                    datetime = datetime.Date + time;
-
-
-                    //currentApp.tournament.TimeAndDate = datetime;
-
-
-
-                    var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
-                        new GameLeg() {
-                            history=new Dictionary<string, ObservableCollection<Triplet>>(),
-                            ScoreHistory=new Dictionary<string, ObservableCollection<int>>(),
-                            Winner=null,
-                            CurrentTurn=null
-                        } } } };
-
-                    foreach (Player p in currentApp.tournament.Players)
-                    {
-                        gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
-                        gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
-                    }
-
-
-                    // Setting the Game in the Tournament object
-                    Game game = new Game() {
-                        Winner = null,
-                        setsAmount = Convert.ToInt32(amountOfSets.Text),
-                        legsAmount = Convert.ToInt32(amountOfLegs.Text),
-                        gameSets = gameSets
-                    };
-
-                    foreach (GameSet set in game.gameSets)
-                    {
-                        foreach (GameLeg leg in set.legs)
-                        {
-                            leg.parent = set;
-                        }
-
-                        set.parent = game;
-                    }
-
-                    game.parent = currentApp.tournament;
-
-
-                    // Adding the Game to the game array in the global model.
-                    currentApp.tournament.Games.Add(game);
-                    // This tells App.xaml.cs to continue to the next window
                     DialogResult = true;
                     // Closes the Window
                     Close();
@@ -144,29 +80,6 @@ namespace DartTracker.Views
             DialogResult = false;
             Close();
         }
-
-        //private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (_datePicker1.SelectedDate != null) return;
-
-        //    FieldInfo fiTextBox = typeof(DatePicker).GetField("_textBox", BindingFlags.Instance | BindingFlags.NonPublic);
-
-        //    if (fiTextBox != null)
-        //    {
-        //        DatePickerTextBox dateTextBox =
-        //         (DatePickerTextBox)fiTextBox.GetValue(_datePicker1);
-
-        //        if (dateTextBox != null)
-        //        {
-        //            PropertyInfo piWatermark = dateTextBox.GetType().GetProperty("Watermark", BindingFlags.Instance | BindingFlags.NonPublic);
-        //            if (piWatermark != null)
-        //            {
-        //                piWatermark.SetValue(dateTextBox, "...", null);
-        //            }
-        //        }
-        //    }
-        //}
-
         private void LoadJson_Click(object sender, RoutedEventArgs e)
         {
             currentApp.tournament = LoadTournamentJson.LoadJson();

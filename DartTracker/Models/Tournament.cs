@@ -54,7 +54,7 @@ namespace DartTracker.Models
     public class Tournament : INotifyPropertyChanged
     {
         private Player _winner;
-        private DateTime _timeAndDate;
+        private DateTime? _timeAndDate;
         private List<Player> _players;
 
         public List<Player> Players
@@ -81,10 +81,16 @@ namespace DartTracker.Models
             get { return _winner; }
             set { _winner = value; OnPropertyChanged("Winner"); }
         }
-        public DateTime TimeAndDate
+        public DateTime? TimeAndDate
         {
             get { return _timeAndDate; }
             set { _timeAndDate = value; OnPropertyChanged("TimeAndDate"); }
+        }
+        private TimeSpan? _time;
+        public TimeSpan? Time
+        {
+            get { return _time; }
+            set { _time = value; OnPropertyChanged("Time"); }
         }
         #region PropertyChanged Members
         public event PropertyChangedEventHandler PropertyChanged;
@@ -106,8 +112,7 @@ namespace DartTracker.Models
         public string Name
         {
             get { return _Name; }
-            set
-            {
+            set{
                 _Name = value;
                 OnPropertyChanged("Name");
             }
@@ -140,8 +145,8 @@ namespace DartTracker.Models
         [JsonIgnore] public Tournament parent;
         public Player Winner;
         public List<GameSet> gameSets;
-        public int setsAmount;
-        public int legsAmount;
+        public int? setsAmount;
+        public int? legsAmount;
     }
 
     public class GameSet

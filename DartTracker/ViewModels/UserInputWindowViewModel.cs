@@ -1,75 +1,147 @@
 ﻿using DartTracker.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using DartTracker.Commands;
+using System.ComponentModel.DataAnnotations;
 
 namespace DartTracker.ViewModels
 {
     public class UserInputWindowViewModel
     {
+        #region Global object & command
+        // This is the command when the user clicks on the 'OK' Button.
+        public ICommand setGameCommand { get; set; }
         // Calling the current app to access the tournament object globally
         public App currentApp = Application.Current as App;
-        #region The players object
+        #endregion
+        #region ComboBox Filler
+        public IEnumerable<GameType> TournamentGameType
+        {
+            get
+            {
+                return Enum.GetValues(typeof(GameType)).Cast<GameType>();
+            }
+        }
+        #endregion
+        #region Binding ComboBox SelectedItem
+        private GameType _gameType = GameType.NORMAL;
+        public GameType NewGameType
+        {
+            get { return _gameType; }
+            set { _gameType = value; }
+        }
+        #endregion
+        #region Players object
         private List<Player> _players;
         public List<Player> Players
         {
             get { return _players; }
-            set { _players = value; }
+            set { _players = value;}
         }
         #endregion
-        #region The DateTime object
-        private DateTime _dateTime;
-        public DateTime TournamentDateTime
+        #region Date object
+        private DateTime? _dateTime = DateTime.Now;
+        public DateTime? TournamentDateTime
         {
             get { return _dateTime; }
-            set { _dateTime = value; OnPropertyChanged("TournamentDateTime"); }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            set { _dateTime = value; updateModelDate(_dateTime); }
         }
         #endregion
+        #region Amount of Sets
+        private int? _amountofsets;
+        public int? AmountOfSets
+        {
+            get { return _amountofsets; }
+            set { _amountofsets = value; }
+        }
+        #endregion
+        #region Amount os Legs
+        private int? _amountoflegs;
+        public int? AmountOfLegs
+        {
+            get { return _amountoflegs; }
+            set { _amountoflegs = value; }
+        }
+        #endregion
+        #region The Time Object
+        private TimeSpan _tournamentTime;
+        public TimeSpan TournamentTime
+        {
+            get { return _tournamentTime; }
+            set { _tournamentTime = value; updateModelTime(_tournamentTime); }
+        }
+        #endregion
+        #region Constructor
         public UserInputWindowViewModel()
         {
-            Tournament tournament = currentApp.tournament;
-            Players = tournament.Players;
-            TournamentDateTime = new DateTime(2021, 11, 22);
-            tournament.TimeAndDate = TournamentDateTime;
-            //TournamentDateTime = tournament.TimeAndDate;
+            setGameCommand = new CreateGameObjectCommand(new Action<object>((o) => setGamesets()));
+            Players = currentApp.tournament.Players;
+            TournamentDateTime = TournamentDateTime + TournamentTime;
+            currentApp.tournament.TimeAndDate = TournamentDateTime;
+            
         }
-        #region ICommand Members
-        private ICommand mUpdater;
-        public ICommand UpdateCommand
+        #endregion
+        #region setup Game
+        public void setGamesets()
         {
-            get
+            currentApp.score.SetScore(NewGameType);
+            IEnumerable<GameType> test = TournamentGameType;
+            var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
+                new GameLeg() {
+                    history=new Dictionary<string, ObservableCollection<Triplet>>(),
+                    ScoreHistory=new Dictionary<string, ObservableCollection<int>>(),
+                    Winner=null,
+                    CurrentTurn=null
+                } } } };
+
+            foreach (Player p in currentApp.tournament.Players)
             {
-                if (mUpdater == null)
-                    mUpdater = new Updater();
-                return mUpdater;
+                gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
+                gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
             }
-            set
+            Game game = new Game()
             {
-                mUpdater = value;
+                Winner = null,
+                setsAmount = AmountOfSets,
+                legsAmount = AmountOfLegs,
+                gameSets = gameSets
+            };
+            foreach (GameSet set in game.gameSets)
+            {
+                foreach (GameLeg leg in set.legs)
+                {
+                    leg.parent = set;
+                }
+
+                set.parent = game;
             }
+            currentApp.tournament.Games.Add(game);
         }
-
-        private class Updater : ICommand
+        #endregion
+        #region Update Functions
+        /// <summary>
+        /// Updates the DateTime after the user sets another date.
+        /// </summary>
+        /// <param name="s"></param>
+        public void updateModelDate(DateTime? newDateTime)
         {
-            public bool CanExecute(object parameter) => true;
-            public event EventHandler CanExecuteChanged;
-            public void Execute(object parameter)
-            {
-
-            }
+            currentApp.tournament.TimeAndDate = newDateTime;
+        }
+        /// <summary>
+        /// Update the Time after the user sets the Time
+        /// </summary>
+        /// <param name="newTime"></param>
+        public void updateModelTime(TimeSpan? newTime)
+        {
+            currentApp.tournament.Time = newTime;
         }
         #endregion
     }

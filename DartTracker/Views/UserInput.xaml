@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DartTracker.Views" xmlns:ctrl1="clr-namespace:DartTracker.Controls"
-        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:viewmodels="clr-namespace:DartTracker.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:UserInputWindowViewModel}"
+        xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
         mc:Ignorable="d"
         Title="UserInput" Height="300" Width="450">
     <Window.Resources>
@@ -47,26 +48,26 @@
         </Grid>
         <WrapPanel Grid.Row="1">
             <Label Width="191" HorizontalContentAlignment="Center">Hoeveel sets worden er gespeeld?</Label>
-            <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="OnlyNumbersTextInput" Name="amountOfSets" Width="200" />
+            <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="OnlyNumbersTextInput" Text="{Binding AmountOfSets, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" />
         </WrapPanel>
         <WrapPanel Grid.Row="2">
             <Label Width="191" HorizontalContentAlignment="Center">Hoeveel legs worden er gespeeld?</Label>
-            <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="OnlyNumbersTextInput" Name="amountOfLegs" Width="200"></TextBox>
+            <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="OnlyNumbersTextInput" Text="{Binding AmountOfLegs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"></TextBox>
         </WrapPanel>
         <WrapPanel HorizontalAlignment="Left" Grid.Row="3">
             <Label Width="191">Selecteer een datum en een tijd: </Label>
             <DatePicker SelectedDate="{Binding TournamentDateTime, Mode=TwoWay}"/>
-            <ctrl1:TimeControl Value="{Binding StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="startTime"/>
+            <ctrl1:TimeControl Value="{Binding TournamentTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="startTime"/>
             <!-- TODO: Add Timepicker-->
         </WrapPanel>
         <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4">
             <Label Width="191">Spel Type</Label>
-            <ComboBox Name="pickGame" SelectedIndex="1" Width="100"></ComboBox>
+            <ComboBox ItemsSource="{Binding TournamentGameType}" SelectedItem="{Binding NewGameType}" SelectedIndex="1" Width="100"></ComboBox>
         </WrapPanel>
 
 
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5">
-            <Button IsDefault="True" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
+            <Button Command="{Binding setGameCommand}" IsDefault="True" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
             <Button IsCancel="True" MinWidth="60"  Margin="0,0,10,0" Click="Button_Click">Cancel</Button>
             <Button IsCancel="True" MinWidth="60" Name="LoadJson" Click="LoadJson_Click">load Json</Button> <!-- load json needs to be moved to somewhere else -->
         </WrapPanel>

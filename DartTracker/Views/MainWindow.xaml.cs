@@ -38,31 +38,31 @@ namespace DartTracker
         public void setBindings()
         {
             Tournament tournament = currentApp.tournament;
-            //var currentLeg = tournament.Games.Last().gameSets.Last().legs.Last(); // use Tournament View model to pass trough current legg
-            //string playerOne = tournament.Players[0].Name;
-            //string playerTwo = tournament.Players[1].Name;
+            var currentLeg = tournament.Games.Last().gameSets.Last().legs.Last(); // use Tournament View model to pass trough current legg
+            string playerOne = tournament.Players[0].Name;
+            string playerTwo = tournament.Players[1].Name;
 
 
-            //DataContext = new
-            //{
-            //    leg = new GameLegViewModel(tournament.Players, currentLeg),
-            //    tournament = new TournamentViewModel(tournament),
-            //    // preferably use the tournament also this way; 
-            //};
+            DataContext = new
+            {
+                leg = new GameLegViewModel(tournament.Players, currentLeg),
+                tournament = new TournamentViewModel(tournament),
+                // preferably use the tournament also this way; 
+            };
 
-            //p1label.Text = playerOne;
-            //p2label.Text = playerTwo;
+            p1label.Text = playerOne;
+            p2label.Text = playerTwo;
 
-            //// test(janek) 
-            //Player currentPlayer = currentApp.tournament.Players[0];
-            //GameSetViewModel main = new GameSetViewModel(0, null, null);
+            // test(janek) 
+            Player currentPlayer = currentApp.tournament.Players[0];
+            GameSetViewModel main = new GameSetViewModel(0, null, null);
 
-            //// true
-            //bool a = main.loadTestData(5);
-            //// false
-            //bool b = main.loadTestData(6);
-            //// false
-            //bool c = main.loadTestData(7);
+            // true
+            bool a = main.loadTestData(5);
+            // false
+            bool b = main.loadTestData(6);
+            // false
+            bool c = main.loadTestData(7);
         }
     }
 }
