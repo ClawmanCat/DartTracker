@@ -9,16 +9,18 @@
     <Window.Resources>
         <!-- Template for displaying a score triplet. -->
         <DataTemplate x:Key="TripletPanel">
-            <ItemsControl x:Name="ThrowView" ItemsSource="{Binding Path=throws}">
+            <ItemsControl x:Name="ThrowView" ItemsSource="{Binding Path=throws}" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
+                        <StackPanel Orientation="Horizontal" Margin="85,0,0,0" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Path=segment.Display}" Margin="10, 5, 10, 5" TextAlignment="Center" HorizontalAlignment="Center"/>
+                        <Border>
+                            <TextBlock Text="{Binding Path=segment.Display}" Margin="0, 5, 10, 5" TextAlignment="Center" />
+                        </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -84,80 +86,111 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="2.5*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="0">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+        <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="1" Grid.Column="0" >
+            <ListView BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="1">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerOne}">
+        <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="1" Grid.Column="1">
+            <ListView BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerOne}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="Margin" Value="0,5,0,5"/>
+                        <Setter Property="Margin" Value="0,5,15,5"/>
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="2">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerTwo}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+        <Border BorderBrush="Black" BorderThickness="1,0,0,1"  Grid.Row="1" Grid.Column="2">
+            <ListView BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerTwo}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="3">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerTwo}">
+        <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="1" Grid.Column="3">
+            <ListView BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerTwo}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="Margin" Value="0,5,0,5"/>
+                        <Setter Property="Margin" Value="0,5,15,5"/>
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="2">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p1label" Text="Header for player1"></TextBlock>
-        </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.ColumnSpan="2">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p2label" Text="Header for player 2"></TextBlock>
-        </Border>
-
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.ColumnSpan="4">
+        <Border Background="#e2e2e2" BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Margin="0,15,0,0" Name="p1label" Text="Speler1"></TextBlock>
+                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="20" FontWeight="Bold" Margin="0,0,100,5" Name="p1LegsLabel" Text="Legs: 0"></TextBlock>
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="20" FontWeight="Bold" Margin="100,0,0,5" Name="p1SetsLabel" Text="Sets: 0"></TextBlock>
+            </Grid>
+        </Border>
 
+        <Border Background="#e2e2e2" BorderBrush="Black" BorderThickness="1,0,0,1" Grid.Column="2" Grid.ColumnSpan="2">
+            <Grid>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Margin="0,15,0,0" Name="p2label" Text="Speler2"></TextBlock>
+                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="20" FontWeight="Bold" Margin="0,0,100,5" Name="p2LegsLabel" Text="Legs: 0"></TextBlock>
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="20" FontWeight="Bold" Margin="100,0,0,5" Name="p2SegsLabel" Text="Sets: 0"></TextBlock>
+            </Grid>
+        </Border>
+
+        <Border BorderBrush="Black" BorderThickness="0,0,0,0" Grid.Row="3" Grid.ColumnSpan="2">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" Margin="2px">
-                    <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_First"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.first,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_Second" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_Third"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.third,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Margin="2px">
+                    <TextBox Width="75" Margin="30, 10, 0, 0" x:Name="Input_First"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.first,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="75" Margin="10, 10, 0, 0" x:Name="Input_Second" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="75" Margin="10, 10, 0, 0" x:Name="Input_Third"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.third,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Style="{DynamicResource RoundedButtonStyle}" Height="20" Width="70px" Margin="10,13,0,0" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="{Binding leg.registerShotCommand}">Sla beurt op</Button>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
-                    <Label VerticalAlignment="Center">Current Player:</Label>
-                    <TextBlock Width="125" VerticalAlignment="Center" Text="{Binding Path=leg.gameLeg.CurrentTurn.Name, Mode=TwoWay}"></TextBlock>
-                    <Button Style="{DynamicResource RoundedButtonStyle}" Height="20" Width="50px" Margin="2px" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="{Binding leg.registerShotCommand}">End Turn</Button>
-                    <Button Style="{DynamicResource RoundedButtonStyle}" Height="20" Width="50px" Margin="2px" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="{Binding tournament.SerializeTournamentCommand}" Content="Serialize"/>
-                    <!-- temperary for test purpeses--> 
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+                    <Button Style="{DynamicResource RoundedButtonStyle}" Height="20" Width="30px" Margin="0,1,10,0" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="">&lt;&lt;</Button>
+                    <Label VerticalAlignment="Center">Over:</Label>
+                    <TextBlock Width="125" VerticalAlignment="Center" Text="501"></TextBlock>
+                    <Button Style="{DynamicResource RoundedButtonStyle}" Height="20" Width="30px" Margin="10,1,10,0" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="">&lt;</Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <Border BorderBrush="Black" BorderThickness="1,0,0,0" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Margin="2px">
+                    <TextBox Width="75" Margin="30, 10, 0, 0" x:Name="Input_First2"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.first,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="75" Margin="10, 10, 0, 0" x:Name="Input_Second2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="75" Margin="10, 10, 0, 0" x:Name="Input_Third2"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.third,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Style="{DynamicResource RoundedButtonStyle}" Height="20" Width="70px" Margin="10,13,0,0" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="{Binding leg.registerShotCommand}">Sla beurt op</Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+                    <Button Style="{DynamicResource RoundedButtonStyle}" Height="20" Width="30px" Margin="0,1,10,0" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="">&lt;&lt;</Button>
+                    <Label VerticalAlignment="Center">Over:</Label>
+                    <TextBlock Width="125" VerticalAlignment="Center" Text="501"></TextBlock>
+                    <Button Style="{DynamicResource RoundedButtonStyle}" Height="20" Width="30px" Margin="10,1,10,0" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="">&lt;</Button>
                 </StackPanel>
             </Grid>
         </Border>
