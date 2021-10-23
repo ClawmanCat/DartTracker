@@ -91,6 +91,165 @@ namespace UnitTests
                                                 }
                                             }
                                         }
+                                    },
+                                    new GameLeg()
+                                    {
+                                        Winner = new Player {Name = "Henk"},
+                                        CurrentTurn = new Player {Name = "Henk"},
+                                        history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                        {
+                                            {
+                                                "Henk",
+                                                new ObservableCollection<Triplet>
+                                                {
+                                                    new Triplet(
+                                                        new Throw(SegmentParser.parse("10T")),
+                                                        new Throw(SegmentParser.parse("10D")),
+                                                        new Throw(SegmentParser.parse("10"))
+                                                    )
+                                                }
+                                            },
+                                            {
+                                                "Piet",
+                                                new ObservableCollection<Triplet>
+                                                {
+                                                    new Triplet(
+                                                        new Throw(SegmentParser.parse("20T")),
+                                                        new Throw(SegmentParser.parse("20D")),
+                                                        new Throw(SegmentParser.parse("20"))
+                                                    )
+                                                }
+                                            }
+                                        },
+                                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                        {
+                                            {
+                                                "Henk",
+                                                new ObservableCollection<int>()
+                                                {
+                                                    10,
+                                                    20,
+                                                    30,
+                                                }
+                                            },
+                                            {
+                                                "Piet",
+                                                new ObservableCollection<int>()
+                                                {
+                                                    10,
+                                                    20,
+                                                    30,
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            new GameSet()
+                            {
+                                legs = new List<GameLeg>()
+                                {
+                                    new GameLeg()
+                                    {
+                                        Winner = new Player {Name = "Henk"},
+                                        CurrentTurn = new Player {Name = "Henk"},
+                                        history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                        {
+                                            {
+                                                "Henk",
+                                                new ObservableCollection<Triplet>
+                                                {
+                                                    new Triplet(
+                                                        new Throw(SegmentParser.parse("10T")),
+                                                        new Throw(SegmentParser.parse("10D")),
+                                                        new Throw(SegmentParser.parse("10"))
+                                                    )
+                                                }
+                                            },
+                                            {
+                                                "Piet",
+                                                new ObservableCollection<Triplet>
+                                                {
+                                                    new Triplet(
+                                                        new Throw(SegmentParser.parse("20T")),
+                                                        new Throw(SegmentParser.parse("20D")),
+                                                        new Throw(SegmentParser.parse("20"))
+                                                    )
+                                                }
+                                            }
+                                        },
+                                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                        {
+                                            {
+                                                "Henk",
+                                                new ObservableCollection<int>()
+                                                {
+                                                    10,
+                                                    20,
+                                                    30,
+                                                }
+                                            },
+                                            {
+                                                "Piet",
+                                                new ObservableCollection<int>()
+                                                {
+                                                    10,
+                                                    20,
+                                                    30,
+                                                }
+                                            }
+                                        }
+                                    },
+                                    new GameLeg()
+                                    {
+                                        Winner = new Player {Name = "Henk"},
+                                        CurrentTurn = new Player {Name = "Henk"},
+                                        history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                        {
+                                            {
+                                                "Henk",
+                                                new ObservableCollection<Triplet>
+                                                {
+                                                    new Triplet(
+                                                        new Throw(SegmentParser.parse("10T")),
+                                                        new Throw(SegmentParser.parse("10D")),
+                                                        new Throw(SegmentParser.parse("10"))
+                                                    )
+                                                }
+                                            },
+                                            {
+                                                "Piet",
+                                                new ObservableCollection<Triplet>
+                                                {
+                                                    new Triplet(
+                                                        new Throw(SegmentParser.parse("20T")),
+                                                        new Throw(SegmentParser.parse("20D")),
+                                                        new Throw(SegmentParser.parse("20"))
+                                                    )
+                                                }
+                                            }
+                                        },
+                                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                        {
+                                            {
+                                                "Henk",
+                                                new ObservableCollection<int>()
+                                                {
+                                                    10,
+                                                    20,
+                                                    30,
+                                                }
+                                            },
+                                            {
+                                                "Piet",
+                                                new ObservableCollection<int>()
+                                                {
+                                                    10,
+                                                    20,
+                                                    30,
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }

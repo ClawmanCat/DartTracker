@@ -9,7 +9,7 @@ using DartTracker.Models;
 
 namespace DartTracker.ViewModels
 {
-    class StatsWindowViewModel
+    public class StatsWindowViewModel
     {
         // public Dictionary<string, ObservableCollection<Triplet>> FirstHistory => _totalHistory.First();
 
@@ -30,7 +30,7 @@ namespace DartTracker.ViewModels
         {
             _tournament = tournament;
             GetAllHistories();
-            var average = GetAverageInGame();
+            // var average = GetAverageInGame();
         }
 
         public void GetAllHistories()
@@ -46,44 +46,76 @@ namespace DartTracker.ViewModels
             }
         }
 
-        private Dictionary<string, double> GetAverageInGame()
+        public Dictionary<string, Tuple<double, int>> CalculateAverageScoreInGame(Game game)
         {
-            Dictionary<string, double> averageScoreDictionary = new Dictionary<string, double>();
-            foreach (var set in _gameHistory)
-            {
-                var averageScoreInSet = CalculateAverageScoreInSet(set);
-                foreach (var setAverages in averageScoreDictionary)
-                    averageScoreDictionary.Add(setAverages.Key, setAverages.Value);
-            }
+            Dictionary<string, Tuple<double,int>> averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
+            List<Dictionary<string, Tuple<double, int>>>
+                allSets = new List<Dictionary<string, Tuple<double, int>>>();
+            foreach (var set in game.gameSets)
+                allSets.Add(CalculateAverageScoreInSet(set));
 
-            return averageScoreDictionary;
+            return WeightedMeans(allSets);
         }
 
-        private Dictionary<string, double> CalculateAverageScoreInSet(
-            List<Dictionary<string, ObservableCollection<Triplet>>> set)
+        public Dictionary<string, Tuple<double,int>> CalculateAverageScoreInSet(GameSet set)
         {
-            Dictionary<string, double> averageScoreDictionary = new Dictionary<string, double>();
-            foreach (var leg in set)
-            {
-                var legScores = CalculateAverageScoreInLeg(leg);
-                foreach (var scores in legScores)
-                    averageScoreDictionary.Add(scores.Key, scores.Value);
-            }
+            Dictionary<string, Tuple<double,int>> averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
+            List<Dictionary<string, Tuple<double, int>>>
+                allLegs = new List<Dictionary<string, Tuple<double, int>>>();
+            foreach (var leg in set.legs)
+                allLegs.Add(CalculateAverageScoreInLeg(leg.history));
 
-            return averageScoreDictionary;
+            return WeightedMeans(allLegs);
         }
 
-        private Dictionary<string, double> CalculateAverageScoreInLeg(
+        public Dictionary<string, Tuple<double,int>> CalculateAverageScoreInLeg(
             Dictionary<string, ObservableCollection<Triplet>> leg)
         {
-            Dictionary<string, double> averageScoreDictionary = new Dictionary<string, double>();
+            Dictionary<string, Tuple<double,int>> averageScoreDictionary = new Dictionary<string, Tuple<double,int>>();
             foreach (var playerTurns in leg)
-                averageScoreDictionary.Add(playerTurns.Key, CalculateAverageScoreInTurn(playerTurns.Value));
-                
+                averageScoreDictionary[playerTurns.Key] = Tuple.Create(CalculateAverageScoreInTurn(playerTurns.Value),playerTurns.Value.Count * 3);
+
             return averageScoreDictionary;
         }
 
-        private double CalculateAverageScoreInTurn(ObservableCollection<Triplet> turns)
+        private Dictionary<string,Tuple<double,int>> WeightedMeans(List<Dictionary<string, Tuple<double, int>>> combinedHistory)
+        {
+            Dictionary<string, Tuple<double, int>>
+                combinedMeanDictionary = new Dictionary<string, Tuple<double, int>>();
+            if (combinedMeanDictionary == null) throw new ArgumentNullException(nameof(combinedMeanDictionary));
+
+            Dictionary<string, Tuple<double, int>> weightAndValueSum =
+                new Dictionary<string, Tuple<double, int>>();
+
+            foreach (var legs in combinedHistory)
+            {
+                foreach (var player in legs)
+                {
+                    double scoreValue = player.Value.Item1 * player.Value.Item2;
+                    int weights = player.Value.Item2;
+                    if(!weightAndValueSum.ContainsKey(player.Key))
+                    {
+                        weightAndValueSum[player.Key] = new Tuple<double, int>(scoreValue, weights);
+                    }
+                    else
+                    {
+                        var totalValueWeight =+ weightAndValueSum[player.Key].Item1 + scoreValue;
+                        int totalWeights =+ weightAndValueSum[player.Key].Item2 + weights;
+                        weightAndValueSum[player.Key] = new Tuple<double, int>(totalValueWeight, totalWeights);
+                    }
+                }
+            }
+
+            foreach (var player in weightAndValueSum)
+                combinedMeanDictionary[player.Key] = new Tuple<double, int>(
+                    player.Value.Item1/player.Value.Item2,player.Value.Item2
+                    );
+
+            return combinedMeanDictionary;
+        }
+
+
+        public double CalculateAverageScoreInTurn(ObservableCollection<Triplet> turns)
         {
             List<int> throwScores = new List<int>();
 
