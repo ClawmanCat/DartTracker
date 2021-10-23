@@ -13,6 +13,7 @@ namespace DartTracker.Commands
         readonly Action<object> _execute;
         readonly Predicate<object> _canExecute;
         #endregion
+        #region Constructors
         public CreateGameObjectCommand(Action<object> execute) : this(execute, null)
         {
         }
@@ -23,7 +24,8 @@ namespace DartTracker.Commands
             _execute = execute;
             _canExecute = canExecute;
         }
-        
+        #endregion
+        #region ICommand Interface members
         public bool CanExecute(object parameter)
         {
             return _canExecute == null ? true : _canExecute(parameter);
@@ -39,5 +41,6 @@ namespace DartTracker.Commands
         {
             _execute(parameter);
         }
+        #endregion
     }
 }
