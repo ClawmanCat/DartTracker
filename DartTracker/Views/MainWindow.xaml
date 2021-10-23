@@ -112,6 +112,7 @@
                     <TextBlock Width="125" VerticalAlignment="Center" Text="{Binding Path=leg.gameLeg.CurrentTurn.Name, Mode=TwoWay}"></TextBlock>
                     <Button Height="20" Command="{Binding leg.registerShotCommand}">End Turn</Button>
                     <Button Height="20" Command="{Binding tournament.SerializeTournamentCommand}">serialize</Button>
+                    <Button Height="20" Click="GoToHistory">Tournament History</Button>
                     <!-- temperary for test purpeses--> 
                 </StackPanel>
             </Grid>
