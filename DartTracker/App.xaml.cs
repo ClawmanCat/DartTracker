@@ -47,7 +47,7 @@ namespace DartTracker
 
             // Initializing the UserInput
             UserInput userInput = new UserInput();
-            UserInputWindowViewModel userinputViewModel = new UserInputWindowViewModel();
+            UserInputWindowViewModel userinputViewModel = new UserInputWindowViewModel(tournament, score);
             userInput.DataContext = userinputViewModel;
             // Opening the UserInput Window
             bool? res = userInput.ShowDialog();

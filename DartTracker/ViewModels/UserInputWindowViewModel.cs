@@ -20,7 +20,9 @@ namespace DartTracker.ViewModels
         // This is the command when the user clicks on the 'OK' Button.
         public ICommand setGameCommand { get; set; }
         // Calling the current app to access the tournament object globally
-        public App currentApp = Application.Current as App;
+        private Tournament _tournament;
+        private Score _score;
+        //public App currentApp = Application.Current as App;
         #endregion
         #region ComboBox Filler
         public IEnumerable<GameType> TournamentGameType
@@ -52,7 +54,7 @@ namespace DartTracker.ViewModels
         public DateTime? TournamentDateTime
         {
             get { return _dateTime; }
-            set { _dateTime = value; updateModelDate(_dateTime); }
+            set { _dateTime = value; updateModelDate(_tournament, _dateTime); }
         }
         #endregion
         #region Amount of Sets
@@ -76,23 +78,25 @@ namespace DartTracker.ViewModels
         public TimeSpan TournamentTime
         {
             get { return _tournamentTime; }
-            set { _tournamentTime = value; updateModelTime(_tournamentTime); }
+            set { _tournamentTime = value; updateModelTime(_tournament, _tournamentTime); }
         }
         #endregion
         #region Constructor
-        public UserInputWindowViewModel()
+        public UserInputWindowViewModel(Tournament tournament, Score score)
         {
+            _tournament = tournament;
+            _score = score;
             setGameCommand = new CreateGameObjectCommand(new Action<object>((o) => setGamesets()));
-            Players = currentApp.tournament.Players;
-            TournamentDateTime = TournamentDateTime + TournamentTime;
-            currentApp.tournament.TimeAndDate = TournamentDateTime;
-            
+            Players = _tournament.Players;
+            _tournament.TimeAndDate = TournamentDateTime;
+
         }
         #endregion
         #region setup Game
         public void setGamesets()
         {
-            currentApp.score.SetScore(NewGameType);
+            
+            _score.SetScore(NewGameType);
             IEnumerable<GameType> test = TournamentGameType;
             var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
                 new GameLeg() {
@@ -102,7 +106,7 @@ namespace DartTracker.ViewModels
                     CurrentTurn=null
                 } } } };
 
-            foreach (Player p in currentApp.tournament.Players)
+            foreach (Player p in _tournament.Players)
             {
                 gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
                 gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
@@ -123,7 +127,7 @@ namespace DartTracker.ViewModels
 
                 set.parent = game;
             }
-            currentApp.tournament.Games.Add(game);
+            _tournament.Games.Add(game);
         }
         #endregion
         #region Update Functions
@@ -131,17 +135,17 @@ namespace DartTracker.ViewModels
         /// Updates the DateTime after the user sets another date.
         /// </summary>
         /// <param name="s"></param>
-        public void updateModelDate(DateTime? newDateTime)
+        public void updateModelDate(Tournament tournament, DateTime? newDateTime)
         {
-            currentApp.tournament.TimeAndDate = newDateTime;
+            tournament.TimeAndDate = newDateTime;
         }
         /// <summary>
         /// Update the Time after the user sets the Time
         /// </summary>
         /// <param name="newTime"></param>
-        public void updateModelTime(TimeSpan? newTime)
+        public void updateModelTime(Tournament tournament, TimeSpan? newTime)
         {
-            currentApp.tournament.Time = newTime;
+            tournament.Time = newTime;
         }
         #endregion
     }
