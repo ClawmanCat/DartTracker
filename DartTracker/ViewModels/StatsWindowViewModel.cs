@@ -15,12 +15,6 @@ namespace DartTracker.ViewModels
 
 
         private readonly Tournament _tournament;
-
-        private readonly List<List<Dictionary<string, ObservableCollection<Triplet>>>> _gameHistory =
-            new List<List<Dictionary<string, ObservableCollection<Triplet>>>>();
-
-        private List<Dictionary<string, ObservableCollection<Triplet>>> _totalHistory =
-            new List<Dictionary<string, ObservableCollection<Triplet>>>();
         // stats per set 
         // stats per leg 
         // stats total 
@@ -29,22 +23,9 @@ namespace DartTracker.ViewModels
         public StatsWindowViewModel(Tournament tournament)
         {
             _tournament = tournament;
-            GetAllHistories();
             // var average = GetAverageInGame();
         }
 
-        public void GetAllHistories()
-        {
-            List<GameSet> sets = _tournament.Games.First().gameSets; // if there are more games show current current games
-            foreach (var set in sets)
-            {
-                var totalLegHistory = new List<Dictionary<string, ObservableCollection<Triplet>>>();
-                foreach (var leg in set.legs)
-                    totalLegHistory.Add(leg.history);
-
-                _gameHistory.Add(totalLegHistory);
-            }
-        }
 
         public Dictionary<string, Tuple<double, int>> CalculateAverageScoreInGame(Game game)
         {
@@ -78,7 +59,17 @@ namespace DartTracker.ViewModels
             return averageScoreDictionary;
         }
 
-        private Dictionary<string,Tuple<double,int>> WeightedMeans(List<Dictionary<string, Tuple<double, int>>> combinedHistory)
+        public double CalculateAverageScoreInTurn(ObservableCollection<Triplet> turns)
+        {
+            List<int> throwScores = new List<int>();
+
+            foreach (var triplet in turns)
+                foreach (var trow in triplet.throws)
+                    throwScores.Add(trow.segment.Score);
+
+            return throwScores.Average();
+        }
+        private Dictionary<string, Tuple<double, int>> WeightedMeans(List<Dictionary<string, Tuple<double, int>>> combinedHistory)
         {
             Dictionary<string, Tuple<double, int>>
                 combinedMeanDictionary = new Dictionary<string, Tuple<double, int>>();
@@ -93,14 +84,14 @@ namespace DartTracker.ViewModels
                 {
                     double scoreValue = player.Value.Item1 * player.Value.Item2;
                     int weights = player.Value.Item2;
-                    if(!weightAndValueSum.ContainsKey(player.Key))
+                    if (!weightAndValueSum.ContainsKey(player.Key))
                     {
                         weightAndValueSum[player.Key] = new Tuple<double, int>(scoreValue, weights);
                     }
                     else
                     {
-                        var totalValueWeight =+ weightAndValueSum[player.Key].Item1 + scoreValue;
-                        int totalWeights =+ weightAndValueSum[player.Key].Item2 + weights;
+                        var totalValueWeight = +weightAndValueSum[player.Key].Item1 + scoreValue;
+                        int totalWeights = +weightAndValueSum[player.Key].Item2 + weights;
                         weightAndValueSum[player.Key] = new Tuple<double, int>(totalValueWeight, totalWeights);
                     }
                 }
@@ -108,22 +99,48 @@ namespace DartTracker.ViewModels
 
             foreach (var player in weightAndValueSum)
                 combinedMeanDictionary[player.Key] = new Tuple<double, int>(
-                    player.Value.Item1/player.Value.Item2,player.Value.Item2
-                    );
+                    player.Value.Item1 / player.Value.Item2, player.Value.Item2
+                );
 
             return combinedMeanDictionary;
         }
 
-
-        public double CalculateAverageScoreInTurn(ObservableCollection<Triplet> turns)
+        public Dictionary<string,int> GetNumberOf180SInGame(Game game)
         {
-            List<int> throwScores = new List<int>();
+            Dictionary<string, int> dictOf180 = new Dictionary<string, int>();
+            int total180S = 0;
+            foreach (var set in game.gameSets)
+                foreach (var leg in set.legs)
+                    foreach (var player in leg.history)
+                    {
+                        if (!dictOf180.ContainsKey(player.Key))
+                            dictOf180[player.Key] = Checked180S(player.Value);
+                        else
+                            dictOf180[player.Key] += Checked180S(player.Value);
+                    }
 
-            foreach (var triplet in turns)
-                foreach (var trow in triplet.throws)
-                    throwScores.Add(trow.segment.Score);
+                            
+                
 
-            return throwScores.Average();
+            return dictOf180;
+        }
+
+        private int Checked180S(ObservableCollection<Triplet> leg)
+        {
+            int total180S = 0;
+            foreach (var triplet in leg)
+            {
+                int tripleTwenties = 0;
+                foreach (Throw trow in triplet.throws)
+                {
+                    if (trow.segment.Score == 60)
+                        tripleTwenties++;
+                    if (tripleTwenties == 3)
+                        total180S++;
+                }
+            }
+
+            return total180S;
         }
     }
 }
