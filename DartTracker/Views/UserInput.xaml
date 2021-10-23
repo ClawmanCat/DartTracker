@@ -13,9 +13,7 @@
             <Setter Property="Text" Value="Selecteer een datum"/>
         </Style>
     </Window.Resources>
-    <Window.CommandBindings>
-        
-    </Window.CommandBindings>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="110" />

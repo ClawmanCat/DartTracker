@@ -31,7 +31,6 @@ namespace DartTracker.Views
         public UserInput()
         {
             InitializeComponent();
-            //pickGame.ItemsSource = Enum.GetValues(typeof(GameType));
         }
 
 
