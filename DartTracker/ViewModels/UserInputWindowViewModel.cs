@@ -16,9 +16,10 @@ namespace DartTracker.ViewModels
 {
     public class UserInputWindowViewModel
     {
-        #region Global object & command
-        // This is the command when the user clicks on the 'OK' Button.
+        #region Global objects & commands
+        // Calling the application object
         public App currentApp = Application.Current as App;
+        // This is the command when the user clicks on the 'OK' Button.
         public ICommand setGameCommand { get; set; }
         // Calling the current app to access the tournament object globally
         private Tournament _tournament;
@@ -87,62 +88,30 @@ namespace DartTracker.ViewModels
         {
             _tournament = tournament;
             _score = score;
-            setGameCommand = new CreateGameObjectCommand(new Action<object>((o) => setGamesets()));
+            setGameCommand = new CreateGameObjectCommand(new Action<object>((o) => setGamesets(currentApp.CreateGameObject)));
             Players = _tournament.Players;
             _tournament.TimeAndDate = TournamentDateTime;
 
         }
         #endregion
         #region setup Game
-        public void setGamesets()
+        public void setGamesets(bool createGameObject)
         {
-            if(currentApp.CreateGameObject == true)
+            if(createGameObject == true)
             {
                 _score.SetScore(NewGameType);
-                IEnumerable<GameType> test = TournamentGameType;
-                createSetsLegs();
-                // * Left this is for rollback purposes if stuff doesn't work out *
-                //var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
-                //new GameLeg() {
-                //    history=new Dictionary<string, ObservableCollection<Triplet>>(),
-                //    ScoreHistory=new Dictionary<string, ObservableCollection<int>>(),
-                //    Winner=null,
-                //    CurrentTurn=null
-                //} } } };
-
-                //foreach (Player p in _tournament.Players)
-                //{
-                //    gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
-                //    gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
-                //}
-                //Game game = new Game()
-                //{
-                //    Winner = null,
-                //    setsAmount = AmountOfSets,
-                //    legsAmount = AmountOfLegs,
-                //    gameSets = gameSets
-                //};
-                //foreach (GameSet set in game.gameSets)
-                //{
-                //    foreach (GameLeg leg in set.legs)
-                //    {
-                //        leg.parent = set;
-                //    }
-
-                //    set.parent = game;
-                //}
-                //_tournament.Games.Add(game);
+                createSetsLegs(AmountOfSets, AmountOfLegs);
             }
         }
 
-        public void createSetsLegs()
+        public void createSetsLegs(int? sets, int? legs)
         {
-            var gameSets = new List<GameSet>((int)AmountOfSets);
-            for(int i = 0; i < (int)AmountOfSets; i++)
+            var gameSets = new List<GameSet>((int)sets);
+            for(int i = 0; i < (int)sets; i++)
             {
                 GameSet gameset = new GameSet();
-                gameset.legs = new List<GameLeg>((int)AmountOfLegs);
-                for(int j = 0; j < (int)AmountOfLegs; j++)
+                gameset.legs = new List<GameLeg>((int)legs);
+                for(int j = 0; j < (int)legs; j++)
                 {
                     GameLeg gameleg = new GameLeg()
                     {
