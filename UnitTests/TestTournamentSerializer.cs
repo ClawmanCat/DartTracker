@@ -45,10 +45,10 @@ namespace UnitTests
                                     {
                                         Winner = new Player {Name = "Henk"},
                                         CurrentTurn = new Player {Name = "Henk"},
-                                        history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                        history = new Dictionary<Player, ObservableCollection<Triplet>>()
                                         {
                                             {
-                                                "Henk",
+                                                new Player{Name = "Henk"},
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -59,7 +59,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                new Player{Name = "Piet"},
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -70,10 +70,10 @@ namespace UnitTests
                                                 }
                                             }
                                         },
-                                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                        ScoreHistory = new Dictionary<Player, ObservableCollection<int>>()
                                         {
                                             {
-                                                "Henk",
+                                                new Player{Name = "Henk"},
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,
@@ -82,7 +82,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                new Player{Name = "Piet"},
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,
