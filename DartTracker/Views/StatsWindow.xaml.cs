@@ -38,12 +38,17 @@ namespace DartTracker.Views
         private void SetSelectionBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index = LegSelectionBox.SelectedIndex;
+            if (index == -1)
+                return;
             _statsWindowViewModel.SetNewSet(index);
         }
 
         private void LegSelectionBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index = LegSelectionBox.SelectedIndex;
+            if(index == -1)
+                return;
+            
             _statsWindowViewModel.SetNewLeg(index);
         }
     }

@@ -63,7 +63,7 @@ namespace DartTracker.ViewModels
             set
             {
                 _averageInLegPlayerOne = value;
-                OnPropertyChanged("AverageInSetPlayerOne");
+                OnPropertyChanged("AverageInLegPlayerOne");
             }
         }
 
@@ -73,7 +73,7 @@ namespace DartTracker.ViewModels
             set
             {
                 _averageInGamePlayerTwo = value;
-                OnPropertyChanged("AverageInGamePlayerOne");
+                OnPropertyChanged("AverageInGamePlayerTwo");
             }
         }
         public double AverageInSetPlayerTwo
@@ -82,7 +82,7 @@ namespace DartTracker.ViewModels
             set
             {
                 _averageInSetPlayerTwo = value;
-                OnPropertyChanged("AverageInSetPlayerOne");
+                OnPropertyChanged("AverageInSetPlayerTwo");
             }
         }
         public double AverageInLegPlayerTwo
@@ -91,7 +91,7 @@ namespace DartTracker.ViewModels
             set
             {
                 _averageInLegPlayerTwo = value;
-                OnPropertyChanged("AverageInSetPlayerOne");
+                OnPropertyChanged("AverageInLegPlayerTwo");
             }
         }
 
@@ -167,8 +167,16 @@ namespace DartTracker.ViewModels
             Dictionary<string, Tuple<double, int>>
                 averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
             foreach (var playerTurns in leg)
+            {
+                if (playerTurns.Value.Count == 0)
+                {
+                    averageScoreDictionary[playerTurns.Key] = Tuple.Create(0d, 0);
+                    continue;
+                }
                 averageScoreDictionary[playerTurns.Key] = Tuple.Create(CalculateAverageScoreInTurn(playerTurns.Value),
                     playerTurns.Value.Count * 3);
+            }
+                
 
             return averageScoreDictionary;
         }
