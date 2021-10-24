@@ -169,7 +169,7 @@
             </Grid>
         </Border>
 
-
+         <!-- Data Input Panel -->
         <Border Background="#e2e2e2" BorderBrush="Black" BorderThickness="1,1,0,1" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1">
             <Grid>
                 <StackPanel>
