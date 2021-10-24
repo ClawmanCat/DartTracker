@@ -27,8 +27,8 @@ namespace DartTracker.ViewModels
         private GameLeg _gameLeg;
         private GameSet _gameSet;
 
-        public GameLeg gameLeg => _gameLeg;
-        public GameSet gameSet => _gameSet;
+        public GameLeg gameLeg { get => _gameLeg; set { _gameLeg = value; OnPropertyChanged("gameLeg"); } }
+        public GameSet gameSet { get => _gameSet; set { _gameSet = value; OnPropertyChanged("gameSet"); } }
 
         public ICommand registerShotCommand
         {
@@ -57,18 +57,21 @@ namespace DartTracker.ViewModels
         {
             if (((int)player.score) == 0)
             {
-                _gameLeg.Winner = player;
-                player.legsWon = _gameSet.legs.Count(x => x.Winner == _gameLeg.CurrentTurn);
+                gameLeg.Winner = player;
+                player.legsWon = gameSet.legs.Count(x => x.Winner == gameLeg.CurrentTurn);
+                foreach (Player p in participatingPlayers)
+                {
+                    p.score.SetScore(GameType.NORMAL);
+                }
 
                 // ga naar volgende leg of set..
                 if (checkSetWinner(player, player.legsWon))
                 {
-                    NextSet();
+                    gameSet = NextSet();
+                    legs = new Queue<GameLeg>(gameSet.legs);
                 }
 
-                legs = new Queue<GameLeg>(_gameSet.legs);
-
-                NextLeg();
+                gameLeg = NextLeg();
             }
         }
 
@@ -76,14 +79,14 @@ namespace DartTracker.ViewModels
         {
             if (legsWon > (_game.legsAmount / 2))
             {
-                _gameSet.Winner = player;
+                gameSet.Winner = player;
 
-                foreach(Player p in participatingPlayers)
+                foreach(Player p in _participatingPlayers)
                 {
                     p.legsWon = 0;
                 }
 
-                _gameLeg.CurrentTurn.setsWon = _game.gameSets.Count(x => x.Winner == _gameLeg.CurrentTurn);
+                gameLeg.CurrentTurn.setsWon = _game.gameSets.Count(x => x.Winner == gameLeg.CurrentTurn);
 
                 return true;
             }
@@ -154,7 +157,7 @@ namespace DartTracker.ViewModels
                         {
                             // Player won
                             _gameLeg.CurrentTurn.score -= totalScore;
-                            _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
+                            _gameLeg.ScoreHistory[gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
                             return;
                         }
                         else
