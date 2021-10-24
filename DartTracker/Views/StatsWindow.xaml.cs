@@ -21,10 +21,30 @@ namespace DartTracker.Views
     /// </summary>
     public partial class StatsWindow : Window
     {
+        private StatsWindowViewModel _statsWindowViewModel;
         public StatsWindow(Tournament tournament)
         {
             InitializeComponent();
-            DataContext = new StatsWindowViewModel(tournament);
+            _statsWindowViewModel = new StatsWindowViewModel(tournament);
+            DataContext = _statsWindowViewModel;
+
+            SetSelectionBox.ItemsSource = _statsWindowViewModel.Sets;
+            SetSelectionBox.ItemsSource = _statsWindowViewModel.Sets;
+            LegSelectionBox.ItemsSource = _statsWindowViewModel.Legs;
+            LegSelectionBox.ItemsSource = _statsWindowViewModel.Legs;
+            
+        }
+
+        private void SetSelectionBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = LegSelectionBox.SelectedIndex;
+            _statsWindowViewModel.SetNewSet(index);
+        }
+
+        private void LegSelectionBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = LegSelectionBox.SelectedIndex;
+            _statsWindowViewModel.SetNewLeg(index);
         }
     }
 }

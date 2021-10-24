@@ -58,7 +58,7 @@ namespace DartTracker
             p2label.Text = playerTwo;
         }
 
-        public void GoToHistory(object sender, EventArgs e)
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             StatsWindow statsWindow = new StatsWindow(currentApp.tournament);
             statsWindow.Show();

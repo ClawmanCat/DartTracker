@@ -1,35 +1,146 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Documents;
+using DartTracker.Annotations;
 using DartTracker.Models;
 
 namespace DartTracker.ViewModels
 {
-    public class StatsWindowViewModel
+    public class StatsWindowViewModel : INotifyPropertyChanged
     {
         // public Dictionary<string, ObservableCollection<Triplet>> FirstHistory => _totalHistory.First();
 
 
         private readonly Tournament _tournament;
-        // stats per set 
-        // stats per leg 
-        // stats total 
+        private GameLeg _gameLeg;
+
+        public GameLeg CurrentLeg
+        {
+            get { return _gameLeg; }
+            set
+            {
+                _gameLeg = value;
+                OnPropertyChanged("CurrentLeg");
+            }
+        }
+
+
+        private double _averageInGamePlayerOne;
+        private double _averageInSetPlayerOne;
+        private double _averageInLegPlayerOne;
+
+        private double _averageInGamePlayerTwo;
+        private double _averageInSetPlayerTwo;
+        private double _averageInLegPlayerTwo;
+
+        public double AverageInGamePlayerOne
+        {
+            get { return _averageInGamePlayerOne; }
+            set
+            {
+                _averageInGamePlayerOne = value;
+                OnPropertyChanged("AverageInGamePlayerOne");
+            }
+        }
+        public double AverageInSetPlayerOne {
+            get { return _averageInSetPlayerOne; }
+            set
+            {
+                _averageInSetPlayerOne = value;
+                OnPropertyChanged("AverageInSetPlayerOne");
+            }
+        }
+        public double AverageInLegPlayerOne
+        {
+            get { return _averageInLegPlayerOne; }
+            set
+            {
+                _averageInLegPlayerOne = value;
+                OnPropertyChanged("AverageInSetPlayerOne");
+            }
+        }
+
+        public double AverageInGamePlayerTwo
+        {
+            get { return _averageInGamePlayerTwo; }
+            set
+            {
+                _averageInGamePlayerTwo = value;
+                OnPropertyChanged("AverageInGamePlayerOne");
+            }
+        }
+        public double AverageInSetPlayerTwo
+        {
+            get { return _averageInSetPlayerTwo; }
+            set
+            {
+                _averageInSetPlayerTwo = value;
+                OnPropertyChanged("AverageInSetPlayerOne");
+            }
+        }
+        public double AverageInLegPlayerTwo
+        {
+            get { return _averageInLegPlayerTwo; }
+            set
+            {
+                _averageInLegPlayerTwo = value;
+                OnPropertyChanged("AverageInSetPlayerOne");
+            }
+        }
+
+
+        public GameSet CurrentSet { get; set; }
+        public Game CurrentGame { get; set; }
+
+        public List<string> Sets { get; set; }
+        public List<string> Legs { get; set; }
 
 
         public StatsWindowViewModel(Tournament tournament)
         {
+            Sets = new List<string>();
+            Legs = new List<string>();
             _tournament = tournament;
-            // var average = GetAverageInGame();
+            CurrentGame = tournament.Games.First();
+            CurrentSet = CurrentGame.gameSets.First();
+            CurrentLeg = CurrentSet.legs.First();
+            FillComboBoxes();
+            SetAverages();
+           
+        }
+
+        private void SetAverages()
+        {
+            var averagesScoresInGame = CalculateAverageScoreInGame(CurrentGame);
+            AverageInGamePlayerOne = averagesScoresInGame.ToArray()[0].Value.Item1;
+            AverageInGamePlayerTwo = averagesScoresInGame.ToArray()[1].Value.Item1;
+            var averagesScoresInSet = CalculateAverageScoreInSet(CurrentSet);
+            AverageInSetPlayerOne = averagesScoresInSet.ToArray()[0].Value.Item1;
+            AverageInSetPlayerTwo = averagesScoresInSet.ToArray()[1].Value.Item1;
+            var averagesScoresInLeg = CalculateAverageScoreInLeg(CurrentLeg.history);
+            AverageInLegPlayerOne = averagesScoresInLeg.ToArray()[0].Value.Item1;
+            AverageInLegPlayerTwo = averagesScoresInLeg.ToArray()[1].Value.Item1;
+        }
+        private void FillComboBoxes()
+        {
+            for (int i = 0; i < CurrentGame.gameSets.Count; i++)
+                Sets.Add($"Set {i + 1}");
+            for (int i = 0; i < CurrentSet.legs.Count; i++)
+                Legs.Add($"Leg {i + 1}");
         }
 
 
         public Dictionary<string, Tuple<double, int>> CalculateAverageScoreInGame(Game game)
         {
-            Dictionary<string, Tuple<double,int>> averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
+            Dictionary<string, Tuple<double, int>>
+                averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
             List<Dictionary<string, Tuple<double, int>>>
                 allSets = new List<Dictionary<string, Tuple<double, int>>>();
             foreach (var set in game.gameSets)
@@ -38,9 +149,10 @@ namespace DartTracker.ViewModels
             return WeightedMeans(allSets);
         }
 
-        public Dictionary<string, Tuple<double,int>> CalculateAverageScoreInSet(GameSet set)
+        public Dictionary<string, Tuple<double, int>> CalculateAverageScoreInSet(GameSet set)
         {
-            Dictionary<string, Tuple<double,int>> averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
+            Dictionary<string, Tuple<double, int>>
+                averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
             List<Dictionary<string, Tuple<double, int>>>
                 allLegs = new List<Dictionary<string, Tuple<double, int>>>();
             foreach (var leg in set.legs)
@@ -49,12 +161,14 @@ namespace DartTracker.ViewModels
             return WeightedMeans(allLegs);
         }
 
-        public Dictionary<string, Tuple<double,int>> CalculateAverageScoreInLeg(
+        public Dictionary<string, Tuple<double, int>> CalculateAverageScoreInLeg(
             Dictionary<string, ObservableCollection<Triplet>> leg)
         {
-            Dictionary<string, Tuple<double,int>> averageScoreDictionary = new Dictionary<string, Tuple<double,int>>();
+            Dictionary<string, Tuple<double, int>>
+                averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
             foreach (var playerTurns in leg)
-                averageScoreDictionary[playerTurns.Key] = Tuple.Create(CalculateAverageScoreInTurn(playerTurns.Value),playerTurns.Value.Count * 3);
+                averageScoreDictionary[playerTurns.Key] = Tuple.Create(CalculateAverageScoreInTurn(playerTurns.Value),
+                    playerTurns.Value.Count * 3);
 
             return averageScoreDictionary;
         }
@@ -64,12 +178,14 @@ namespace DartTracker.ViewModels
             List<int> throwScores = new List<int>();
 
             foreach (var triplet in turns)
-                foreach (var trow in triplet.throws)
-                    throwScores.Add(trow.segment.Score);
+            foreach (var trow in triplet.throws)
+                throwScores.Add(trow.segment.Score);
 
             return throwScores.Average();
         }
-        private Dictionary<string, Tuple<double, int>> WeightedMeans(List<Dictionary<string, Tuple<double, int>>> combinedHistory)
+
+        private Dictionary<string, Tuple<double, int>> WeightedMeans(
+            List<Dictionary<string, Tuple<double, int>>> combinedHistory)
         {
             Dictionary<string, Tuple<double, int>>
                 combinedMeanDictionary = new Dictionary<string, Tuple<double, int>>();
@@ -105,22 +221,20 @@ namespace DartTracker.ViewModels
             return combinedMeanDictionary;
         }
 
-        public Dictionary<string,int> GetNumberOf180SInGame(Game game)
+        public Dictionary<string, int> GetNumberOf180SInGame(Game game)
         {
             Dictionary<string, int> dictOf180 = new Dictionary<string, int>();
             int total180S = 0;
             foreach (var set in game.gameSets)
-                foreach (var leg in set.legs)
-                    foreach (var player in leg.history)
-                    {
-                        if (!dictOf180.ContainsKey(player.Key))
-                            dictOf180[player.Key] = Checked180S(player.Value);
-                        else
-                            dictOf180[player.Key] += Checked180S(player.Value);
-                    }
+            foreach (var leg in set.legs)
+            foreach (var player in leg.history)
+            {
+                if (!dictOf180.ContainsKey(player.Key))
+                    dictOf180[player.Key] = Checked180S(player.Value);
+                else
+                    dictOf180[player.Key] += Checked180S(player.Value);
+            }
 
-                            
-                
 
             return dictOf180;
         }
@@ -141,6 +255,28 @@ namespace DartTracker.ViewModels
             }
 
             return total180S;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void SetNewLeg(int index)
+        {
+            CurrentLeg = CurrentSet.legs[index];
+            SetAverages();
+        }
+
+        public void SetNewSet(int index)
+        {
+            CurrentSet = CurrentGame.gameSets[index];
+            CurrentLeg = CurrentSet.legs.First();
+            SetAverages();
         }
     }
 }
