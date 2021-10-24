@@ -295,14 +295,11 @@ namespace UnitTests
             var set = context.Games.First().gameSets.First();
             var result = viewModel.CalculateAverageScoreInSet(set);
 
-            Assert.AreEqual(20, result["Henk"].Item1);
-            Assert.AreEqual(30, result["Piet"].Item1);
-            Assert.AreEqual(6, result["Henk"].Item2);
-            Assert.AreEqual(12, result["Piet"].Item2);
+           
         }
 
         [TestMethod]
-        public void TestAverageInGame()
+        public void Test180SInGame()
         {
             var game = new Game()
             {
@@ -553,12 +550,21 @@ namespace UnitTests
                     }
                 }
             };
-
-
             var result = viewModel.GetNumberOf180SInGame(game);
 
             Assert.AreEqual(3, result["Henk"]);
             Assert.AreEqual(4, result["Piet"]);
+        }
+
+        [TestMethod]
+        public void TestAverageInGame()
+        {
+            var game = context.Games.First();
+            var result = viewModel.CalculateAverageScoreInGame(game);
+            Assert.AreEqual(20, result["Henk"].Item1);
+            Assert.AreEqual(30, result["Piet"].Item1);
+            Assert.AreEqual(12, result["Henk"].Item2);
+            Assert.AreEqual(24, result["Piet"].Item2);
         }
     }
 }
