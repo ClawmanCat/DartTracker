@@ -125,6 +125,20 @@ namespace DartTracker.Models
             set { _score = value; OnPropertyChanged("score"); }
         }
 
+        private int _legsWon = 0;
+        public int legsWon
+        {
+            get { return _legsWon; }
+            set { _legsWon = value; OnPropertyChanged("legsWon"); }
+        }
+
+        private int _setsWon = 0;
+        public int setsWon
+        {
+            get { return _setsWon; }
+            set { _setsWon = value; OnPropertyChanged("setsWon"); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
