@@ -7,15 +7,15 @@ using System.Windows.Input;
 
 namespace DartTracker.ViewModels
 {
-    class CheckSetWinnerCommand : ICommand
+    class NextTurnCommand : ICommand
     {
         private readonly Action<object> command;
         private readonly Predicate<object> canExecute;
-        public CheckSetWinnerCommand(Action<object> command) : this(command, null)
+        public NextTurnCommand(Action<object> command) : this(command, null)
         {
         }
 
-        public CheckSetWinnerCommand(Action<object> command, Predicate<object> canExecute)
+        public NextTurnCommand(Action<object> command, Predicate<object> canExecute)
         {
             this.command = command ?? throw new ArgumentNullException(nameof(command));
             this.canExecute = canExecute;

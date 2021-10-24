@@ -12,9 +12,9 @@ namespace DartTracker.Commands
 {
     class RegisterShotCommand : ICommand
     {
-        private GameLegViewModel _viewModel;
+        private MainWindowViewModel _viewModel;
 
-        public RegisterShotCommand(GameLegViewModel viewModel)
+        public RegisterShotCommand(MainWindowViewModel viewModel)
         {
             _viewModel = viewModel;
 
