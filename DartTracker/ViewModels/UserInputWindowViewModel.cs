@@ -100,37 +100,83 @@ namespace DartTracker.ViewModels
             {
                 _score.SetScore(NewGameType);
                 IEnumerable<GameType> test = TournamentGameType;
-                var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
-                new GameLeg() {
-                    history=new Dictionary<string, ObservableCollection<Triplet>>(),
-                    ScoreHistory=new Dictionary<string, ObservableCollection<int>>(),
-                    Winner=null,
-                    CurrentTurn=null
-                } } } };
+                createSetsLegs();
+                // * Left this is for rollback purposes if stuff doesn't work out *
+                //var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
+                //new GameLeg() {
+                //    history=new Dictionary<string, ObservableCollection<Triplet>>(),
+                //    ScoreHistory=new Dictionary<string, ObservableCollection<int>>(),
+                //    Winner=null,
+                //    CurrentTurn=null
+                //} } } };
 
-                foreach (Player p in _tournament.Players)
-                {
-                    gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
-                    gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
-                }
-                Game game = new Game()
-                {
-                    Winner = null,
-                    setsAmount = AmountOfSets,
-                    legsAmount = AmountOfLegs,
-                    gameSets = gameSets
-                };
-                foreach (GameSet set in game.gameSets)
-                {
-                    foreach (GameLeg leg in set.legs)
-                    {
-                        leg.parent = set;
-                    }
+                //foreach (Player p in _tournament.Players)
+                //{
+                //    gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
+                //    gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
+                //}
+                //Game game = new Game()
+                //{
+                //    Winner = null,
+                //    setsAmount = AmountOfSets,
+                //    legsAmount = AmountOfLegs,
+                //    gameSets = gameSets
+                //};
+                //foreach (GameSet set in game.gameSets)
+                //{
+                //    foreach (GameLeg leg in set.legs)
+                //    {
+                //        leg.parent = set;
+                //    }
 
-                    set.parent = game;
-                }
-                _tournament.Games.Add(game);
+                //    set.parent = game;
+                //}
+                //_tournament.Games.Add(game);
             }
+        }
+
+        public void createSetsLegs()
+        {
+            var gameSets = new List<GameSet>((int)AmountOfSets);
+            for(int i = 0; i < (int)AmountOfSets; i++)
+            {
+                GameSet gameset = new GameSet();
+                gameset.legs = new List<GameLeg>((int)AmountOfLegs);
+                for(int j = 0; j < (int)AmountOfLegs; j++)
+                {
+                    GameLeg gameleg = new GameLeg()
+                    {
+                        history = new Dictionary<string, ObservableCollection<Triplet>>(),
+                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>(),
+                        Winner = null,
+                        CurrentTurn = null
+                    };
+                    gameset.legs.Add(gameleg);
+                }
+                gameSets.Add(gameset);
+            }
+            foreach (Player p in _tournament.Players)
+            {
+                gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
+                gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
+            }
+            Game game = new Game()
+            {
+                Winner = null,
+                setsAmount = AmountOfSets,
+                legsAmount = AmountOfLegs,
+                gameSets = gameSets
+            };
+            foreach (GameSet set in game.gameSets)
+            {
+                foreach (GameLeg leg in set.legs)
+                {
+                    leg.parent = set;
+                }
+
+                set.parent = game;
+            }
+            _tournament.Games.Add(game);
         }
         #endregion
         #region Update Functions

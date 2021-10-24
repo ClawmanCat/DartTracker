@@ -46,5 +46,14 @@ namespace DartTracker.Tests
             vm.updateModelTime(tournament, newdate);
             Assert.AreEqual(tournament.Time, newdate);
         }
+
+        [TestMethod()]
+        public void createViewModelTest()
+        {
+            Score score = new Score();
+            Tournament tournament = new Tournament();
+            UserInputWindowViewModel vm = new UserInputWindowViewModel(tournament, score);
+            Assert.IsNotNull(vm);
+        }
     }
 }
