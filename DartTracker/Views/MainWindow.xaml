@@ -65,7 +65,13 @@
          
          <!-- Score Panels -->
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+            <ListView ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="1">

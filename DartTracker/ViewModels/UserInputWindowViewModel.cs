@@ -106,28 +106,84 @@ namespace DartTracker.ViewModels
 
         public void createSetsLegs(int? sets, int? legs)
         {
-            var gameSets = new List<GameSet>((int)sets);
-            for(int i = 0; i < (int)sets; i++)
-            {
-                GameSet gameset = new GameSet();
-                gameset.legs = new List<GameLeg>((int)legs);
-                for(int j = 0; j < (int)legs; j++)
-                {
-                    GameLeg gameleg = new GameLeg()
+            //var gameSets = new List<GameSet>((int)sets);
+            //foreach (Player p in _tournament.Players)
+            //{
+            //    for (int i = 0; i < (int)sets; i++)
+            //    {
+            //        GameSet gameset = new GameSet();
+            //        gameset.legs = new List<GameLeg>((int)legs);
+            //        for (int j = 0; j < (int)legs; j++)
+            //        {
+            //            GameLeg gameleg = new GameLeg()
+            //            {
+            //                history = new Dictionary<string, ObservableCollection<Triplet>>(),
+            //                ScoreHistory = new Dictionary<string, ObservableCollection<int>>(),
+            //                Winner = null,
+            //                CurrentTurn = null
+            //            };
+            //            gameleg.history.Add(p.Name, new ObservableCollection<Triplet>());
+            //            gameleg.ScoreHistory.Add(p.Name, new ObservableCollection<int>());
+            //            gameset.legs.Add(gameleg);
+            //        }
+            //        gameSets.Add(gameset);
+            //    }
+            //}
+
+            var l1 = new List<GameLeg>()
                     {
-                        history = new Dictionary<string, ObservableCollection<Triplet>>(),
-                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>(),
-                        Winner = null,
-                        CurrentTurn = null
+                        new GameLeg()
+                        {
+                            history = new Dictionary<string, ObservableCollection<Triplet>>(),
+                            ScoreHistory = new Dictionary<string, ObservableCollection<int>>(),
+                            Winner = null,
+                            CurrentTurn = null
+                        },
+                        new GameLeg()
+                        {
+                            history = new Dictionary<string, ObservableCollection<Triplet>>(),
+                            ScoreHistory = new Dictionary<string, ObservableCollection<int>>(),
+                            Winner = null,
+                            CurrentTurn = null
+                        },
+                        // this has to be made dynamicly 
                     };
-                    gameset.legs.Add(gameleg);
-                }
-                gameSets.Add(gameset);
-            }
-            foreach (Player p in _tournament.Players)
+            var l2 = new List<GameLeg>()
+                    {
+                        new GameLeg()
+                        {
+                            history = new Dictionary<string, ObservableCollection<Triplet>>(),
+                            ScoreHistory = new Dictionary<string, ObservableCollection<int>>(),
+                            Winner = null,
+                            CurrentTurn = null
+                        },
+                        new GameLeg()
+                        {
+                            history = new Dictionary<string, ObservableCollection<Triplet>>(),
+                            ScoreHistory = new Dictionary<string, ObservableCollection<int>>(),
+                            Winner = null,
+                            CurrentTurn = null
+                        },
+                        // this has to be made dynamicly 
+                    };
+
+            var gameSets = new List<GameSet>() 
+            { 
+                new GameSet() { legs = l1}, 
+                new GameSet() { legs = l2 } 
+            };
+
+            foreach (Player p in Players)
             {
-                gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
-                gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
+                foreach (var set in gameSets)
+                {
+                    for (int i = 0; i < l1.Count; i++)
+                    {
+                        set.legs[i].history.Add(p.Name, new ObservableCollection<Triplet>());
+                        set.legs[i].ScoreHistory.Add(p.Name, new ObservableCollection<int>());
+                    }
+                }
+
             }
             Game game = new Game()
             {
