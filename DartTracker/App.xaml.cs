@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using DartTracker.ViewModels;
 
 namespace DartTracker
 {
@@ -17,7 +18,10 @@ namespace DartTracker
     public partial class App : Application , INotifyPropertyChanged
     {
         private Tournament _tournament;
-        public Tournament tournament { get { return _tournament; } set { _tournament = value; OnPropertyChanged("tournament"); }  }
+        public Tournament tournament { 
+            get { return _tournament; } 
+            set { _tournament = value; OnPropertyChanged("tournament"); }  
+        }
         public Score score { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -28,8 +32,12 @@ namespace DartTracker
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
-
+        private bool _createGameObject = false;
+        public bool CreateGameObject
+        {
+            get { return _createGameObject; }
+            set { _createGameObject = value; OnPropertyChanged("CreateGameObject"); }
+        }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -40,11 +48,14 @@ namespace DartTracker
             tournament = new Tournament();
             tournament.GamesToWin = 1;
             tournament.Games = new List<Game>(1);
-            tournament.Players = new List<Player>(2);
+            tournament.Players = new List<Player>(2) { new Player(), new Player() };
+            //tournament.TimeAndDate = DateTime.Now;
             tournament.Winner = null;
 
             // Initializing the UserInput
             UserInput userInput = new UserInput();
+            UserInputWindowViewModel userinputViewModel = new UserInputWindowViewModel(tournament, score);
+            userInput.DataContext = userinputViewModel;
             // Opening the UserInput Window
             bool? res = userInput.ShowDialog();
             // If the UserInput Window is closed, open the next Window
