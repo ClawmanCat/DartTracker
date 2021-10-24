@@ -98,7 +98,7 @@ namespace DartTracker.ViewModels
 
         public void RegisterShot()
         {
-            _gameLeg.history[_gameLeg.CurrentTurn].Add(new Triplet(
+            _gameLeg.history[_gameLeg.CurrentTurn.Name].Add(new Triplet(
 
                 new Throw(SegmentParser.parse(first)),
                 new Throw(SegmentParser.parse(second)),
@@ -142,7 +142,7 @@ namespace DartTracker.ViewModels
             int futureScore = (int)_gameLeg.CurrentTurn.score - totalScore;
             if (futureScore < 0 || futureScore == 1)
             {
-                _gameLeg.ScoreHistory[_gameLeg.CurrentTurn].Add((int)_gameLeg.CurrentTurn.score);
+                _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
             }
             else if (futureScore == 0)
             {
@@ -157,12 +157,12 @@ namespace DartTracker.ViewModels
                         {
                             // Player won
                             _gameLeg.CurrentTurn.score -= totalScore;
-                            _gameLeg.ScoreHistory[gameLeg.CurrentTurn].Add((int)_gameLeg.CurrentTurn.score);
+                            _gameLeg.ScoreHistory[gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
                             return;
                         }
                         else
                         {
-                            _gameLeg.ScoreHistory[_gameLeg.CurrentTurn].Add((int)_gameLeg.CurrentTurn.score);
+                            _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
                             return;
                         }
                     }
@@ -172,7 +172,7 @@ namespace DartTracker.ViewModels
             else
             {
                 _gameLeg.CurrentTurn.score -= totalScore;
-                _gameLeg.ScoreHistory[_gameLeg.CurrentTurn].Add((int)_gameLeg.CurrentTurn.score);
+                _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
             }
         }
 
