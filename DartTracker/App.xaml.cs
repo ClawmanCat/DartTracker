@@ -32,6 +32,13 @@ namespace DartTracker
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private bool _createGameObject = false;
+        public bool CreateGameObject
+        {
+            get { return _createGameObject; }
+            set { _createGameObject = value; OnPropertyChanged("CreateGameObject"); }
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

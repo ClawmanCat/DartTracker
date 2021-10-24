@@ -18,6 +18,7 @@ namespace DartTracker.ViewModels
     {
         #region Global object & command
         // This is the command when the user clicks on the 'OK' Button.
+        public App currentApp = Application.Current as App;
         public ICommand setGameCommand { get; set; }
         // Calling the current app to access the tournament object globally
         private Tournament _tournament;
@@ -95,10 +96,11 @@ namespace DartTracker.ViewModels
         #region setup Game
         public void setGamesets()
         {
-            
-            _score.SetScore(NewGameType);
-            IEnumerable<GameType> test = TournamentGameType;
-            var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
+            if(currentApp.CreateGameObject == true)
+            {
+                _score.SetScore(NewGameType);
+                IEnumerable<GameType> test = TournamentGameType;
+                var gameSets = new List<GameSet>() { new GameSet() { legs = new List<GameLeg>() {
                 new GameLeg() {
                     history=new Dictionary<string, ObservableCollection<Triplet>>(),
                     ScoreHistory=new Dictionary<string, ObservableCollection<int>>(),
@@ -106,28 +108,29 @@ namespace DartTracker.ViewModels
                     CurrentTurn=null
                 } } } };
 
-            foreach (Player p in _tournament.Players)
-            {
-                gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
-                gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
-            }
-            Game game = new Game()
-            {
-                Winner = null,
-                setsAmount = AmountOfSets,
-                legsAmount = AmountOfLegs,
-                gameSets = gameSets
-            };
-            foreach (GameSet set in game.gameSets)
-            {
-                foreach (GameLeg leg in set.legs)
+                foreach (Player p in _tournament.Players)
                 {
-                    leg.parent = set;
+                    gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
+                    gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
                 }
+                Game game = new Game()
+                {
+                    Winner = null,
+                    setsAmount = AmountOfSets,
+                    legsAmount = AmountOfLegs,
+                    gameSets = gameSets
+                };
+                foreach (GameSet set in game.gameSets)
+                {
+                    foreach (GameLeg leg in set.legs)
+                    {
+                        leg.parent = set;
+                    }
 
-                set.parent = game;
+                    set.parent = game;
+                }
+                _tournament.Games.Add(game);
             }
-            _tournament.Games.Add(game);
         }
         #endregion
         #region Update Functions

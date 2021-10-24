@@ -59,12 +59,18 @@ namespace DartTracker.Views
             {
                 MessageBox.Show("Player 2 is empty.");
             }
+            else if (player1.Text == player2.Text)
+            {
+                MessageBox.Show("Players must be unique.");
+
+            }
             else
             {
                 
                 try
                 {
                     DialogResult = true;
+                    currentApp.CreateGameObject = true;
                     // Closes the Window
                     Close();
                 }
