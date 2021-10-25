@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,6 +20,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace DartTracker.Views
 {
@@ -87,9 +89,15 @@ namespace DartTracker.Views
         }
         private void LoadJson_Click(object sender, RoutedEventArgs e)
         {
-            currentApp.tournament = LoadTournamentJson.LoadJson();
-            DialogResult = true;
-            Close();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON-Formatted Data (*json)|*.json";
+            if (openFileDialog.ShowDialog() ?? false)
+            {
+                string jsonString = File.ReadAllText(openFileDialog.FileName);
+                currentApp.tournament = LoadTournamentJson.LoadTournament(jsonString);
+                DialogResult = true;
+                Close();
+            }
         }
     }
 }
