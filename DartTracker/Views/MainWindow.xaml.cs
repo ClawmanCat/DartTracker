@@ -39,9 +39,7 @@ namespace DartTracker
         public void setBindings()
         {
             Tournament tournament = currentApp.tournament;
-            var currentLeg = tournament.Games.Last().gameSets.Last().legs.Last(); // use Tournament View model to pass trough current legg
-            var currentSet = tournament.Games.Last().gameSets.Last();
-            var currentGame = tournament.Games.Last();
+            List<Score> scores = currentApp.scores;
             string playerOne = tournament.Players[0].Name;
             string playerTwo = tournament.Players[1].Name;
 
@@ -49,7 +47,7 @@ namespace DartTracker
 
             DataContext = new
             {
-                leg = new MainWindowViewModel(tournament.Players,/* currentLeg, currentSet,*/ currentGame),
+                leg = new MainWindowViewModel(tournament.Players, tournament.Games.Last(), scores),
                 tournament = new TournamentViewModel(tournament),
                 // preferably use the tournament also this way; 
             };

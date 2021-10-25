@@ -18,7 +18,7 @@ namespace DartTracker.Models
 
     public class Score
     {
-        private int _score = 501;
+        private int _score;
         public void SetScore(GameType value) => _score = (int) value;
         public static explicit operator int(Score s) => s._score;
 

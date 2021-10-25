@@ -23,7 +23,7 @@ namespace DartTracker.ViewModels
         public ICommand setGameCommand { get; set; }
         // Calling the current app to access the tournament object globally
         private Tournament _tournament;
-        private Score _score;
+        private List<Score> _scores;
         //public App currentApp = Application.Current as App;
         #endregion
         #region ComboBox Filler
@@ -84,10 +84,10 @@ namespace DartTracker.ViewModels
         }
         #endregion
         #region Constructor
-        public UserInputWindowViewModel(Tournament tournament, Score score)
+        public UserInputWindowViewModel(Tournament tournament, List<Score> scores)
         {
             _tournament = tournament;
-            _score = score;
+            _scores = scores;
             setGameCommand = new CreateGameObjectCommand(new Action<object>((o) => setGamesets(currentApp.CreateGameObject)));
             Players = _tournament.Players;
             _tournament.TimeAndDate = TournamentDateTime;
@@ -99,7 +99,12 @@ namespace DartTracker.ViewModels
         {
             if(createGameObject == true)
             {
-                _score.SetScore(NewGameType);
+                Score scoreP1 = new Score();
+                scoreP1.SetScore(NewGameType);
+                Score scoreP2 = new Score();
+                scoreP2.SetScore(NewGameType);
+                _scores.Add(scoreP1);
+                _scores.Add(scoreP2);
                 createSetsLegs(AmountOfSets, AmountOfLegs);
             }
         }
@@ -126,8 +131,14 @@ namespace DartTracker.ViewModels
             }
             foreach (Player p in _tournament.Players)
             {
-                gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
-                gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
+                for (int i = 0; i < AmountOfSets; i++)
+                {
+                    for (int j = 0; j < AmountOfLegs; j++)
+                    {
+                        gameSets[i].legs[j].history.Add(p.Name, new ObservableCollection<Triplet>());
+                        gameSets[i].legs[j].ScoreHistory.Add(p.Name, new ObservableCollection<int>());
+                    }
+                }
             }
             Game game = new Game()
             {

@@ -18,6 +18,7 @@ namespace DartTracker.ViewModels
         private Queue<GameLeg> legs;
         private Queue<GameSet> sets;
         private Game _game;
+        private List<Score> _standardScores;
 
         private string[] throw_inputs = { "", "", "" };
         public string first { get => throw_inputs[0]; set { throw_inputs[0] = value; OnPropertyChanged("first"); } }
@@ -39,12 +40,16 @@ namespace DartTracker.ViewModels
         private List<Player> _participatingPlayers;
         public List<Player> participatingPlayers { get => _participatingPlayers; set { _participatingPlayers = value; OnPropertyChanged("participatingPlayers"); } }
 
-        public MainWindowViewModel(List<Player> participatingPlayers,/* GameLeg leg, GameSet set,*/ Game game)
+        public MainWindowViewModel(List<Player> participatingPlayers, Game game, List<Score> scores)
         {
             _participatingPlayers = participatingPlayers;
             players = new Queue<Player>(participatingPlayers);
             sets = new Queue<GameSet>(game.gameSets);
             legs = new Queue<GameLeg>(sets.Peek().legs);
+
+            _standardScores = scores;
+            _participatingPlayers[0].score = _standardScores[0];
+            _participatingPlayers[1].score = _standardScores[1];
 
             _gameLeg = NextLeg();
             _gameSet = NextSet();
@@ -59,10 +64,8 @@ namespace DartTracker.ViewModels
             {
                 gameLeg.Winner = player;
                 player.legsWon = gameSet.legs.Count(x => x.Winner == gameLeg.CurrentTurn);
-                foreach (Player p in participatingPlayers)
-                {
-                    p.score.SetScore(GameType.NORMAL);
-                }
+                _participatingPlayers[0].score = _standardScores[0];
+                _participatingPlayers[1].score = _standardScores[1];
 
                 // ga naar volgende leg of set..
                 if (checkSetWinner(player, player.legsWon))
