@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DartTracker.Views;
 
 namespace DartTracker
 {
@@ -55,6 +56,12 @@ namespace DartTracker
 
             p1label.Text = playerOne;
             p2label.Text = playerTwo;
+        }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            StatsWindow statsWindow = new StatsWindow(currentApp.tournament);
+            statsWindow.Show();
         }
     }
 }

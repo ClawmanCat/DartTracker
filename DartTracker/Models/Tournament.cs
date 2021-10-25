@@ -51,13 +51,54 @@ namespace DartTracker.Models
         OUTSIDE_BOARD = 0
     }
 
-    public class Tournament
+    public class Tournament : INotifyPropertyChanged
     {
-        public List<Player> Players;
-        public List<Game> Games;
-        public int GamesToWin;
-        public Player Winner;
-        public DateTime TimeAndDate;
+        private Player _winner;
+        private DateTime? _timeAndDate;
+        private List<Player> _players;
+        private List<Game> _games;
+        private int _gamesToWin;
+        private TimeSpan? _time;
+
+        public List<Player> Players
+        {
+            get { return _players; }
+            set { _players = value; OnPropertyChanged("Players"); }
+        }
+        public List<Game> Games
+        {
+            get { return _games; }
+            set { _games = value; OnPropertyChanged("Games"); }
+        }
+        public int GamesToWin
+        {
+            get { return _gamesToWin; }
+            set { _gamesToWin = value; OnPropertyChanged("GamesToWin"); }
+        }
+        public Player Winner
+        {
+            get { return _winner; }
+            set { _winner = value; OnPropertyChanged("Winner"); }
+        }
+        public DateTime? TimeAndDate
+        {
+            get { return _timeAndDate; }
+            set { _timeAndDate = value; OnPropertyChanged("TimeAndDate"); }
+        }
+        public TimeSpan? Time
+        {
+            get { return _time; }
+            set { _time = value; OnPropertyChanged("Time"); }
+        }
+        #region PropertyChanged Members
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 
 
@@ -69,8 +110,7 @@ namespace DartTracker.Models
         public string Name
         {
             get { return _Name; }
-            set
-            {
+            set{
                 _Name = value;
                 OnPropertyChanged("Name");
             }
@@ -117,8 +157,8 @@ namespace DartTracker.Models
         [JsonIgnore] public Tournament parent;
         public Player Winner;
         public List<GameSet> gameSets;
-        public int setsAmount;
-        public int legsAmount;
+        public int? setsAmount;
+        public int? legsAmount;
     }
 
     public class GameSet
@@ -131,10 +171,6 @@ namespace DartTracker.Models
 
     public class GameLeg : INotifyPropertyChanged
     {
-        /*       private Dictionary<Player, ObservableCollection<Triplet>> _history; 
-               [JsonProperty(Order = -2)]
-               public Dictionary<Player, ObservableCollection<Triplet>> history { get { return _history; } set { _history = value; OnPropertyChanged("history");} }*/
-
         private Dictionary<string, ObservableCollection<Triplet>> _history;
 
         [JsonProperty(Order = -2)]
@@ -147,7 +183,6 @@ namespace DartTracker.Models
                 OnPropertyChanged("history");
             }
         }
-
 
         [JsonIgnore]
         public ObservableCollection<Triplet> HistoryPlayerOne => history.Values.ToArray()[0];

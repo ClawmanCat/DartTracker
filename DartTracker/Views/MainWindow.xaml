@@ -100,8 +100,6 @@
             <RowDefinition Height="7*"></RowDefinition>
         </Grid.RowDefinitions>
 
-
-
         <!-- Menu Bar -->
         <DockPanel Grid.Row="0" Grid.ColumnSpan="4">
             <Menu DockPanel.Dock="Top">
@@ -116,15 +114,14 @@
 
                 <MenuItem Header="Exporteer" Command="{Binding tournament.SerializeTournamentCommand}"></MenuItem>
                 <MenuItem Header="Statistieken"></MenuItem>
+                <MenuItem StaysOpenOnClick="True" Click="MenuItem_OnClick" Header="Statistieken"></MenuItem>
             </Menu>
         </DockPanel>
-
 
         <!-- Score Panels -->
         <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="2" Grid.Column="0">
             <ListView HorizontalContentAlignment="Center" BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
-        </Border>
-
+        
         <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="2" Grid.Column="1">
             <ListView BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerOne}">
                 <ListView.ItemContainerStyle>
