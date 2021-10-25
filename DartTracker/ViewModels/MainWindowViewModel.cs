@@ -18,7 +18,7 @@ namespace DartTracker.ViewModels
         private Queue<GameLeg> legs;
         private Queue<GameSet> sets;
         private Game _game;
-        private List<Score> _standardScores;
+        private Score _standardScore;
 
         private string[] throw_inputs = { "", "", "" };
         public string first { get => throw_inputs[0]; set { throw_inputs[0] = value; OnPropertyChanged("first"); } }
@@ -40,16 +40,17 @@ namespace DartTracker.ViewModels
         private List<Player> _participatingPlayers;
         public List<Player> participatingPlayers { get => _participatingPlayers; set { _participatingPlayers = value; OnPropertyChanged("participatingPlayers"); } }
 
-        public MainWindowViewModel(List<Player> participatingPlayers, Game game, List<Score> scores)
+        public MainWindowViewModel(List<Player> participatingPlayers, Game game, Score score)
         {
             _participatingPlayers = participatingPlayers;
             players = new Queue<Player>(participatingPlayers);
             sets = new Queue<GameSet>(game.gameSets);
             legs = new Queue<GameLeg>(sets.Peek().legs);
 
-            _standardScores = scores;
-            _participatingPlayers[0].score = _standardScores[0];
-            _participatingPlayers[1].score = _standardScores[1];
+            _standardScore = new Score(score);
+
+            participatingPlayers[0].score = new Score(score);
+            participatingPlayers[1].score = new Score(score);
 
             _gameLeg = NextLeg();
             _gameSet = NextSet();
@@ -64,8 +65,9 @@ namespace DartTracker.ViewModels
             {
                 gameLeg.Winner = player;
                 player.legsWon = gameSet.legs.Count(x => x.Winner == gameLeg.CurrentTurn);
-                _participatingPlayers[0].score = _standardScores[0];
-                _participatingPlayers[1].score = _standardScores[1];
+
+                participatingPlayers[0].score = new Score(_standardScore);
+                participatingPlayers[1].score = new Score(_standardScore);
 
                 // ga naar volgende leg of set..
                 if (checkSetWinner(player, player.legsWon))

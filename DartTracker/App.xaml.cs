@@ -22,8 +22,7 @@ namespace DartTracker
             get { return _tournament; } 
             set { _tournament = value; OnPropertyChanged("tournament"); }  
         }
-        public List<Score> scores { get; set; }
-        public int beep { get; set; }
+        public Score score { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
@@ -44,7 +43,7 @@ namespace DartTracker
         {
             base.OnStartup(e);
             //setup score
-            scores = new List<Score>();
+            score = new Score();
             
             // Tournament setup
             tournament = new Tournament();
@@ -56,7 +55,7 @@ namespace DartTracker
 
             // Initializing the UserInput
             UserInput userInput = new UserInput();
-            UserInputWindowViewModel userinputViewModel = new UserInputWindowViewModel(tournament, scores);
+            UserInputWindowViewModel userinputViewModel = new UserInputWindowViewModel(tournament, score);
             userInput.DataContext = userinputViewModel;
             // Opening the UserInput Window
             bool? res = userInput.ShowDialog();

@@ -39,7 +39,7 @@ namespace DartTracker
         public void setBindings()
         {
             Tournament tournament = currentApp.tournament;
-            List<Score> scores = currentApp.scores;
+            Score score = currentApp.score;
             string playerOne = tournament.Players[0].Name;
             string playerTwo = tournament.Players[1].Name;
 
@@ -47,7 +47,7 @@ namespace DartTracker
 
             DataContext = new
             {
-                leg = new MainWindowViewModel(tournament.Players, tournament.Games.Last(), scores),
+                leg = new MainWindowViewModel(tournament.Players, tournament.Games.Last(), score),
                 tournament = new TournamentViewModel(tournament),
                 // preferably use the tournament also this way; 
             };

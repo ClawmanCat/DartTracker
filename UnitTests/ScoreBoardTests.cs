@@ -39,6 +39,10 @@ namespace UnitTests
 
         private MainWindowViewModel createTestCode(int setsAmount, int legsAmount)
         {
+            Score score = new Score();
+            score.SetScore(GameType.NORMAL);
+            score -= 501;
+
             gameLeg = new GameLeg
             {
                 Winner = players[0],
@@ -72,7 +76,7 @@ namespace UnitTests
                 legsAmount = legsAmount,
             };
 
-            return new MainWindowViewModel(players, game);
+            return new MainWindowViewModel(players, game, score);
         }
 
         [TestMethod]

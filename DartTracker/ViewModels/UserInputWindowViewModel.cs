@@ -23,7 +23,7 @@ namespace DartTracker.ViewModels
         public ICommand setGameCommand { get; set; }
         // Calling the current app to access the tournament object globally
         private Tournament _tournament;
-        private List<Score> _scores;
+        Score _score;
         //public App currentApp = Application.Current as App;
         #endregion
         #region ComboBox Filler
@@ -84,10 +84,10 @@ namespace DartTracker.ViewModels
         }
         #endregion
         #region Constructor
-        public UserInputWindowViewModel(Tournament tournament, List<Score> scores)
+        public UserInputWindowViewModel(Tournament tournament, Score score)
         {
             _tournament = tournament;
-            _scores = scores;
+            _score = score;
             setGameCommand = new CreateGameObjectCommand(new Action<object>((o) => setGamesets(currentApp.CreateGameObject)));
             Players = _tournament.Players;
             _tournament.TimeAndDate = TournamentDateTime;
@@ -99,12 +99,7 @@ namespace DartTracker.ViewModels
         {
             if(createGameObject == true)
             {
-                Score scoreP1 = new Score();
-                scoreP1.SetScore(NewGameType);
-                Score scoreP2 = new Score();
-                scoreP2.SetScore(NewGameType);
-                _scores.Add(scoreP1);
-                _scores.Add(scoreP2);
+                _score.SetScore(NewGameType);
                 createSetsLegs(AmountOfSets, AmountOfLegs);
             }
         }
