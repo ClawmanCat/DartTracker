@@ -173,10 +173,6 @@ namespace DartTracker.Models
 
     public class GameLeg : INotifyPropertyChanged
     {
-        /*       private Dictionary<Player, ObservableCollection<Triplet>> _history; 
-               [JsonProperty(Order = -2)]
-               public Dictionary<Player, ObservableCollection<Triplet>> history { get { return _history; } set { _history = value; OnPropertyChanged("history");} }*/
-
         private Dictionary<string, ObservableCollection<Triplet>> _history;
 
         [JsonProperty(Order = -2)]
@@ -189,7 +185,6 @@ namespace DartTracker.Models
                 OnPropertyChanged("history");
             }
         }
-
 
         [JsonIgnore]
         public ObservableCollection<Triplet> HistoryPlayerOne => history.Values.ToArray()[0];
