@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:DartTracker" xmlns:models="clr-namespace:DartTracker.Models"
         d:DataContext="{d:DesignInstance Type=models:GameLeg}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        FontFamily="Arial">
+
     <Window.Resources>
         <!-- Template for displaying a score triplet. -->
         <DataTemplate x:Key="TripletPanel">
@@ -103,33 +105,32 @@
         <!-- Menu Bar -->
         <DockPanel Grid.Row="0" Grid.ColumnSpan="4">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="Game">
-                    <MenuItem Header="Edit"></MenuItem>
-                    <MenuItem Header="New"></MenuItem>
+                <MenuItem Header="Wedstrijd">
+                    <MenuItem Header="Nieuwe wedstrijd"></MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="Turn">
-                    <MenuItem Header="Clear"></MenuItem>
-                    <MenuItem Header="Undo"></MenuItem>
+                <MenuItem Header="Beurt">
+                    <MenuItem Header="Beurt leegmaken"></MenuItem>
+                    <MenuItem Header="Ongedaan maken"></MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="Export" Command="{Binding tournament.SerializeTournamentCommand}"></MenuItem>
-                <MenuItem Header="Help"></MenuItem>
+                <MenuItem Header="Exporteer" Command="{Binding tournament.SerializeTournamentCommand}"></MenuItem>
+                <MenuItem Header="Statistieken"></MenuItem>
             </Menu>
         </DockPanel>
 
 
         <!-- Score Panels -->
         <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="2" Grid.Column="0">
-            <ListView BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+            <ListView HorizontalContentAlignment="Center" BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="2" Grid.Column="1">
             <ListView BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerOne}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="Margin" Value="0,5,15,5"/>
-                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="Margin" Value="0,5,0,5"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="FontWeight" Value="Bold"/>
                     </Style>
                 </ListView.ItemContainerStyle>
@@ -137,15 +138,15 @@
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="1,0,0,1" Grid.Row="2" Grid.Column="2">
-            <ListView BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerTwo}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+            <ListView HorizontalContentAlignment="Center" BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerTwo}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="2" Grid.Column="3">
             <ListView BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerTwo}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="Margin" Value="0,5,15,5"/>
-                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="Margin" Value="0,5,0,5"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="FontWeight" Value="Bold"/>
                     </Style>
                 </ListView.ItemContainerStyle>
@@ -187,9 +188,7 @@
 
 
         <!-- Data Input Panel -->
-        <Border BorderBrush="Black" BorderThickness="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"></Border>
-
-        <Border BorderBrush="Black" BorderThickness="1,0,0,0" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
+        <Border BorderBrush="Black" BorderThickness="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -204,10 +203,9 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
-                    <Button Style="{DynamicResource RoundedButtonStyle}" Height="20" Width="30px" Margin="0,0,0,0" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="">&lt;&lt;</Button>
-                    <Label VerticalAlignment="Center">Over:</Label>
-                    <TextBlock Width="125" VerticalAlignment="Center" Text="?"></TextBlock>
-                    <Button Style="{DynamicResource RoundedButtonStyle}" Height="20" Width="30px" Margin="0,0,0,0" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="">&lt;</Button>
+                    <Button Style="{DynamicResource RoundedButtonStyle}" Margin="0,0,10,0" Height="20" Width="30px" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="">&lt;&lt;</Button>
+                    <Label VerticalAlignment="Center">Huidige speler:</Label>
+                    <TextBlock Width="125" VerticalAlignment="Center" Text="{Binding Path=leg.gameLeg.CurrentTurn.Name, Mode=TwoWay}"></TextBlock>
                 </StackPanel>
             </Grid>
         </Border>

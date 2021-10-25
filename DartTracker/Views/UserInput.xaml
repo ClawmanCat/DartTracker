@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DartTracker.Views" xmlns:ctrl1="clr-namespace:DartTracker.Controls"
         mc:Ignorable="d"
-        Title="UserInput" Height="300" Width="450">
+        Title="UserInput" Height="300" Width="450"
+        FontFamily="Arial">
     <Window.Resources>
         <Style TargetType="{x:Type DatePickerTextBox}">
             <Setter Property="Text" Value="Selecteer een datum"/>
