@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DartTracker.Views;
 
 namespace DartTracker
 {
@@ -106,6 +107,12 @@ namespace DartTracker
                 tournament.Players[1].Name = textbox.Text;
             }
 
+        }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            StatsWindow statsWindow = new StatsWindow(currentApp.tournament);
+            statsWindow.Show();
         }
     }
 }

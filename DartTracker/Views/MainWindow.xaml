@@ -59,6 +59,7 @@
                    
                    <MenuItem Header="Export" Command="{Binding tournament.SerializeTournamentCommand}"></MenuItem>
                    <MenuItem Header="Help"></MenuItem>
+                <MenuItem StaysOpenOnClick="True" Click="MenuItem_OnClick" Header="Statistics"></MenuItem>
               </Menu>
          </DockPanel>
          

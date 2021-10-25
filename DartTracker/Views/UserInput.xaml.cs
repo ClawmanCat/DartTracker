@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,6 +20,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace DartTracker.Views
 {
@@ -31,7 +33,6 @@ namespace DartTracker.Views
         public UserInput()
         {
             InitializeComponent();
-            pickGame.ItemsSource = Enum.GetValues(typeof(GameType));
         }
 
 
@@ -59,6 +60,11 @@ namespace DartTracker.Views
             else if (string.IsNullOrEmpty(player2.Text))
             {
                 MessageBox.Show("Player 2 is empty.");
+            }
+            else if (player1.Text == player2.Text)
+            {
+                MessageBox.Show("Players must be unique.");
+
             }
             else
             {
@@ -149,6 +155,7 @@ namespace DartTracker.Views
                     currentApp.tournament.Games.Add(game);
                     // This tells App.xaml.cs to continue to the next window
                     DialogResult = true;
+                    currentApp.CreateGameObject = true;
                     // Closes the Window
                     Close();
                 }
@@ -163,39 +170,17 @@ namespace DartTracker.Views
             DialogResult = false;
             Close();
         }
-
-        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (_datePicker1.SelectedDate != null) return;
-
-            FieldInfo fiTextBox = typeof(DatePicker).GetField("_textBox", BindingFlags.Instance | BindingFlags.NonPublic);
-
-            if (fiTextBox != null)
-            {
-                DatePickerTextBox dateTextBox =
-                 (DatePickerTextBox)fiTextBox.GetValue(_datePicker1);
-
-                if (dateTextBox != null)
-                {
-                    PropertyInfo piWatermark = dateTextBox.GetType().GetProperty("Watermark", BindingFlags.Instance | BindingFlags.NonPublic);
-                    if (piWatermark != null)
-                    {
-                        piWatermark.SetValue(dateTextBox, "...", null);
-                    }
-                }
-            }
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void LoadJson_Click(object sender, RoutedEventArgs e)
         {
-            currentApp.tournament = LoadTournamentJson.LoadJson();
-            DialogResult = true;
-            Close();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON-Formatted Data (*json)|*.json";
+            if (openFileDialog.ShowDialog() ?? false)
+            {
+                string jsonString = File.ReadAllText(openFileDialog.FileName);
+                currentApp.tournament = LoadTournamentJson.LoadTournament(jsonString);
+                DialogResult = true;
+                Close();
+            }
         }
     }
 }

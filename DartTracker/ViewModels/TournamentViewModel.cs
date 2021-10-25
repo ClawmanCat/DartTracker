@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using DartTracker.Utility;
 using System;
+using System.Text;
+using Microsoft.Win32;
 
 namespace DartTracker.ViewModels
 {
@@ -27,10 +29,15 @@ namespace DartTracker.ViewModels
 
         public void SaveJson()
         {
-            string jsonString = Serialize();
-            File.WriteAllText("..\\..\\..\\tournament.json", jsonString); // add file explorer later for ease of use 
-        }
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "JSON-Formatted Data (*json)|*.json";
 
+            if (dialog.ShowDialog() ?? false)
+            {
+                string jsonString = Serialize();
+                File.WriteAllText(dialog.FileName, jsonString, Encoding.UTF8);
+            }
+        }
 
         public string Serialize()
         {
