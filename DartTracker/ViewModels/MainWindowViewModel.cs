@@ -57,6 +57,7 @@ namespace DartTracker.ViewModels
         {
             if (((int)player.score) == 0)
             {
+                checkIfNineDarter(player);
                 gameLeg.Winner = player;
                 player.legsWon = gameSet.legs.Count(x => x.Winner == gameLeg.CurrentTurn);
                 foreach (Player p in participatingPlayers)
@@ -173,6 +174,16 @@ namespace DartTracker.ViewModels
             {
                 _gameLeg.CurrentTurn.score -= totalScore;
                 _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Name].Add((int)_gameLeg.CurrentTurn.score);
+            }
+        }
+
+        public void checkIfNineDarter(Player player)
+        {
+            int dartsThrown = _gameLeg.history[player.Name].Count();
+
+            if (dartsThrown == 3)
+            {
+                System.Windows.MessageBox.Show("9 dart leg thrown by" + player.Name);
             }
         }
 
