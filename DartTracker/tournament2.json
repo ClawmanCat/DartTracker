@@ -1,0 +1,131 @@
+﻿{
+  "$type": "DartTracker.Models.Tournament, DartTracker",
+  "Players": {
+    "$type": "System.Collections.Generic.List`1[[DartTracker.Models.Player, DartTracker]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "DartTracker.Models.Player, DartTracker",
+        "Name": "henk",
+        "setsWon": 0,
+        "legsWon": 0,
+        "score": {
+          "$type": "DartTracker.Models.Score, DartTracker"
+        }
+      },
+      {
+        "$type": "DartTracker.Models.Player, DartTracker",
+        "Name": "piet",
+        "setsWon": 0,
+        "legsWon": 0,
+        "score": {
+          "$type": "DartTracker.Models.Score, DartTracker"
+        }
+      }
+    ]
+  },
+  "Games": {
+    "$type": "System.Collections.Generic.List`1[[DartTracker.Models.Game, DartTracker]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "DartTracker.Models.Game, DartTracker",
+        "Winner": null,
+        "gameSets": {
+          "$type": "System.Collections.Generic.List`1[[DartTracker.Models.GameSet, DartTracker]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "DartTracker.Models.GameSet, DartTracker",
+              "legs": {
+                "$type": "System.Collections.Generic.List`1[[DartTracker.Models.GameLeg, DartTracker]], System.Private.CoreLib",
+                "$values": [
+                  {
+                    "$type": "DartTracker.Models.GameLeg, DartTracker",
+                    "history": {
+                      "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[System.Collections.ObjectModel.ObservableCollection`1[[DartTracker.Models.Triplet, DartTracker]], System.ObjectModel]], System.Private.CoreLib",
+                      "henk": {
+                        "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DartTracker.Models.Triplet, DartTracker]], System.ObjectModel",
+                        "$values": [
+                          {
+                            "$type": "DartTracker.Models.Triplet, DartTracker",
+                            "throws": {
+                              "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DartTracker.Models.Throw, DartTracker]], System.ObjectModel",
+                              "$values": [
+                                {
+                                  "$type": "DartTracker.Models.Throw, DartTracker",
+                                  "segment": {
+                                    "$type": "DartTracker.Models.NormalSegment, DartTracker",
+                                    "value": 10,
+                                    "modifier": 1,
+                                    "Score": 10,
+                                    "Display": "10S"
+                                  }
+                                },
+                                {
+                                  "$type": "DartTracker.Models.Throw, DartTracker",
+                                  "segment": {
+                                    "$type": "DartTracker.Models.NormalSegment, DartTracker",
+                                    "value": 10,
+                                    "modifier": 1,
+                                    "Score": 10,
+                                    "Display": "10S"
+                                  }
+                                },
+                                {
+                                  "$type": "DartTracker.Models.Throw, DartTracker",
+                                  "segment": {
+                                    "$type": "DartTracker.Models.NormalSegment, DartTracker",
+                                    "value": 10,
+                                    "modifier": 1,
+                                    "Score": 10,
+                                    "Display": "10S"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "piet": {
+                        "$type": "System.Collections.ObjectModel.ObservableCollection`1[[DartTracker.Models.Triplet, DartTracker]], System.ObjectModel",
+                        "$values": []
+                      }
+                    },
+                    "ScoreHistory": {
+                      "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[System.Collections.ObjectModel.ObservableCollection`1[[System.Int32, System.Private.CoreLib]], System.ObjectModel]], System.Private.CoreLib",
+                      "henk": {
+                        "$type": "System.Collections.ObjectModel.ObservableCollection`1[[System.Int32, System.Private.CoreLib]], System.ObjectModel",
+                        "$values": [
+                          471
+                        ]
+                      },
+                      "piet": {
+                        "$type": "System.Collections.ObjectModel.ObservableCollection`1[[System.Int32, System.Private.CoreLib]], System.ObjectModel",
+                        "$values": []
+                      }
+                    },
+                    "Winner": null,
+                    "CurrentTurn": {
+                      "$type": "DartTracker.Models.Player, DartTracker",
+                      "Name": "piet",
+                      "setsWon": 0,
+                      "legsWon": 0,
+                      "score": {
+                        "$type": "DartTracker.Models.Score, DartTracker"
+                      }
+                    }
+                  }
+                ]
+              },
+              "Winner": null
+            }
+          ]
+        },
+        "setsAmount": 1,
+        "legsAmount": 1
+      }
+    ]
+  },
+  "GamesToWin": 1,
+  "Winner": null,
+  "TimeAndDate": "2021-10-25T12:28:48.6656303+02:00",
+  "Time": null
+}

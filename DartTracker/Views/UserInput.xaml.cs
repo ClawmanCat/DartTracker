@@ -90,15 +90,14 @@ namespace DartTracker.Views
         private void LoadJson_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            string jsonString = "";
-            if (openFileDialog.ShowDialog() == true)
-                jsonString = File.ReadAllText(openFileDialog.FileName);
-            if(jsonString == "")
-                return;
-
-            currentApp.tournament = LoadTournamentJson.LoadTournament(jsonString);
-            DialogResult = true;
-            Close();
+            openFileDialog.Filter = "JSON-Formatted Data (*json)|*.json";
+            if (openFileDialog.ShowDialog() ?? false)
+            {
+                string jsonString = File.ReadAllText(openFileDialog.FileName);
+                currentApp.tournament = LoadTournamentJson.LoadTournament(jsonString);
+                DialogResult = true;
+                Close();
+            }
         }
     }
 }
