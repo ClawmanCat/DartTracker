@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:DartTracker" xmlns:models="clr-namespace:DartTracker.Models"
         d:DataContext="{d:DesignInstance Type=models:GameLeg}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        FontFamily="Arial">
+
     <Window.Resources>
         <!-- Template for displaying a score triplet. -->
         <DataTemplate x:Key="TripletPanel">
@@ -25,122 +27,183 @@
             </ItemsControl>
         </DataTemplate>
 
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" SnapsToDevicePixels="true" StrokeThickness="1" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="DeepSkyBlue"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" CornerRadius="5" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
             <RowDefinition Height="20*"></RowDefinition>
-            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
         </Grid.RowDefinitions>
 
-         
-         
-         <!-- Menu Bar -->
-         <DockPanel Grid.Row="0" Grid.ColumnSpan="4">
-              <Menu DockPanel.Dock="Top">
-                   <MenuItem Header="Game">
-                        <MenuItem Header="Edit"></MenuItem>
-                        <MenuItem Header="New"></MenuItem>
-                   </MenuItem>
-                   
-                   <MenuItem Header="Turn">
-                        <MenuItem Header="Clear"></MenuItem>
-                        <MenuItem Header="Undo"></MenuItem>
-                   </MenuItem>
-                   
-                   <MenuItem Header="Export" Command="{Binding tournament.SerializeTournamentCommand}"></MenuItem>
-                   <MenuItem Header="Help"></MenuItem>
-                <MenuItem StaysOpenOnClick="True" Click="MenuItem_OnClick" Header="Statistics"></MenuItem>
-              </Menu>
-         </DockPanel>
-         
-         
-         <!-- Score Panels -->
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+        <!-- Menu Bar -->
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="4">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Wedstrijd">
+                    <MenuItem Header="Nieuwe wedstrijd"></MenuItem>
+                </MenuItem>
+
+                <MenuItem Header="Beurt">
+                    <MenuItem Header="Beurt leegmaken"></MenuItem>
+                    <MenuItem Header="Ongedaan maken"></MenuItem>
+                </MenuItem>
+
+                <MenuItem Header="Exporteer" Command="{Binding tournament.SerializeTournamentCommand}"></MenuItem>
+                <MenuItem Header="Statistieken"></MenuItem>
+                <MenuItem StaysOpenOnClick="True" Click="MenuItem_OnClick" Header="Statistieken"></MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <!-- Score Panels -->
+        <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="2" Grid.Column="0">
+            <ListView HorizontalContentAlignment="Center" BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+        </Border>
+        
+        <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="2" Grid.Column="1">
+            <ListView BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerOne}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="0,5,0,5"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="1">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerOne}"></ListView>
+        <Border BorderBrush="Black" BorderThickness="1,0,0,1" Grid.Row="2" Grid.Column="2">
+            <ListView HorizontalContentAlignment="Center" BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerTwo}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="2">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.HistoryPlayerTwo}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+        <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="2" Grid.Column="3">
+            <ListView BorderThickness="0,0,0,0" ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerTwo}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="0,5,0,5"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="3">
-            <ListView ItemsSource="{Binding Path=leg.gameLeg.ScorePlayerTwo}"></ListView>
-        </Border>
 
-         
-         <!-- Player Info Panels -->
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+        <!-- Player Info Panels -->
+        <Border Background="#e2e2e2" BorderBrush="Black" BorderThickness="0,1,0,1" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
             <Grid>
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p1label" Text="Header for player1"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Margin="0,10,0,0" Name="p1label" Text="Speler1"></TextBlock>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
-                    <Label Content="SETS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfSetsWonP1" Content="{Binding Path=leg.participatingPlayers[0].setsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label Content="LEGS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfLegsWonP1" Content="{Binding Path=leg.participatingPlayers[0].legsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="SETS:"  FontSize="20" FontWeight="Bold" Margin="0, 0, 0, 0"  HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
+                    <Label x:Name="nrOfSetsWonP1" Content="{Binding Path=leg.participatingPlayers[0].setsWon}" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
+                    <Label Content="LEGS:"  FontSize="20"  FontWeight="Bold" Margin="70, 0, 0, 0"  HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                    <Label x:Name="nrOfLegsWonP1" Content="{Binding Path=leg.participatingPlayers[0].legsWon}" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
                 </StackPanel>
             </Grid>
         </Border>
 
-         
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1">
-            <Grid>
-                <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p2label" Text="Header for player 2"></TextBlock>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
-                    <Label Content="SETS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfSetsWonP2" Content="{Binding Path=leg.participatingPlayers[1].setsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label Content="LEGS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfLegsWonP2" Content="{Binding Path=leg.participatingPlayers[1].legsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                </StackPanel>
-            </Grid>
-        </Border>
-
-         
          <!-- Data Input Panel -->
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="3" Grid.ColumnSpan="4">
+        <Border Background="#e2e2e2" BorderBrush="Black" BorderThickness="1,1,0,1" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Margin="0,10,0,0" Name="p2label" Text="Speler2"></TextBlock>
+                </StackPanel>
 
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
+                    <Label Content="SETS:"  FontSize="20"  FontWeight="Bold" Margin="0, 0, 10, 0"  HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
+                    <Label x:Name="nrOfSetsWonP2" Content="{Binding Path=leg.participatingPlayers[1].setsWon}" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
+                    <Label Content="LEGS:"  FontSize="20"  FontWeight="Bold" Margin="70, 0, 10, 0"  HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                    <Label x:Name="nrOfLegsWonP2" Content="{Binding Path=leg.participatingPlayers[1].legsWon}" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+
+        <!-- Data Input Panel -->
+        <Border BorderBrush="Black" BorderThickness="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0">
-                    <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_First"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.first,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_Second" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Width="75" Margin="10, 0, 10, 0" x:Name="Input_Third"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.third,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="75" Margin="10, 10, 10, 0" x:Name="Input_First"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.first,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="75" Margin="10, 10, 10, 0" x:Name="Input_Second" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="75" Margin="10, 10, 10, 0" x:Name="Input_Third"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Path=leg.third,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Style="{DynamicResource RoundedButtonStyle}" Height="20" Width="70px" Margin="0,13,0,0" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="{Binding leg.registerShotCommand}">Sla beurt op</Button>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
-                    <Label VerticalAlignment="Center">Current Player:</Label>
+                    <Button Style="{DynamicResource RoundedButtonStyle}" Margin="0,0,10,0" Height="20" Width="30px" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="">&lt;&lt;</Button>
+                    <Label VerticalAlignment="Center">Huidige speler:</Label>
                     <TextBlock Width="125" VerticalAlignment="Center" Text="{Binding Path=leg.gameLeg.CurrentTurn.Name, Mode=TwoWay}"></TextBlock>
-                    
-                    <Button Height="20" Command="{Binding leg.registerShotCommand}">End Turn</Button>
                 </StackPanel>
             </Grid>
         </Border>
