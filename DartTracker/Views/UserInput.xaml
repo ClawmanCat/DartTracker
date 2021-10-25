@@ -46,21 +46,21 @@
 
         </Grid>
         <WrapPanel Grid.Row="1">
-            <Label Width="191" HorizontalContentAlignment="Center">Hoeveel sets worden er gespeeld?</Label>
+            <Label Width="200" HorizontalContentAlignment="Center">Hoeveel sets worden er gespeeld?</Label>
             <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="OnlyNumbersTextInput" Text="{Binding AmountOfSets, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" />
         </WrapPanel>
         <WrapPanel Grid.Row="2">
-            <Label Width="191" HorizontalContentAlignment="Center">Hoeveel legs worden er gespeeld?</Label>
+            <Label Width="200" HorizontalContentAlignment="Center">Hoeveel legs worden er gespeeld?</Label>
             <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="OnlyNumbersTextInput" Text="{Binding AmountOfLegs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"></TextBox>
         </WrapPanel>
         <WrapPanel HorizontalAlignment="Left" Grid.Row="3">
-            <Label Width="191">Selecteer een datum en een tijd: </Label>
+            <Label Width="200">Selecteer een datum en een tijd: </Label>
             <DatePicker SelectedDate="{Binding TournamentDateTime, Mode=TwoWay}"/>
             <ctrl1:TimeControl Value="{Binding TournamentTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="startTime"/>
             <!-- TODO: Add Timepicker-->
         </WrapPanel>
         <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4">
-            <Label Width="191">Spel Type</Label>
+            <Label Width="200">Spel Type</Label>
             <ComboBox ItemsSource="{Binding TournamentGameType}" SelectedItem="{Binding NewGameType}" SelectedIndex="1" Width="100"></ComboBox>
         </WrapPanel>
 
