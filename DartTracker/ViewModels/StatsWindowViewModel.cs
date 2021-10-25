@@ -15,8 +15,6 @@ namespace DartTracker.ViewModels
 {
     public class StatsWindowViewModel : INotifyPropertyChanged
     {
-        // public Dictionary<string, ObservableCollection<Triplet>> FirstHistory => _totalHistory.First();
-
 
         private readonly Tournament _tournament;
         private GameLeg _gameLeg;
@@ -31,6 +29,7 @@ namespace DartTracker.ViewModels
             }
         }
 
+        #region PlayersAverages
 
         private double _averageInGamePlayerOne;
         private double _averageInSetPlayerOne;
@@ -49,7 +48,8 @@ namespace DartTracker.ViewModels
                 OnPropertyChanged("AverageInGamePlayerOne");
             }
         }
-        public double AverageInSetPlayerOne {
+        public double AverageInSetPlayerOne
+        {
             get { return _averageInSetPlayerOne; }
             set
             {
@@ -95,6 +95,7 @@ namespace DartTracker.ViewModels
             }
         }
 
+        #endregion
 
         public GameSet CurrentSet { get; set; }
         public Game CurrentGame { get; set; }
