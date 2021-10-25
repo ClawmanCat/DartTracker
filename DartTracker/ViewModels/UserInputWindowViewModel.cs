@@ -104,14 +104,17 @@ namespace DartTracker.ViewModels
             }
         }
 
+
         public void createSetsLegs(int? sets, int? legs)
         {
+             
+            //// TODO: Make dynamic!
             var gameSets = new List<GameSet>((int)sets);
-            for(int i = 0; i < (int)sets; i++)
+            for (int i = 0; i < (int)sets; i++)
             {
                 GameSet gameset = new GameSet();
                 gameset.legs = new List<GameLeg>((int)legs);
-                for(int j = 0; j < (int)legs; j++)
+                for (int j = 0; j < (int)legs; j++)
                 {
                     GameLeg gameleg = new GameLeg()
                     {
@@ -126,9 +129,16 @@ namespace DartTracker.ViewModels
             }
             foreach (Player p in _tournament.Players)
             {
-                gameSets.Last().legs.Last().history.Add(p.Name, new ObservableCollection<Triplet>());
-                gameSets.Last().legs.Last().ScoreHistory.Add(p.Name, new ObservableCollection<int>());
+                for (int i = 0; i < AmountOfSets; i++)
+                {
+                    for (int j = 0; j < AmountOfLegs; j++)
+                    {
+                        gameSets[i].legs[j].history.Add(p.Name, new ObservableCollection<Triplet>());
+                        gameSets[i].legs[j].ScoreHistory.Add(p.Name, new ObservableCollection<int>());
+                    }
+                }
             }
+
             Game game = new Game()
             {
                 Winner = null,

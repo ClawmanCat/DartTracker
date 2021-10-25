@@ -56,21 +56,20 @@ namespace DartTracker.Models
         private Player _winner;
         private DateTime? _timeAndDate;
         private List<Player> _players;
+        private List<Game> _games;
+        private int _gamesToWin;
+        private TimeSpan? _time;
 
         public List<Player> Players
         {
             get { return _players; }
             set { _players = value; OnPropertyChanged("Players"); }
         }
-        private List<Game> _games;
-
         public List<Game> Games
         {
             get { return _games; }
             set { _games = value; OnPropertyChanged("Games"); }
         }
-        private int _gamesToWin;
-
         public int GamesToWin
         {
             get { return _gamesToWin; }
@@ -86,7 +85,6 @@ namespace DartTracker.Models
             get { return _timeAndDate; }
             set { _timeAndDate = value; OnPropertyChanged("TimeAndDate"); }
         }
-        private TimeSpan? _time;
         public TimeSpan? Time
         {
             get { return _time; }
