@@ -156,30 +156,40 @@
         <Border Background="#e2e2e2" BorderBrush="Black" BorderThickness="0,1,0,1" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
             <Grid>
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Margin="0,10,0,0" Name="p1label" Text="Speler1"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Margin="0,5,0,0" Name="p1label" Text="Speler1"></TextBlock>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
-                    <Label Content="SETS:"  FontSize="20" FontWeight="Bold" Margin="0, 0, 0, 0"  HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
-                    <Label x:Name="nrOfSetsWonP1" Content="{Binding Path=leg.participatingPlayers[0].setsWon}" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
-                    <Label Content="LEGS:"  FontSize="20"  FontWeight="Bold" Margin="70, 0, 0, 0"  HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
-                    <Label x:Name="nrOfLegsWonP1" Content="{Binding Path=leg.participatingPlayers[0].legsWon}" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" Grid.Column="0" Grid.Row="0">
+                    <Label Content="SETS:"  FontSize="15" FontWeight="Bold" Margin="0, 0, 0, 0"  HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
+                    <Label x:Name="nrOfSetsWonP1" Content="{Binding Path=leg.participatingPlayers[0].setsWon}" FontSize="15" FontWeight="Bold" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
+                    <Label Content="LEGS:"  FontSize="15"  FontWeight="Bold" Margin="70, 0, 0, 0"  HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                    <Label x:Name="nrOfLegsWonP1" Content="{Binding Path=leg.participatingPlayers[0].legsWon}" FontSize="15" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <Label  Content="Gemiddelde wedstrijd:" ></Label>
+                    <Label x:Name="AverageInGamePlayerOne" Content="{Binding Path=}" ></Label>
                 </StackPanel>
             </Grid>
         </Border>
 
-         <!-- Data Input Panel -->
         <Border Background="#e2e2e2" BorderBrush="Black" BorderThickness="1,1,0,1" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1">
             <Grid>
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Margin="0,10,0,0" Name="p2label" Text="Speler2"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Margin="0,5,0,0" Name="p2label" Text="Speler2"></TextBlock>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
-                    <Label Content="SETS:"  FontSize="20"  FontWeight="Bold" Margin="0, 0, 10, 0"  HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
-                    <Label x:Name="nrOfSetsWonP2" Content="{Binding Path=leg.participatingPlayers[1].setsWon}" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
-                    <Label Content="LEGS:"  FontSize="20"  FontWeight="Bold" Margin="70, 0, 10, 0"  HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
-                    <Label x:Name="nrOfLegsWonP2" Content="{Binding Path=leg.participatingPlayers[1].legsWon}" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" Grid.Column="0" Grid.Row="0">
+                    <Label Content="SETS:"  FontSize="15"  FontWeight="Bold" Margin="0, 0, 10, 0"  HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
+                    <Label x:Name="nrOfSetsWonP2" Content="{Binding Path=leg.participatingPlayers[1].setsWon}" FontSize="15" FontWeight="Bold" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"/>
+                    <Label Content="LEGS:"  FontSize="15"  FontWeight="Bold" Margin="70, 0, 10, 0"  HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                    <Label x:Name="nrOfLegsWonP2" Content="{Binding Path=leg.participatingPlayers[1].legsWon}" FontSize="15" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <Label  Content="Gemiddelde wedstrijd:" ></Label>
+                    <Label x:Name="AverageInGamePlayerTwo" Content="{Binding Path=AverageInGamePlayerTwo}" ></Label>
                 </StackPanel>
             </Grid>
         </Border>
