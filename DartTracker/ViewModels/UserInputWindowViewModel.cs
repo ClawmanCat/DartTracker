@@ -23,7 +23,7 @@ namespace DartTracker.ViewModels
         public ICommand setGameCommand { get; set; }
         // Calling the current app to access the tournament object globally
         private Tournament _tournament;
-        private Score _score;
+        Score _score;
         //public App currentApp = Application.Current as App;
         #endregion
         #region ComboBox Filler

@@ -44,6 +44,7 @@ namespace DartTracker
             base.OnStartup(e);
             //setup score
             score = new Score();
+            
             // Tournament setup
             tournament = new Tournament();
             tournament.GamesToWin = 1;
