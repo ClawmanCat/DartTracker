@@ -156,7 +156,7 @@
         <Border Background="#e2e2e2" BorderBrush="Black" BorderThickness="0,1,0,1" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
             <Grid>
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Margin="0,10,0,0" Name="p1label" Text="Speler1"></TextBlock>
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Margin="0,10,0,0" Name="p1label" Text="Speler 1" BorderThickness="0" Background="Transparent" LostFocus="p1_LostFocus"></TextBox>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
@@ -172,7 +172,7 @@
         <Border Background="#e2e2e2" BorderBrush="Black" BorderThickness="1,1,0,1" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1">
             <Grid>
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Margin="0,10,0,0" Name="p2label" Text="Speler2"></TextBlock>
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" Margin="0,10,0,0" Name="p2label" Text="Speler 2" BorderThickness="0" Background="Transparent" LostFocus="p2_LostFocus"></TextBox>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
