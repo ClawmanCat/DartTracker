@@ -161,8 +161,7 @@ namespace DartTracker.ViewModels
 
             return WeightedMeans(allLegs);
         }
-        //Jongens we moeten echt IDs gebruiken anders kunnen we een eis niet implementeren
-        //En dan schrijft iemand dit
+
         public Dictionary<int, Tuple<double, int>> CalculateAverageScoreInLeg(
             Dictionary<int, ObservableCollection<Triplet>> leg)
         {
