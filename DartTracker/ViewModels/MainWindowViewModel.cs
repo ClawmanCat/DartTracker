@@ -183,6 +183,7 @@ namespace DartTracker.ViewModels
             if(dartsThrown != 0 && dartsThrown == 3)
             {
                 System.Windows.MessageBox.Show("9 dart leg gegooid door " + player.Name);
+                player.nineDarts++;
             }
             
         }
