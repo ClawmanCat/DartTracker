@@ -114,7 +114,23 @@ namespace DartTracker.Models
     public class Player : INotifyPropertyChanged
     {
         private string _Name;
-
+        private int _Id;
+        public Player()
+        {
+            //Voor data inladen: Als de naam al bestaat krijgt de speler hetzelfde ID als hij in de data heeft, anders random
+            Random rnd = new Random();
+            _Id = rnd.Next();
+        }
+        public Player(string name, int id)
+        {
+            _Name = name;
+            _Id = id;
+        }
+        public int Id
+        {
+            get { return _Id; }
+            set { _Id = value; }
+        }
         public string Name
         {
             get { return _Name; }
@@ -154,10 +170,10 @@ namespace DartTracker.Models
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public override string ToString()
+        /*public override string ToString()
         {
             return Name;
-        }
+        }*/
     }
 
     public class Game
@@ -179,10 +195,14 @@ namespace DartTracker.Models
 
     public class GameLeg : INotifyPropertyChanged
     {
-        private Dictionary<string, ObservableCollection<Triplet>> _history;
+        /*       private Dictionary<Player, ObservableCollection<Triplet>> _history; 
+               [JsonProperty(Order = -2)]
+               public Dictionary<Player, ObservableCollection<Triplet>> history { get { return _history; } set { _history = value; OnPropertyChanged("history");} }*/
+
+        private Dictionary<int, ObservableCollection<Triplet>> _history;
 
         [JsonProperty(Order = -2)]
-        public Dictionary<string, ObservableCollection<Triplet>> history
+        public Dictionary<int, ObservableCollection<Triplet>> history
         {
             get { return _history; }
             set
@@ -205,7 +225,7 @@ namespace DartTracker.Models
         public ObservableCollection<int> ScorePlayerTwo => ScoreHistory.Values.ToArray()[1];
 
         [JsonProperty(Order = -2)]
-        public Dictionary<string, ObservableCollection<int>> ScoreHistory { get; set; }
+        public Dictionary<int, ObservableCollection<int>> ScoreHistory { get; set; }
 
         [JsonIgnore] public GameSet parent;
 
