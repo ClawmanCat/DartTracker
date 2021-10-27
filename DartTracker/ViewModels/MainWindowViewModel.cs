@@ -36,6 +36,11 @@ namespace DartTracker.ViewModels
             get;
             private set;
         }
+        public ICommand undoShotCommand
+        {
+            get;
+            private set;
+        }
 
         private List<Player> _participatingPlayers;
         public List<Player> participatingPlayers { get => _participatingPlayers; set { _participatingPlayers = value; OnPropertyChanged("participatingPlayers"); } }
@@ -57,6 +62,7 @@ namespace DartTracker.ViewModels
             _game = game;
             _gameLeg.CurrentTurn = NextPlayer();
             registerShotCommand = new RegisterShotCommand(this);
+            undoShotCommand = new UndoShotCommand(this);
         }
 
         public void checkWinner(Player player)
@@ -119,6 +125,26 @@ namespace DartTracker.ViewModels
             first = second = third = "";
 
             _gameLeg.CurrentTurn = NextPlayer();
+        }
+
+        public bool CheckHistorySize()
+        {
+            var otherPlayer = NextPlayer();
+            var returnValue =  _gameLeg.history[_gameLeg.CurrentTurn.Id].Count > 0;
+            NextPlayer();
+            return returnValue;
+        }
+        public void UndoShot()
+        {
+            _gameLeg.CurrentTurn = NextPlayer();
+            int lastItem = _gameLeg.history[_gameLeg.CurrentTurn.Id].Count - 1;
+            int lastScore = _gameLeg.ScoreHistory[gameLeg.CurrentTurn.Id][lastItem];
+            _gameLeg.CurrentTurn.score.set(lastScore);
+
+
+            _gameLeg.history[_gameLeg.CurrentTurn.Id].RemoveAt(lastItem);
+            _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Id].RemoveAt(lastItem);
+
         }
 
         public Player NextPlayer()

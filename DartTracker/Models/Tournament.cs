@@ -36,6 +36,12 @@ namespace DartTracker.Models
             result._score = s._score -= amount;
             return result;
         }
+        public Score set (int amount)
+        {
+            Score result = new Score();
+            result._score = this._score += amount;
+            return result;
+        }
     }
 
     public enum SegmentModifier
