@@ -52,25 +52,25 @@ namespace UnitTests
                 {
                     Winner = players[0],
                     CurrentTurn = new Player {Name = "Henk"},
-                    history = new Dictionary<string, ObservableCollection<Triplet>>()
+                    history = new Dictionary<int, ObservableCollection<Triplet>>()
                     {
                         {
-                            "Henk",
+                            0,
                             new ObservableCollection<Triplet>() { }
                         },
                         {
-                            "Piet",
+                            1,
                             new ObservableCollection<Triplet>() { }
                         }
                     },
-                    ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                    ScoreHistory = new Dictionary<int, ObservableCollection<int>>()
                     {
                         {
-                            "Henk",
+                            0,
                             new ObservableCollection<int>() { }
                         },
                         {
-                            "Piet",
+                            1,
                             new ObservableCollection<int>() { }
                         }
                     }
@@ -79,25 +79,25 @@ namespace UnitTests
                 {
                     Winner = players[0],
                     CurrentTurn = new Player {Name = "Henk"},
-                    history = new Dictionary<string, ObservableCollection<Triplet>>()
+                    history = new Dictionary<int, ObservableCollection<Triplet>>()
                     {
                         {
-                            "Henk",
+                            0,
                             new ObservableCollection<Triplet> { }
                         },
                         {
-                            "Piet",
+                            1,
                             new ObservableCollection<Triplet> { }
                         }
                     },
-                    ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                    ScoreHistory = new Dictionary<int, ObservableCollection<int>>()
                     {
                         {
-                            "Henk",
+                            0,
                             new ObservableCollection<int>() { }
                         },
                         {
-                            "Piet",
+                            1,
                             new ObservableCollection<int>() { }
                         }
                     }

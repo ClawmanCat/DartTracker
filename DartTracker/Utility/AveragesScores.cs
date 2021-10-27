@@ -26,35 +26,35 @@ namespace DartTracker.Utility
             }
         }
 
-        public Dictionary<string, Tuple<double, int>> CalculateAverageScoreInGame(Game game)
+        public Dictionary<int, Tuple<double, int>> CalculateAverageScoreInGame(Game game)
         {
-            Dictionary<string, Tuple<double, int>>
-                averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
-            List<Dictionary<string, Tuple<double, int>>>
-                allSets = new List<Dictionary<string, Tuple<double, int>>>();
+            Dictionary<int, Tuple<double, int>>
+                averageScoreDictionary = new Dictionary<int, Tuple<double, int>>();
+            List<Dictionary<int, Tuple<double, int>>>
+                allSets = new List<Dictionary<int, Tuple<double, int>>>();
             foreach (var set in game.gameSets)
                 allSets.Add(CalculateAverageScoreInSet(set));
 
             return WeightedMeans(allSets);
         }
 
-        public Dictionary<string, Tuple<double, int>> CalculateAverageScoreInSet(GameSet set)
+        public Dictionary<int, Tuple<double, int>> CalculateAverageScoreInSet(GameSet set)
         {
-            Dictionary<string, Tuple<double, int>>
-                averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
-            List<Dictionary<string, Tuple<double, int>>>
-                allLegs = new List<Dictionary<string, Tuple<double, int>>>();
+            Dictionary<int, Tuple<double, int>>
+                averageScoreDictionary = new Dictionary<int, Tuple<double, int>>();
+            List<Dictionary<int, Tuple<double, int>>>
+                allLegs = new List<Dictionary<int, Tuple<double, int>>>();
             foreach (var leg in set.legs)
                 allLegs.Add(CalculateAverageScoreInLeg(leg.history));
 
             return WeightedMeans(allLegs);
         }
 
-        public Dictionary<string, Tuple<double, int>> CalculateAverageScoreInLeg(
-            Dictionary<string, ObservableCollection<Triplet>> leg)
+        public Dictionary<int, Tuple<double, int>> CalculateAverageScoreInLeg(
+            Dictionary<int, ObservableCollection<Triplet>> leg)
         {
-            Dictionary<string, Tuple<double, int>>
-                averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
+            Dictionary<int, Tuple<double, int>>
+                averageScoreDictionary = new Dictionary<int, Tuple<double, int>>();
             foreach (var playerTurns in leg)
             {
                 if (playerTurns.Value.Count == 0)
@@ -81,15 +81,15 @@ namespace DartTracker.Utility
             return throwScores.Average();
         }
 
-        private Dictionary<string, Tuple<double, int>> WeightedMeans(
-            List<Dictionary<string, Tuple<double, int>>> combinedHistory)
+        private Dictionary<int, Tuple<double, int>> WeightedMeans(
+            List<Dictionary<int, Tuple<double, int>>> combinedHistory)
         {
-            Dictionary<string, Tuple<double, int>>
-                combinedMeanDictionary = new Dictionary<string, Tuple<double, int>>();
+            Dictionary<int, Tuple<double, int>>
+                combinedMeanDictionary = new Dictionary<int, Tuple<double, int>>();
             if (combinedMeanDictionary == null) throw new ArgumentNullException(nameof(combinedMeanDictionary));
 
-            Dictionary<string, Tuple<double, int>> weightAndValueSum =
-                new Dictionary<string, Tuple<double, int>>();
+            Dictionary<int, Tuple<double, int>> weightAndValueSum =
+                new Dictionary<int, Tuple<double, int>>();
 
             foreach (var legs in combinedHistory)
             {
