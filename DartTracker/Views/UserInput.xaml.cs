@@ -76,7 +76,7 @@ namespace DartTracker.Views
                     // Closes the Window
                     Close();
                 }
-                catch (Exception exc)
+                catch(Exception exc)
                 {
                     MessageBox.Show(exc.Message);
                 }

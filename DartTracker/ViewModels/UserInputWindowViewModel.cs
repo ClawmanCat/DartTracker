@@ -118,8 +118,8 @@ namespace DartTracker.ViewModels
                 {
                     GameLeg gameleg = new GameLeg()
                     {
-                        history = new Dictionary<int, ObservableCollection<Triplet>>(),
-                        ScoreHistory = new Dictionary<int, ObservableCollection<int>>(),
+                        history = new Dictionary<string, ObservableCollection<Triplet>>(),
+                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>(),
                         Winner = null,
                         CurrentTurn = null
                     };
@@ -133,8 +133,8 @@ namespace DartTracker.ViewModels
                 {
                     for (int j = 0; j < AmountOfLegs; j++)
                     {
-                        gameSets[i].legs[j].history.Add(p.Id, new ObservableCollection<Triplet>());
-                        gameSets[i].legs[j].ScoreHistory.Add(p.Id, new ObservableCollection<int>());
+                        gameSets[i].legs[j].history.Add(p.Name, new ObservableCollection<Triplet>());
+                        gameSets[i].legs[j].ScoreHistory.Add(p.Name, new ObservableCollection<int>());
                     }
                 }
             }
