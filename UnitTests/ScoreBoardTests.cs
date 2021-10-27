@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,9 +32,10 @@ namespace UnitTests
             score2.SetScore(GameType.NORMAL);
 
             // The players 
-            players = new List<Player> { 
-                new Player { Name = "Henk", legsWon = 0, score = score1 }, 
-                new Player { Name = "Piet", legsWon = 0, score = score2 } 
+            players = new List<Player>
+            {
+                new Player {Name = "Henk", legsWon = 0, score = score1},
+                new Player {Name = "Piet", legsWon = 0, score = score2}
             };
         }
 
@@ -43,20 +45,64 @@ namespace UnitTests
             score.SetScore(GameType.NORMAL);
             score -= 501;
 
-            gameLeg = new GameLeg
+
+            var legs = new List<GameLeg>()
             {
-                Winner = players[0],
+                new GameLeg()
+                {
+                    Winner = players[0],
+                    CurrentTurn = new Player {Name = "Henk"},
+                    history = new Dictionary<string, ObservableCollection<Triplet>>()
+                    {
+                        {
+                            "Henk",
+                            new ObservableCollection<Triplet>() { }
+                        },
+                        {
+                            "Piet",
+                            new ObservableCollection<Triplet>() { }
+                        }
+                    },
+                    ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                    {
+                        {
+                            "Henk",
+                            new ObservableCollection<int>() { }
+                        },
+                        {
+                            "Piet",
+                            new ObservableCollection<int>() { }
+                        }
+                    }
+                },
+                new GameLeg()
+                {
+                    Winner = players[0],
+                    CurrentTurn = new Player {Name = "Henk"},
+                    history = new Dictionary<string, ObservableCollection<Triplet>>()
+                    {
+                        {
+                            "Henk",
+                            new ObservableCollection<Triplet> { }
+                        },
+                        {
+                            "Piet",
+                            new ObservableCollection<Triplet> { }
+                        }
+                    },
+                    ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                    {
+                        {
+                            "Henk",
+                            new ObservableCollection<int>() { }
+                        },
+                        {
+                            "Piet",
+                            new ObservableCollection<int>() { }
+                        }
+                    }
+                }
             };
-
-            gameLeg2 = new GameLeg
-            {
-                Winner = players[0],
-            };
-
-            var legs = new List<GameLeg>();
-
-            legs.Add(gameLeg);
-            legs.Add(gameLeg2);
 
             gameSet = new GameSet
             {
@@ -75,7 +121,6 @@ namespace UnitTests
                 setsAmount = setsAmount,
                 legsAmount = legsAmount,
             };
-
             return new MainWindowViewModel(players, game, score);
         }
 
@@ -83,12 +128,13 @@ namespace UnitTests
         public void doesLegScoreIncreaseByOneIfMoreThanHalfOfLegsWon()
         {
             // 5 legs, 5 sets
-            viewModel = createTestCode(5,5);
+            viewModel = createTestCode(5, 5);
+
             //Henk
             viewModel.checkWinner(players[0]);
+
             // Piet
             viewModel.checkWinner(players[1]);
-
             Assert.AreEqual(2, players[0].legsWon);
             Assert.AreEqual(0, players[1].legsWon);
         }
@@ -98,11 +144,12 @@ namespace UnitTests
         {
             // 3 legs, 3 sets
             viewModel = createTestCode(3, 3);
+
             // Henk
             viewModel.checkWinner(players[0]);
+
             // Piet
             viewModel.checkWinner(players[1]);
-
             Assert.AreEqual(1, players[0].setsWon);
             Assert.AreEqual(0, players[1].setsWon);
         }
