@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using DartTracker.Annotations;
 using DartTracker.Models;
+using DartTracker.Utility;
 
 namespace DartTracker.ViewModels
 {
@@ -19,6 +20,7 @@ namespace DartTracker.ViewModels
         private readonly Tournament _tournament;
         private GameLeg _gameLeg;
 
+        private AveragesScores _averagesScores;
         public GameLeg CurrentLeg
         {
             get { return _gameLeg; }
@@ -108,6 +110,7 @@ namespace DartTracker.ViewModels
         {
             Sets = new List<string>();
             Legs = new List<string>();
+            _averagesScores = AveragesScores.Instantance;
             _tournament = tournament;
             CurrentGame = tournament.Games.First();
             CurrentSet = CurrentGame.gameSets.First();
@@ -119,13 +122,13 @@ namespace DartTracker.ViewModels
 
         private void SetAverages()
         {
-            var averagesScoresInGame = CalculateAverageScoreInGame(CurrentGame);
+            var averagesScoresInGame = _averagesScores.CalculateAverageScoreInGame(CurrentGame);
             AverageInGamePlayerOne = averagesScoresInGame.ToArray()[0].Value.Item1;
             AverageInGamePlayerTwo = averagesScoresInGame.ToArray()[1].Value.Item1;
-            var averagesScoresInSet = CalculateAverageScoreInSet(CurrentSet);
+            var averagesScoresInSet = _averagesScores.CalculateAverageScoreInSet(CurrentSet);
             AverageInSetPlayerOne = averagesScoresInSet.ToArray()[0].Value.Item1;
             AverageInSetPlayerTwo = averagesScoresInSet.ToArray()[1].Value.Item1;
-            var averagesScoresInLeg = CalculateAverageScoreInLeg(CurrentLeg.history);
+            var averagesScoresInLeg = _averagesScores.CalculateAverageScoreInLeg(CurrentLeg.history);
             AverageInLegPlayerOne = averagesScoresInLeg.ToArray()[0].Value.Item1;
             AverageInLegPlayerTwo = averagesScoresInLeg.ToArray()[1].Value.Item1;
         }
@@ -135,99 +138,6 @@ namespace DartTracker.ViewModels
                 Sets.Add($"Set {i + 1}");
             for (int i = 0; i < CurrentSet.legs.Count; i++)
                 Legs.Add($"Leg {i + 1}");
-        }
-
-
-        public Dictionary<string, Tuple<double, int>> CalculateAverageScoreInGame(Game game)
-        {
-            Dictionary<string, Tuple<double, int>>
-                averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
-            List<Dictionary<string, Tuple<double, int>>>
-                allSets = new List<Dictionary<string, Tuple<double, int>>>();
-            foreach (var set in game.gameSets)
-                allSets.Add(CalculateAverageScoreInSet(set));
-
-            return WeightedMeans(allSets);
-        }
-
-        public Dictionary<string, Tuple<double, int>> CalculateAverageScoreInSet(GameSet set)
-        {
-            Dictionary<string, Tuple<double, int>>
-                averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
-            List<Dictionary<string, Tuple<double, int>>>
-                allLegs = new List<Dictionary<string, Tuple<double, int>>>();
-            foreach (var leg in set.legs)
-                allLegs.Add(CalculateAverageScoreInLeg(leg.history));
-
-            return WeightedMeans(allLegs);
-        }
-
-        public Dictionary<string, Tuple<double, int>> CalculateAverageScoreInLeg(
-            Dictionary<string, ObservableCollection<Triplet>> leg)
-        {
-            Dictionary<string, Tuple<double, int>>
-                averageScoreDictionary = new Dictionary<string, Tuple<double, int>>();
-            foreach (var playerTurns in leg)
-            {
-                if (playerTurns.Value.Count == 0)
-                {
-                    averageScoreDictionary[playerTurns.Key] = Tuple.Create(0d, 0);
-                    continue;
-                }
-                averageScoreDictionary[playerTurns.Key] = Tuple.Create(CalculateAverageScoreInTurn(playerTurns.Value),
-                    playerTurns.Value.Count * 3);
-            }
-                
-
-            return averageScoreDictionary;
-        }
-
-        public double CalculateAverageScoreInTurn(ObservableCollection<Triplet> turns)
-        {
-            List<int> throwScores = new List<int>();
-
-            foreach (var triplet in turns)
-            foreach (var trow in triplet.throws)
-                throwScores.Add(trow.segment.Score);
-
-            return throwScores.Average();
-        }
-
-        private Dictionary<string, Tuple<double, int>> WeightedMeans(
-            List<Dictionary<string, Tuple<double, int>>> combinedHistory)
-        {
-            Dictionary<string, Tuple<double, int>>
-                combinedMeanDictionary = new Dictionary<string, Tuple<double, int>>();
-            if (combinedMeanDictionary == null) throw new ArgumentNullException(nameof(combinedMeanDictionary));
-
-            Dictionary<string, Tuple<double, int>> weightAndValueSum =
-                new Dictionary<string, Tuple<double, int>>();
-
-            foreach (var legs in combinedHistory)
-            {
-                foreach (var player in legs)
-                {
-                    double scoreValue = player.Value.Item1 * player.Value.Item2;
-                    int weights = player.Value.Item2;
-                    if (!weightAndValueSum.ContainsKey(player.Key))
-                    {
-                        weightAndValueSum[player.Key] = new Tuple<double, int>(scoreValue, weights);
-                    }
-                    else
-                    {
-                        var totalValueWeight = +weightAndValueSum[player.Key].Item1 + scoreValue;
-                        int totalWeights = +weightAndValueSum[player.Key].Item2 + weights;
-                        weightAndValueSum[player.Key] = new Tuple<double, int>(totalValueWeight, totalWeights);
-                    }
-                }
-            }
-
-            foreach (var player in weightAndValueSum)
-                combinedMeanDictionary[player.Key] = new Tuple<double, int>(
-                    player.Value.Item1 / player.Value.Item2, player.Value.Item2
-                );
-
-            return combinedMeanDictionary;
         }
 
         public Dictionary<string, int> GetNumberOf180SInGame(Game game)

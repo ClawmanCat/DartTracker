@@ -16,6 +16,7 @@ namespace UnitTests
     {
         private Tournament context;
         private StatsWindowViewModel viewModel;
+        private AveragesScores averagesScores;
 
         [TestInitialize]
         public void TestInitialize()
@@ -280,12 +281,13 @@ namespace UnitTests
             };
             context = tournament;
             viewModel = new StatsWindowViewModel(tournament);
+            averagesScores = AveragesScores.Instantance;
         }
         [TestMethod()]
         public void TestAverageInLeg()
         {
             var leg = context.Games.First().gameSets.First().legs.First();
-            var result = viewModel.CalculateAverageScoreInLeg(leg.history);
+            var result = averagesScores.CalculateAverageScoreInLeg(leg.history);
             Assert.AreEqual(20,result["Henk"].Item1);
             Assert.AreEqual(30,result["Piet"].Item1);
         }
@@ -293,9 +295,20 @@ namespace UnitTests
         public void TestAverageInSet()
         {
             var set = context.Games.First().gameSets.First();
-            var result = viewModel.CalculateAverageScoreInSet(set);
+            var result = averagesScores.CalculateAverageScoreInSet(set);
 
            
+        }
+
+        [TestMethod]
+        public void TestAverageInGame()
+        {
+            var game = context.Games.First();
+            var result = averagesScores.CalculateAverageScoreInGame(game);
+            Assert.AreEqual(20, result["Henk"].Item1);
+            Assert.AreEqual(30, result["Piet"].Item1);
+            Assert.AreEqual(12, result["Henk"].Item2);
+            Assert.AreEqual(24, result["Piet"].Item2);
         }
 
         [TestMethod]
@@ -556,15 +569,6 @@ namespace UnitTests
             Assert.AreEqual(4, result["Piet"]);
         }
 
-        [TestMethod]
-        public void TestAverageInGame()
-        {
-            var game = context.Games.First();
-            var result = viewModel.CalculateAverageScoreInGame(game);
-            Assert.AreEqual(20, result["Henk"].Item1);
-            Assert.AreEqual(30, result["Piet"].Item1);
-            Assert.AreEqual(12, result["Henk"].Item2);
-            Assert.AreEqual(24, result["Piet"].Item2);
-        }
+       
     }
 }
