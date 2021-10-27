@@ -24,13 +24,13 @@ namespace UnitTests
             var tournament = new Tournament
             {
                 GamesToWin = 1,
-                Players = new List<Player> { new Player { Name = "Henk" }, new Player { Name = "Piet" } },
-                Winner = new Player { Name = "Henk" },
+                Players = new List<Player> { new Player { Name = "Henk", Id = 2 }, new Player { Name = "Piet", Id = 3} },
+                Winner = new Player { Name = "Henk", Id = 2 },
                 Games = new List<Game>
                 {
                     new Game()
                     {
-                        Winner = new Player {Name = "Henk"},
+                        Winner = new Player {Name = "Henk", Id = 2},
                         setsAmount = 1,
                         legsAmount = 1,
                         gameSets = new List<GameSet>()
@@ -41,12 +41,12 @@ namespace UnitTests
                                 {
                                     new GameLeg()
                                     {
-                                        Winner = new Player {Name = "Henk"},
-                                        CurrentTurn = new Player {Name = "Henk"},
-                                        history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                        Winner = new Player {Name = "Henk", Id = 2},
+                                        CurrentTurn = new Player {Name = "Henk", Id = 2},
+                                        history = new Dictionary<int, ObservableCollection<Triplet>>()
                                         {
                                             {
-                                                "Henk",
+                                                2,
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -58,7 +58,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                3,
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -76,10 +76,10 @@ namespace UnitTests
                                                 }
                                             }
                                         },
-                                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                        ScoreHistory = new Dictionary<int, ObservableCollection<int>>()
                                         {
                                             {
-                                                "Henk",
+                                                2,
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,
@@ -88,7 +88,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                3,
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,
@@ -100,12 +100,12 @@ namespace UnitTests
                                     },
                                     new GameLeg()
                                     {
-                                        Winner = new Player {Name = "Henk"},
-                                        CurrentTurn = new Player {Name = "Henk"},
-                                        history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                        Winner = new Player {Name = "Henk", Id = 2},
+                                        CurrentTurn = new Player {Name = "Henk", Id = 2},
+                                        history = new Dictionary<int, ObservableCollection<Triplet>>()
                                         {
                                             {
-                                                "Henk",
+                                                2,
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -116,7 +116,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                3,
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -133,10 +133,10 @@ namespace UnitTests
                                                 }
                                             }
                                         },
-                                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                        ScoreHistory = new Dictionary<int, ObservableCollection<int>>()
                                         {
                                             {
-                                                "Henk",
+                                                2,
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,
@@ -145,7 +145,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                3,
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,
@@ -163,12 +163,12 @@ namespace UnitTests
                                 {
                                     new GameLeg()
                                     {
-                                        Winner = new Player {Name = "Henk"},
-                                        CurrentTurn = new Player {Name = "Henk"},
-                                        history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                        Winner = new Player {Name = "Henk", Id = 2},
+                                        CurrentTurn = new Player {Name = "Henk", Id = 2},
+                                        history = new Dictionary<int, ObservableCollection<Triplet>>()
                                         {
                                             {
-                                                "Henk",
+                                                2,
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -179,7 +179,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                3,
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -195,10 +195,10 @@ namespace UnitTests
                                                 }
                                             }
                                         },
-                                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                        ScoreHistory = new Dictionary<int, ObservableCollection<int>>()
                                         {
                                             {
-                                                "Henk",
+                                                2,
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,
@@ -207,7 +207,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                3,
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,
@@ -219,12 +219,12 @@ namespace UnitTests
                                     },
                                     new GameLeg()
                                     {
-                                        Winner = new Player {Name = "Henk"},
-                                        CurrentTurn = new Player {Name = "Henk"},
-                                        history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                        Winner = new Player {Name = "Henk", Id = 2},
+                                        CurrentTurn = new Player {Name = "Henk", Id = 2},
+                                        history = new Dictionary<int, ObservableCollection<Triplet>>()
                                         {
                                             {
-                                                "Henk",
+                                                2,
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -235,7 +235,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                3,
                                                 new ObservableCollection<Triplet>
                                                 {
                                                     new Triplet(
@@ -251,10 +251,10 @@ namespace UnitTests
                                                 }
                                             }
                                         },
-                                        ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                        ScoreHistory = new Dictionary<int, ObservableCollection<int>>()
                                         {
                                             {
-                                                "Henk",
+                                                2,
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,
@@ -263,7 +263,7 @@ namespace UnitTests
                                                 }
                                             },
                                             {
-                                                "Piet",
+                                                3,
                                                 new ObservableCollection<int>()
                                                 {
                                                     10,
@@ -287,9 +287,9 @@ namespace UnitTests
         public void TestAverageInLeg()
         {
             var leg = context.Games.First().gameSets.First().legs.First();
-            var result = averagesScores.CalculateAverageScoreInLeg(leg.history);
-            Assert.AreEqual(20,result["Henk"].Item1);
-            Assert.AreEqual(30,result["Piet"].Item1);
+            var result = viewModel.CalculateAverageScoreInLeg(leg.history);
+            Assert.AreEqual(20,result[2].Item1);
+            Assert.AreEqual(30,result[3].Item1);
         }
         [TestMethod]
         public void TestAverageInSet()
@@ -316,7 +316,7 @@ namespace UnitTests
         {
             var game = new Game()
             {
-                Winner = new Player {Name = "Henk"},
+                Winner = new Player {Name = "Henk", Id = 2},
                 setsAmount = 1,
                 legsAmount = 1,
                 gameSets = new List<GameSet>()
@@ -327,12 +327,12 @@ namespace UnitTests
                         {
                             new GameLeg()
                             {
-                                Winner = new Player {Name = "Henk"},
-                                CurrentTurn = new Player {Name = "Henk"},
-                                history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                Winner = new Player {Name = "Henk", Id = 2},
+                                CurrentTurn = new Player {Name = "Henk", Id = 2},
+                                history = new Dictionary<int, ObservableCollection<Triplet>>()
                                 {
                                     {
-                                        "Henk",
+                                        2,
                                         new ObservableCollection<Triplet>
                                         {
                                             new Triplet(
@@ -344,7 +344,7 @@ namespace UnitTests
                                         }
                                     },
                                     {
-                                        "Piet",
+                                        3,
                                         new ObservableCollection<Triplet>
                                         {
                                             new Triplet(
@@ -362,10 +362,10 @@ namespace UnitTests
                                         }
                                     }
                                 },
-                                ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                ScoreHistory = new Dictionary<int, ObservableCollection<int>>()
                                 {
                                     {
-                                        "Henk",
+                                        2,
                                         new ObservableCollection<int>()
                                         {
                                             10,
@@ -374,7 +374,7 @@ namespace UnitTests
                                         }
                                     },
                                     {
-                                        "Piet",
+                                        3,
                                         new ObservableCollection<int>()
                                         {
                                             10,
@@ -386,12 +386,12 @@ namespace UnitTests
                             },
                             new GameLeg()
                             {
-                                Winner = new Player {Name = "Henk"},
-                                CurrentTurn = new Player {Name = "Henk"},
-                                history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                Winner = new Player {Name = "Henk", Id = 2},
+                                CurrentTurn = new Player {Name = "Henk", Id = 2},
+                                history = new Dictionary<int, ObservableCollection<Triplet>>()
                                 {
                                     {
-                                        "Henk",
+                                        2,
                                         new ObservableCollection<Triplet>
                                         {
                                             new Triplet(
@@ -402,7 +402,7 @@ namespace UnitTests
                                         }
                                     },
                                     {
-                                        "Piet",
+                                        3,
                                         new ObservableCollection<Triplet>
                                         {
                                             new Triplet(
@@ -419,10 +419,10 @@ namespace UnitTests
                                         }
                                     }
                                 },
-                                ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                ScoreHistory = new Dictionary<int, ObservableCollection<int>>()
                                 {
                                     {
-                                        "Henk",
+                                        2,
                                         new ObservableCollection<int>()
                                         {
                                             10,
@@ -431,7 +431,7 @@ namespace UnitTests
                                         }
                                     },
                                     {
-                                        "Piet",
+                                        3,
                                         new ObservableCollection<int>()
                                         {
                                             10,
@@ -449,12 +449,12 @@ namespace UnitTests
                         {
                             new GameLeg()
                             {
-                                Winner = new Player {Name = "Henk"},
-                                CurrentTurn = new Player {Name = "Henk"},
-                                history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                Winner = new Player {Name = "Henk", Id = 2},
+                                CurrentTurn = new Player {Name = "Henk", Id = 2},
+                                history = new Dictionary<int, ObservableCollection<Triplet>>()
                                 {
                                     {
-                                        "Henk",
+                                        2,
                                         new ObservableCollection<Triplet>
                                         {
                                             new Triplet(
@@ -465,7 +465,7 @@ namespace UnitTests
                                         }
                                     },
                                     {
-                                        "Piet",
+                                        3,
                                         new ObservableCollection<Triplet>
                                         {
                                             new Triplet(
@@ -481,10 +481,10 @@ namespace UnitTests
                                         }
                                     }
                                 },
-                                ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                ScoreHistory = new Dictionary<int, ObservableCollection<int>>()
                                 {
                                     {
-                                        "Henk",
+                                        2,
                                         new ObservableCollection<int>()
                                         {
                                             10,
@@ -493,7 +493,7 @@ namespace UnitTests
                                         }
                                     },
                                     {
-                                        "Piet",
+                                        3,
                                         new ObservableCollection<int>()
                                         {
                                             10,
@@ -505,12 +505,12 @@ namespace UnitTests
                             },
                             new GameLeg()
                             {
-                                Winner = new Player {Name = "Henk"},
-                                CurrentTurn = new Player {Name = "Henk"},
-                                history = new Dictionary<string, ObservableCollection<Triplet>>()
+                                Winner = new Player {Name = "Henk", Id = 2},
+                                CurrentTurn = new Player {Name = "Henk", Id = 2},
+                                history = new Dictionary<int, ObservableCollection<Triplet>>()
                                 {
                                     {
-                                        "Henk",
+                                        2,
                                         new ObservableCollection<Triplet>
                                         {
                                             new Triplet(
@@ -521,7 +521,7 @@ namespace UnitTests
                                         }
                                     },
                                     {
-                                        "Piet",
+                                        3,
                                         new ObservableCollection<Triplet>
                                         {
                                             new Triplet(
@@ -537,10 +537,10 @@ namespace UnitTests
                                         }
                                     }
                                 },
-                                ScoreHistory = new Dictionary<string, ObservableCollection<int>>()
+                                ScoreHistory = new Dictionary<int, ObservableCollection<int>>()
                                 {
                                     {
-                                        "Henk",
+                                        2,
                                         new ObservableCollection<int>()
                                         {
                                             10,
@@ -549,7 +549,7 @@ namespace UnitTests
                                         }
                                     },
                                     {
-                                        "Piet",
+                                        3,
                                         new ObservableCollection<int>()
                                         {
                                             10,
@@ -565,10 +565,19 @@ namespace UnitTests
             };
             var result = viewModel.GetNumberOf180SInGame(game);
 
-            Assert.AreEqual(3, result["Henk"]);
-            Assert.AreEqual(4, result["Piet"]);
+            Assert.AreEqual(3, result[2]);
+            Assert.AreEqual(4, result[3]);
         }
 
-       
+        [TestMethod]
+        public void TestAverageInGame()
+        {
+            var game = context.Games.First();
+            var result = viewModel.CalculateAverageScoreInGame(game);
+            Assert.AreEqual(20, result[2].Item1);
+            Assert.AreEqual(30, result[3].Item1);
+            Assert.AreEqual(12, result[2].Item2);
+            Assert.AreEqual(24, result[3].Item2);
+        }
     }
 }

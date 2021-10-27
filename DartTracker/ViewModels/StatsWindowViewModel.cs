@@ -142,7 +142,7 @@ namespace DartTracker.ViewModels
 
         public Dictionary<string, int> GetNumberOf180SInGame(Game game)
         {
-            Dictionary<string, int> dictOf180 = new Dictionary<string, int>();
+            Dictionary<int, int> dictOf180 = new Dictionary<int, int>();
             int total180S = 0;
             foreach (var set in game.gameSets)
             foreach (var leg in set.legs)
