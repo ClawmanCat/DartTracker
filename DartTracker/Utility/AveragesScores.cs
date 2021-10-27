@@ -116,10 +116,10 @@ namespace DartTracker.Utility
                 if (double.IsNaN(averageWeights))
                     averageWeights = 0;
                 combinedMeanDictionary[player.Key] = new Tuple<double, int>(
-                   averageWeights , player.Value.Item2
+                   averageWeights, player.Value.Item2
                 );
             }
-                
+
 
             return combinedMeanDictionary;
         }

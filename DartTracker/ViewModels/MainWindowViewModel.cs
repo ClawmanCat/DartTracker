@@ -45,10 +45,6 @@ namespace DartTracker.ViewModels
             set { _averageInGamePlayerTwo = value; OnPropertyChanged("AverageInGamePlayerTwo"); }
         }
 
-
-
-
-
         public ICommand registerShotCommand
         {
             get;

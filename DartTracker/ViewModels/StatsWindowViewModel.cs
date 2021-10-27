@@ -117,7 +117,7 @@ namespace DartTracker.ViewModels
             CurrentLeg = CurrentSet.legs.First();
             FillComboBoxes();
             SetAverages();
-           
+
         }
 
         private void SetAverages()
@@ -142,17 +142,17 @@ namespace DartTracker.ViewModels
 
         public Dictionary<string, int> GetNumberOf180SInGame(Game game)
         {
-            Dictionary<int, int> dictOf180 = new Dictionary<int, int>();
+            Dictionary<string, int> dictOf180 = new Dictionary<string, int>();
             int total180S = 0;
             foreach (var set in game.gameSets)
-            foreach (var leg in set.legs)
-            foreach (var player in leg.history)
-            {
-                if (!dictOf180.ContainsKey(player.Key))
-                    dictOf180[player.Key] = Checked180S(player.Value);
-                else
-                    dictOf180[player.Key] += Checked180S(player.Value);
-            }
+                foreach (var leg in set.legs)
+                    foreach (var player in leg.history)
+                    {
+                        if (!dictOf180.ContainsKey(player.Key))
+                            dictOf180[player.Key] = Checked180S(player.Value);
+                        else
+                            dictOf180[player.Key] += Checked180S(player.Value);
+                    }
 
 
             return dictOf180;
