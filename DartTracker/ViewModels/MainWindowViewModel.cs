@@ -137,20 +137,27 @@ namespace DartTracker.ViewModels
             _gameLeg.CurrentTurn = NextPlayer();
             int lastItem = _gameLeg.history[_gameLeg.CurrentTurn.Id].Count - 1;
             //int lastScore = _gameLeg.ScoreHistory[gameLeg.CurrentTurn.Id][lastItem];
+            try
+            { 
+                Triplet lastTriplet = _gameLeg.history[_gameLeg.CurrentTurn.Id][lastItem];
+                int lastScore = 0;
+                foreach (Throw t in lastTriplet.throws)
+                {
+                    lastScore += t.segment.Score;
+                }
 
-            Triplet lastTriplet = _gameLeg.history[_gameLeg.CurrentTurn.Id][lastItem];
-            int lastScore = 0;
-            foreach (Throw t in lastTriplet.throws)
-            {
-                lastScore += t.segment.Score;
+                _gameLeg.CurrentTurn.score -= -1 * lastScore;
+
+
+
+                _gameLeg.history[_gameLeg.CurrentTurn.Id].RemoveAt(lastItem);
+                _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Id].RemoveAt(lastItem);
             }
-
-            _gameLeg.CurrentTurn.score-=-1*lastScore;
-
-
-
-            _gameLeg.history[_gameLeg.CurrentTurn.Id].RemoveAt(lastItem);
-            _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Id].RemoveAt(lastItem);
+            catch (ArgumentOutOfRangeException e)
+            {
+                _gameLeg.CurrentTurn = NextPlayer();
+                return;
+            }
 
         }
 

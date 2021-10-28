@@ -46,7 +46,6 @@ namespace DartTracker.Commands
         public void Execute(object parameter)
         {
             _viewModel.RegisterShot();
-            CommandManager.InvalidateRequerySuggested();
         }
     }
     class UndoShotCommand : ICommand
@@ -63,8 +62,8 @@ namespace DartTracker.Commands
 
         public bool CanExecute(object parameter)
         {
-            //return true;
-            return _viewModel.CheckHistorySize();
+            return true;
+            //return _viewModel.CheckHistorySize();
         }
 
         public void Execute(object parameter)
