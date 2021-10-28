@@ -181,6 +181,18 @@ namespace DartTracker.ViewModels
             }
         }
 
+        public void CheckIfNineDarter(Player player)
+        {
+            int dartsThrown = _gameLeg.history[player.Name].Count();
+
+            if(dartsThrown != 0 && dartsThrown == 3)
+            {
+                System.Windows.MessageBox.Show("9 dart leg gegooid door " + player.Name);
+                player.nineDarts++;
+            }
+            
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
