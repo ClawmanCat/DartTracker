@@ -23,7 +23,6 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </DataTemplate>
-
     </Window.Resources>
 
     <Grid>
@@ -41,53 +40,65 @@
             <RowDefinition Height="25*"></RowDefinition>
         </Grid.RowDefinitions>
 
-
-
         <!-- Menu Bar -->
-        <DockPanel Grid.Row="0" Grid.ColumnSpan="4">
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="5">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="Game">
-                    <MenuItem Header="Edit"></MenuItem>
-                    <MenuItem Header="New"></MenuItem>
+                <MenuItem Header="Wedstrijd">
+                    <MenuItem Header="Nieuwe wedstrijd"></MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="Turn">
-                    <MenuItem Header="Clear"></MenuItem>
-                    <MenuItem Header="Undo"></MenuItem>
+                <MenuItem Header="Beurt">
+                    <MenuItem Header="Beurt leegmaken"></MenuItem>
+                    <MenuItem Header="Ongedaan maken"></MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="Export" Command="{Binding tournament.SerializeTournamentCommand}"></MenuItem>
-                <MenuItem Header="Help"></MenuItem>
-                <MenuItem Header="Statistics"></MenuItem>
+                <MenuItem Header="Exporteer" Command="{Binding tournament.SerializeTournamentCommand}"></MenuItem>
+                
+                <MenuItem Header="Statistieken"></MenuItem>
             </Menu>
         </DockPanel>
 
 
         <!-- Score Panels -->
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0">
-            <ListView ItemsSource="{Binding Path=CurrentLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+        <Border BorderBrush="Black" BorderThickness="0" Grid.Row="2" Grid.Column="0">
+            <ListView BorderThickness="0" ItemsSource="{Binding Path=CurrentLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="1">
-            <ListView ItemsSource="{Binding CurrentLeg.ScorePlayerOne}"></ListView>
-        </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="2">
-        </Border>
-
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="3">
-            <ListView ItemsSource="{Binding Path=CurrentLeg.HistoryPlayerTwo}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
-        </Border>
-
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="4">
-            <ListView ItemsSource="{Binding Path=CurrentLeg.ScorePlayerTwo}"></ListView>
+        <Border BorderBrush="Black" BorderThickness="0" Grid.Row="2" Grid.Column="1">
+            <ListView BorderThickness="0" ItemsSource="{Binding CurrentLeg.ScorePlayerOne}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="0,5,0,5"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
         </Border>
 
+        <Border BorderBrush="Black" BorderThickness="1,0,1,0" Grid.Row="2" Grid.Column="2"/>
+
+        <Border BorderBrush="Black" BorderThickness="0" Grid.Row="2" Grid.Column="3">
+            <ListView BorderThickness="0" ItemsSource="{Binding Path=CurrentLeg.HistoryPlayerTwo}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
+        </Border>
+
+        <Border BorderBrush="Black" BorderThickness="0" Grid.Row="2" Grid.Column="4">
+            <ListView BorderThickness="0" ItemsSource="{Binding Path=CurrentLeg.ScorePlayerTwo}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="0,5,0,5"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Border>
 
         <!-- Player Info Panels -->
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1">
+        <Border BorderBrush="Black" BorderThickness="0,1,0,1" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1">
             <Grid>
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p1label" Text="Header for player1"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" Name="p1label" Text="Speler1"></TextBlock>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
@@ -98,52 +109,56 @@
                 </StackPanel>
             </Grid>
         </Border >
+        
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.ColumnSpan="1" Grid.Row="1">
             <StackPanel VerticalAlignment="Center">
                 <ComboBox Margin="5, 5, 5, 0" Name="SetSelectionBox" Text="Sets" SelectionChanged="SetSelectionBox_OnSelectionChanged" ></ComboBox>
                 <ComboBox Margin="5, 5, 5, 0" Name="LegSelectionBox" Text="Legs" SelectionChanged="LegSelectionBox_OnSelectionChanged" ></ComboBox>
             </StackPanel>
-            
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="1">
+        
+        <Border BorderBrush="Black" BorderThickness="1,1,0,1" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="1">
             <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                            <Label HorizontalAlignment="Left" Content="Average in Game:" ></Label>
-                    <Label x:Name="AverageInGamePlayerOne" Content="{Binding Path=AverageInGamePlayerOne}" ></Label>
-                        </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label  Margin="0, 0, 0, 0"  Content="Average in Set:" ></Label>
-                    <Label x:Name="AverageInSetOne" Content="{Binding Path=AverageInSetPlayerOne}" ></Label>
+                        <Label HorizontalAlignment="Left" Content="Gemmidelde in wedstrijd:" ></Label>
+                        <Label x:Name="AverageInGamePlayerOne" Content="{Binding Path=AverageInGamePlayerOne}" ></Label>
                     </StackPanel>
+                
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Average in Leg:" ></Label>
-                    <Label x:Name="AverageInLegPlayerOne" Content="{Binding Path=AverageInLegPlayerOne}" ></Label>
+                        <Label  Margin="0, 0, 0, 0"  Content="Gemiddelde in set:" ></Label>
+                        <Label x:Name="AverageInSetOne" Content="{Binding Path=AverageInSetPlayerOne}" ></Label>
                     </StackPanel>
-                </StackPanel>
+                
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Gemiddelde in leg:" ></Label>
+                        <Label x:Name="AverageInLegPlayerOne" Content="{Binding Path=AverageInLegPlayerOne}" ></Label>
+                    </StackPanel>
+            </StackPanel>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" Grid.ColumnSpan="1" Grid.Row="1">
+        
+        <Border BorderBrush="Black" BorderThickness="0,1,1,1" Grid.Column="3" Grid.ColumnSpan="1" Grid.Row="1">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label HorizontalAlignment="Left" Content="Average in Game:" ></Label>
+                    <Label HorizontalAlignment="Left" Content="Gemiddelde in wedstrijd:" ></Label>
                     <Label x:Name="AverageInGamePlayerTwo" Content="{Binding Path=AverageInGamePlayerTwo}" ></Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label  Margin="0, 0, 0, 0"  Content="Average in Set:" ></Label>
+                    <Label  Margin="0, 0, 0, 0"  Content="Gemiddelde in set:" ></Label>
                     <Label x:Name="AverageInSetTwo" Content="{Binding Path=AverageInSetPlayerTwo}" ></Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Average in Leg:" ></Label>
+                    <Label Content="Gemiddelde in leg:" ></Label>
                     <Label x:Name="AverageInLegPlayerTwo" Content="{Binding Path=AverageInLegPlayerTwo}" ></Label>
                 </StackPanel>
             </StackPanel>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1">
-
+        <Border BorderBrush="Black" BorderThickness="0,1,0,1" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1">
             <Grid>
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="p2label" Text="Header for player 2"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" Name="p2label" Text="Speler2"></TextBlock>
                 </StackPanel>
+                
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
                     <Label Content="SETS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <Label x:Name="nrOfSetsWonP2" Content="{Binding Path=leg.participatingPlayers[1].setsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
