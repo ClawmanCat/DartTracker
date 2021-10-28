@@ -206,7 +206,7 @@ namespace DartTracker.ViewModels
 
         public void CheckIfNineDarter(Player player)
         {
-            int dartsThrown = _gameLeg.history[player.Name].Count();
+            int dartsThrown = _gameLeg.history[player.Id].Count();
 
             if(dartsThrown != 0 && dartsThrown == 3)
             {
