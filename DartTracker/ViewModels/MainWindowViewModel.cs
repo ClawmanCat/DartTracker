@@ -31,6 +31,20 @@ namespace DartTracker.ViewModels
         public GameLeg gameLeg { get => _gameLeg; set { _gameLeg = value; OnPropertyChanged("gameLeg"); } }
         public GameSet gameSet { get => _gameSet; set { _gameSet = value; OnPropertyChanged("gameSet"); } }
 
+
+        private double _averageInGamePlayerOne;
+        public double AverageInGamePlayerOne
+        {
+            get => _averageInGamePlayerOne;
+            set { _averageInGamePlayerOne = value; OnPropertyChanged("AverageInGamePlayerOne"); }
+        }
+        private double _averageInGamePlayerTwo;
+        public double AverageInGamePlayerTwo
+        {
+            get => _averageInGamePlayerTwo;
+            set { _averageInGamePlayerTwo = value; OnPropertyChanged("AverageInGamePlayerTwo"); }
+        }
+
         public ICommand registerShotCommand
         {
             get;
@@ -47,6 +61,7 @@ namespace DartTracker.ViewModels
 
         public MainWindowViewModel(List<Player> participatingPlayers, Game game, Score score)
         {
+
             _participatingPlayers = participatingPlayers;
             players = new Queue<Player>(participatingPlayers);
             sets = new Queue<GameSet>(game.gameSets);
@@ -63,6 +78,14 @@ namespace DartTracker.ViewModels
             _gameLeg.CurrentTurn = NextPlayer();
             registerShotCommand = new RegisterShotCommand(this);
             undoShotCommand = new UndoShotCommand(this);
+            UpdateAverages();
+        }
+
+        private void UpdateAverages()
+        {
+            var averages = AveragesScores.Instantance.CalculateAverageScoreInGame(_game);
+            AverageInGamePlayerOne = averages.ToArray()[0].Value.Item1;
+            AverageInGamePlayerTwo = averages.ToArray()[1].Value.Item1;
         }
 
         public void checkWinner(Player player)
@@ -119,7 +142,7 @@ namespace DartTracker.ViewModels
             int totalScore = SegmentParser.parse(first).Score + SegmentParser.parse(second).Score + SegmentParser.parse(third).Score;
 
             CheckScore(totalScore);
-
+            UpdateAverages();
             checkWinner(_gameLeg.CurrentTurn);
 
             first = second = third = "";
@@ -219,6 +242,18 @@ namespace DartTracker.ViewModels
                 _gameLeg.CurrentTurn.score -= totalScore;
                 _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Id].Add((int)_gameLeg.CurrentTurn.score);
             }
+        }
+
+        public void CheckIfNineDarter(Player player)
+        {
+            int dartsThrown = _gameLeg.history[player.Id].Count();
+
+            if(dartsThrown != 0 && dartsThrown == 3)
+            {
+                System.Windows.MessageBox.Show("9 dart leg gegooid door " + player.Name);
+                player.nineDarts++;
+            }
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

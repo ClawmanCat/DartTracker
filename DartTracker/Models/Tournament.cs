@@ -161,6 +161,13 @@ namespace DartTracker.Models
             set { _setsWon = value; OnPropertyChanged("setsWon"); }
         }
 
+        private int _nineDarts = 0;
+        public int nineDarts
+        {
+            get { return _nineDarts; }
+            set { _nineDarts = value; OnPropertyChanged("nineDarts"); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
