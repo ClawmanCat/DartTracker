@@ -288,8 +288,8 @@ namespace UnitTests
         {
             var leg = context.Games.First().gameSets.First().legs.First();
             var result = averagesScores.CalculateAverageScoreInLeg(leg.history);
-            Assert.AreEqual(20, result[0].Item1);
-            Assert.AreEqual(30, result[1].Item1);
+            Assert.AreEqual(60, result[0].Item1);
+            Assert.AreEqual(90, result[1].Item1);
         }
         [TestMethod]
         public void TestAverageInSet()
@@ -305,8 +305,8 @@ namespace UnitTests
         {
             var game = context.Games.First();
             var result = averagesScores.CalculateAverageScoreInGame(game);
-            Assert.AreEqual(20, result[0].Item1);
-            Assert.AreEqual(30, result[1].Item1);
+            Assert.AreEqual(60, result[0].Item1);
+            Assert.AreEqual(90, result[1].Item1);
             Assert.AreEqual(12, result[0].Item2);
             Assert.AreEqual(24, result[1].Item2);
         }
