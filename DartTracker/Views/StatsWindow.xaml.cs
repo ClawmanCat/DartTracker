@@ -35,6 +35,8 @@ namespace DartTracker.Views
             
         }
 
+        
+
         private void SetSelectionBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index = LegSelectionBox.SelectedIndex;
