@@ -74,7 +74,7 @@ namespace DartTracker.Views
                     DialogResult = true;
                     currentApp.CreateGameObject = true;
                     // Closes the Window
-                    Hide();
+                    Close();
                 }
                 catch (Exception exc)
                 {
