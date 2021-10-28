@@ -57,7 +57,7 @@ namespace UnitTests
         {
             string[] miss_names = { "x", "miss" };
             string[] outer_bull_names = { "b", "bull", "outer bull", "outer bullseye" };
-            string[] inner_bull_names = { "bs", "bullseye", "inner bull", "inner bullseye" };
+            string[] inner_bull_names = { "be", "bullseye", "inner bull", "inner bullseye" };
 
 
             foreach (var name in miss_names)
