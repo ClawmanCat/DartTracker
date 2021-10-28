@@ -43,7 +43,7 @@ namespace DartTracker.Utility
                 "outer bull" => new NamedSegment(NamedSegmentType.OUTER_BULLSEYE),
                 "outer bullseye" => new NamedSegment(NamedSegmentType.OUTER_BULLSEYE),
 
-                "bs" => new NamedSegment(NamedSegmentType.INNER_BULLSEYE),
+                "be" => new NamedSegment(NamedSegmentType.INNER_BULLSEYE),
                 "bullseye" => new NamedSegment(NamedSegmentType.INNER_BULLSEYE),
                 "inner bull" => new NamedSegment(NamedSegmentType.INNER_BULLSEYE),
                 "inner bullseye" => new NamedSegment(NamedSegmentType.INNER_BULLSEYE),

@@ -30,6 +30,8 @@ namespace DartTracker.Commands
         }
 
 
+
+
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
@@ -53,6 +55,29 @@ namespace DartTracker.Commands
                 window.Close();
 
             }
+        }
+    }
+    class UndoShotCommand : ICommand
+    {
+        private MainWindowViewModel _viewModel;
+
+        public UndoShotCommand(MainWindowViewModel viewModel)
+        {
+            _viewModel = viewModel;
+            EventHandler handler = CanExecuteChanged;
+            if (handler != null) handler(this, new EventArgs()); 
+        }
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+            //return _viewModel.CheckHistorySize();
+        }
+
+        public void Execute(object parameter)
+        {
+            _viewModel.UndoShot();
         }
     }
 }
