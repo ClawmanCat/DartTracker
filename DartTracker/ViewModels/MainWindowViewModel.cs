@@ -129,17 +129,24 @@ namespace DartTracker.ViewModels
 
         public bool CheckHistorySize()
         {
-            var otherPlayer = NextPlayer();
-            var returnValue =  _gameLeg.history[_gameLeg.CurrentTurn.Id].Count > 0;
-            NextPlayer();
+            bool returnValue =  _gameLeg.history[participatingPlayers[0].Id].Count > 0;
             return returnValue;
         }
         public void UndoShot()
         {
             _gameLeg.CurrentTurn = NextPlayer();
             int lastItem = _gameLeg.history[_gameLeg.CurrentTurn.Id].Count - 1;
-            int lastScore = _gameLeg.ScoreHistory[gameLeg.CurrentTurn.Id][lastItem];
-            _gameLeg.CurrentTurn.score.set(lastScore);
+            //int lastScore = _gameLeg.ScoreHistory[gameLeg.CurrentTurn.Id][lastItem];
+
+            Triplet lastTriplet = _gameLeg.history[_gameLeg.CurrentTurn.Id][lastItem];
+            int lastScore = 0;
+            foreach (Throw t in lastTriplet.throws)
+            {
+                lastScore += t.segment.Score;
+            }
+
+            _gameLeg.CurrentTurn.score-=-1*lastScore;
+
 
 
             _gameLeg.history[_gameLeg.CurrentTurn.Id].RemoveAt(lastItem);

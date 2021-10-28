@@ -62,8 +62,8 @@ namespace DartTracker.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
-            //return _viewModel.CheckHistorySize();              
+            //return true;
+            return _viewModel.CheckHistorySize();              
         }
 
         public void Execute(object parameter)
