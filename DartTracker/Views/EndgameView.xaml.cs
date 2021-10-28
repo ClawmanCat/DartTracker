@@ -35,9 +35,13 @@ namespace DartTracker.Views
             introText.Text = message;
             Closed += EndgameView_Closed;
             Loaded += EndgameView_Loaded;
-
         }
 
+        /// <summary>
+        /// Removing the X from the window during the load process.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EndgameView_Loaded(object sender, RoutedEventArgs e)
         {
             var hwnd = new WindowInteropHelper(this).Handle;
@@ -52,8 +56,6 @@ namespace DartTracker.Views
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
-            
-            
         }
 
         private void NoButton_Click(object sender, RoutedEventArgs e)
