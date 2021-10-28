@@ -50,6 +50,11 @@ namespace DartTracker.ViewModels
             get;
             private set;
         }
+        public ICommand undoShotCommand
+        {
+            get;
+            private set;
+        }
 
         private List<Player> _participatingPlayers;
         public List<Player> participatingPlayers { get => _participatingPlayers; set { _participatingPlayers = value; OnPropertyChanged("participatingPlayers"); } }
@@ -72,6 +77,7 @@ namespace DartTracker.ViewModels
             _game = game;
             _gameLeg.CurrentTurn = NextPlayer();
             registerShotCommand = new RegisterShotCommand(this);
+            undoShotCommand = new UndoShotCommand(this);
             UpdateAverages();
         }
 
@@ -142,6 +148,41 @@ namespace DartTracker.ViewModels
             first = second = third = "";
 
             _gameLeg.CurrentTurn = NextPlayer();
+        }
+
+        public bool CheckHistorySize()
+        {
+            bool returnValue =  _gameLeg.history[participatingPlayers[0].Id].Count > 0;
+            return returnValue;
+        }
+        public void UndoShot()
+        {
+            _gameLeg.CurrentTurn = NextPlayer();
+            int lastItem = _gameLeg.history[_gameLeg.CurrentTurn.Id].Count - 1;
+            //int lastScore = _gameLeg.ScoreHistory[gameLeg.CurrentTurn.Id][lastItem];
+            try
+            { 
+                Triplet lastTriplet = _gameLeg.history[_gameLeg.CurrentTurn.Id][lastItem];
+                int lastScore = 0;
+                foreach (Throw t in lastTriplet.throws)
+                {
+                    lastScore += t.segment.Score;
+                }
+
+                _gameLeg.CurrentTurn.score -= -1 * lastScore;
+
+
+
+                _gameLeg.history[_gameLeg.CurrentTurn.Id].RemoveAt(lastItem);
+                _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Id].RemoveAt(lastItem);
+                UpdateAverages();
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                _gameLeg.CurrentTurn = NextPlayer();
+                return;
+            }
+
         }
 
         public Player NextPlayer()

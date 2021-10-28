@@ -210,7 +210,7 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
-                    <Button Style="{DynamicResource RoundedButtonStyle}" Margin="0,0,10,0" Height="20" Width="30px" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="">&lt;&lt;</Button>
+                    <Button Style="{DynamicResource RoundedButtonStyle}" Margin="0,0,10,0" Height="20" Width="30px" Background="DodgerBlue" FontSize="10px" Foreground="White" Command="{Binding leg.undoShotCommand}">&lt;&lt;</Button>
                     <Label VerticalAlignment="Center">Huidige speler:</Label>
                     <TextBlock Width="125" VerticalAlignment="Center" Text="{Binding Path=leg.gameLeg.CurrentTurn.Name, Mode=TwoWay}"></TextBlock>
                 </StackPanel>
