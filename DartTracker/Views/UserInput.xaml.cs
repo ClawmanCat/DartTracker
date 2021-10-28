@@ -74,7 +74,7 @@ namespace DartTracker.Views
                     DialogResult = true;
                     currentApp.CreateGameObject = true;
                     // Closes the Window
-                    Close();
+                    Hide();
                 }
                 catch (Exception exc)
                 {
@@ -85,7 +85,7 @@ namespace DartTracker.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
-            Close();
+            Hide();
         }
         private void LoadJson_Click(object sender, RoutedEventArgs e)
         {
@@ -96,7 +96,7 @@ namespace DartTracker.Views
                 string jsonString = File.ReadAllText(openFileDialog.FileName);
                 currentApp.tournament = LoadTournamentJson.LoadTournament(jsonString);
                 DialogResult = true;
-                Close();
+                Hide();
             }
         }
     }

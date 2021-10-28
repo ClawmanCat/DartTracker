@@ -17,6 +17,11 @@ namespace DartTracker
     /// </summary>
     public partial class App : Application , INotifyPropertyChanged
     {
+
+        private MainWindow _mainWindow;
+        private UserInput _userInputWindow;
+
+
         private Tournament _tournament;
         public Tournament tournament { 
             get { return _tournament; } 
@@ -42,9 +47,33 @@ namespace DartTracker
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            StartNewTournament();
+        }
+
+        private void ExitMessageBox()
+        {
+            string message = $"gefleciteerd {tournament.Games.First().Winner.Name} jij hebt gewonnen ! , wil je een nieuwe game starten";
+            string caption = "het spel is voorbij";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+
+            var result = MessageBox.Show(message, caption, button);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    Environment.Exit(0);
+                    StartNewTournament();
+                    break;
+                case MessageBoxResult.No:
+                    Shutdown();
+                    break;
+            }
+        }
+
+        private void StartNewTournament()
+        {
             //setup score
             score = new Score();
-            
+
             // Tournament setup
             tournament = new Tournament();
             tournament.GamesToWin = 1;
@@ -54,22 +83,33 @@ namespace DartTracker
             tournament.Winner = null;
 
             // Initializing the UserInput
-            UserInput userInput = new UserInput();
+            _userInputWindow ??= new UserInput();
+
             UserInputWindowViewModel userinputViewModel = new UserInputWindowViewModel(tournament, score);
-            userInput.DataContext = userinputViewModel;
+            _userInputWindow.DataContext = userinputViewModel;
             // Opening the UserInput Window
-            bool? res = userInput.ShowDialog();
+            bool? res = _userInputWindow.ShowDialog();
             // If the UserInput Window is closed, open the next Window
             if (res == true)
             {
                 // Opening the MainWindow
-                MainWindow main = new MainWindow();
-                main.Show();
+                _mainWindow ??= new MainWindow();
+                bool? resultMainWindow = _mainWindow.ShowDialog();
+                if (resultMainWindow == true)
+                {
+                    ExitMessageBox();
+                }
+
             }
             else
             {
                 Shutdown();
             }
+        }
+        private void CloseAllWindows()
+        {
+            for (int intCounter = App.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
+                App.Current.Windows[intCounter].Close();
         }
     }
 }

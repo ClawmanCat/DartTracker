@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DartTracker.Views;
 
 namespace DartTracker.Commands
 {
@@ -44,6 +45,14 @@ namespace DartTracker.Commands
         public void Execute(object parameter)
         {
             _viewModel.RegisterShot();
+            var player = _viewModel.gameLeg.CurrentTurn;
+            if (_viewModel.CheckGameWinner(player, player.setsWon))
+            {
+                var window =(MainWindow)parameter;
+                window.DialogResult = true;
+                window.Close();
+
+            }
         }
     }
 }
