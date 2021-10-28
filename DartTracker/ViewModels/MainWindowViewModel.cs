@@ -175,6 +175,7 @@ namespace DartTracker.ViewModels
 
                 _gameLeg.history[_gameLeg.CurrentTurn.Id].RemoveAt(lastItem);
                 _gameLeg.ScoreHistory[_gameLeg.CurrentTurn.Id].RemoveAt(lastItem);
+                UpdateAverages();
             }
             catch (ArgumentOutOfRangeException e)
             {
