@@ -41,20 +41,16 @@ namespace DartTracker
 
         private void ExitMessageBox()
         {
-            string message = string.Format("{0} heeft gewonnen! \nWil je een nieuw spel starten?", currentApp.tournament.Games.First().Winner.Name);
-            string caption = "het spel is voorbij";
-            MessageBoxButton button = MessageBoxButton.YesNo;
-
-            var result = MessageBox.Show(message, caption, button);
-            switch (result)
+            if(currentApp.tournament.Games.First().Winner == null)
             {
-                case MessageBoxResult.Yes:
-                    currentApp.StartNewTournament();
-                    break;
-                case MessageBoxResult.No:
-                    App.Current.Shutdown();
-                    break;
+                Application.Current.Shutdown();
             }
+            else
+            {
+                EndgameView endgame = new EndgameView();
+                endgame.ShowDialog();
+            }
+            
         }
 
         public void setBindings()

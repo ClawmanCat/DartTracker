@@ -40,25 +40,6 @@
             <RowDefinition Height="25*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <!-- Menu Bar -->
-        <DockPanel Grid.Row="0" Grid.ColumnSpan="5">
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="Wedstrijd">
-                    <MenuItem Header="Nieuwe wedstrijd"></MenuItem>
-                </MenuItem>
-
-                <MenuItem Header="Beurt">
-                    <MenuItem Header="Beurt leegmaken"></MenuItem>
-                    <MenuItem Header="Ongedaan maken"></MenuItem>
-                </MenuItem>
-
-                <MenuItem Header="Exporteer" Command="{Binding tournament.SerializeTournamentCommand}"></MenuItem>
-                
-                <MenuItem Header="Statistieken"></MenuItem>
-            </Menu>
-        </DockPanel>
-
-
         <!-- Score Panels -->
         <Border BorderBrush="Black" BorderThickness="0" Grid.Row="2" Grid.Column="0">
             <ListView BorderThickness="0" ItemsSource="{Binding Path=CurrentLeg.HistoryPlayerOne}" ItemTemplate="{StaticResource TripletPanel}"></ListView>
@@ -98,14 +79,14 @@
         <Border BorderBrush="Black" BorderThickness="0,1,0,1" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1">
             <Grid>
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" Name="p1label" Text="Speler1"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" Text="{Binding Players[0].Name}"></TextBlock>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
                     <Label Content="SETS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfSetsWonP1" Content="{Binding Path=leg.participatingPlayers[0].setsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="NumberOfSetsWonPlayerOne" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <Label Content="LEGS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfLegsWonP1" Content="{Binding Path=leg.participatingPlayers[0].legsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="NumberOfLegsWonPlayerOne" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </Border >
@@ -156,14 +137,14 @@
         <Border BorderBrush="Black" BorderThickness="0,1,0,1" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1">
             <Grid>
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" Name="p2label" Text="Speler2"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" Name="p2label" Text="{Binding Players[1].Name}"></TextBlock>
                 </StackPanel>
                 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
                     <Label Content="SETS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfSetsWonP2" Content="{Binding Path=leg.participatingPlayers[1].setsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="NumberOfSetsWonPlayerTwo" Content="{Binding Path=leg.participatingPlayers[1].setsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <Label Content="LEGS:"  FontSize="15"  Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label x:Name="nrOfLegsWonP2" Content="{Binding Path=leg.participatingPlayers[1].legsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="NumberOfLegsWonPlayerTwo" Content="{Binding Path=leg.participatingPlayers[1].legsWon}" FontSize="15" Margin="10, 0, 10, 0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </Border>
