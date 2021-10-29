@@ -45,11 +45,6 @@ namespace DartTracker.Views
 
         private void SetSelectionBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // var x =LegSelectionBox.SelectedValue;
-            // if ((string) LegSelectionBox.SelectionBoxItem == "")
-            //     return;
-            // var index = (LegSelectionBox.SelectedItem.ToString() ?? string.Empty).Last() - '0';
-            //
             var index = SetSelectionBox.SelectedIndex;
             if (index == -1)
                 return;
