@@ -100,6 +100,8 @@ namespace DartTracker.ViewModels
             if(createGameObject == true)
             {
                 _score.SetScore(NewGameType);
+                Players[0].score.SetScore(NewGameType);
+                Players[1].score.SetScore(NewGameType);
                 createSetsLegs(AmountOfSets, AmountOfLegs);
             }
         }
