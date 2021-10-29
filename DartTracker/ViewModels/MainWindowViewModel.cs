@@ -69,11 +69,6 @@ namespace DartTracker.ViewModels
 
             _standardScore = new Score(score);
 
-            
-
-            //participatingPlayers[0].score = new Score(score);
-            //participatingPlayers[1].score = new Score(score);
-
             _gameLeg = NextLeg();
             _gameSet = NextSet();
             _game = game;
