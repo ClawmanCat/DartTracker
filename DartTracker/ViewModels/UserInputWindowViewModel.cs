@@ -100,8 +100,6 @@ namespace DartTracker.ViewModels
             if(createGameObject == true)
             {
                 _score.SetScore(NewGameType);
-                Players[0].score.SetScore(NewGameType);
-                Players[1].score.SetScore(NewGameType);
                 createSetsLegs(AmountOfSets, AmountOfLegs);
             }
         }
@@ -139,6 +137,8 @@ namespace DartTracker.ViewModels
                         gameSets[i].legs[j].ScoreHistory.Add(p.Id, new ObservableCollection<int>());
                     }
                 }
+                p.score = new Score();
+                p.score.SetScore(NewGameType);
             }
 
             Game game = new Game()
