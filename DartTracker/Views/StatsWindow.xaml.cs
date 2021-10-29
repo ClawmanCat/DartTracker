@@ -36,6 +36,8 @@ namespace DartTracker.Views
             NumberOfLegsWonPlayerOne.Content = tournament.Players[0].TotalLegsWon;
             NumberOfSetsWonPlayerTwo.Content = tournament.Players[1].TotalSetsWon;
             NumberOfLegsWonPlayerTwo.Content = tournament.Players[1].TotalLegsWon;
+            SetSelectionBox.SelectedItem = SetSelectionBox.Items[0];
+            LegSelectionBox.SelectedItem = LegSelectionBox.Items[0];
 
         }
 
@@ -43,7 +45,7 @@ namespace DartTracker.Views
 
         private void SetSelectionBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int index = LegSelectionBox.SelectedIndex;
+            var index = SetSelectionBox.SelectedIndex;
             if (index == -1)
                 return;
             _statsWindowViewModel.SetNewSet(index);
