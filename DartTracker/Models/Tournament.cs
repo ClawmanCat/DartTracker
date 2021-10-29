@@ -147,6 +147,9 @@ namespace DartTracker.Models
             set { _score = value; OnPropertyChanged("score"); }
         }
 
+        public int TotalSetsWon { get; set; }
+        public int TotalLegsWon { get; set; }
+
         private int _legsWon = 0;
         public int legsWon
         {
@@ -176,11 +179,6 @@ namespace DartTracker.Models
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        /*public override string ToString()
-        {
-            return Name;
-        }*/
     }
 
     public class Game

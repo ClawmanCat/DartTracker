@@ -75,9 +75,13 @@ namespace DartTracker.Utility
             List<int> throwScores = new List<int>();
 
             foreach (var triplet in turns)
+            {
+                int throwSum = 0;
                 foreach (var trow in triplet.throws)
-                    throwScores.Add(trow.segment.Score);
-
+                    throwSum += trow.segment.Score;
+                //throwScores.Add(trow.segment.Score);
+                throwScores.Add(throwSum);
+            }
             return throwScores.Average();
         }
 

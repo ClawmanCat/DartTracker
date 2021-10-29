@@ -42,9 +42,10 @@ namespace DartTracker
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            //StartNewTournament();
             //setup score
             score = new Score();
-            
+
             // Tournament setup
             tournament = new Tournament();
             tournament.GamesToWin = 1;
@@ -54,21 +55,57 @@ namespace DartTracker
             tournament.Winner = null;
 
             // Initializing the UserInput
-            UserInput userInput = new UserInput();
+            UserInput userInputWindow = new();
+
             UserInputWindowViewModel userinputViewModel = new UserInputWindowViewModel(tournament, score);
-            userInput.DataContext = userinputViewModel;
+            userInputWindow.DataContext = userinputViewModel;
             // Opening the UserInput Window
-            bool? res = userInput.ShowDialog();
+            bool? res = userInputWindow.ShowDialog();
             // If the UserInput Window is closed, open the next Window
             if (res == true)
             {
                 // Opening the MainWindow
-                MainWindow main = new MainWindow();
-                main.Show();
+                MainWindow mainWindow = new();
+                mainWindow.ShowDialog();
             }
             else
             {
                 Shutdown();
+            }
+        }
+        public void StartNewTournament()
+        {
+            //emptying objects
+            score = null;
+            tournament = null;
+            _createGameObject = false;
+            //setup score
+            score = new Score();
+            // Tournament setup
+            tournament = new Tournament();
+            tournament.GamesToWin = 1;
+            tournament.Games = new List<Game>(1);
+            tournament.Players = new List<Player>(2) { new Player(), new Player() };
+            //tournament.TimeAndDate = DateTime.Now;
+            tournament.Winner = null;
+
+            // Initializing the UserInput
+            UserInput userInputWindow = new();
+
+            UserInputWindowViewModel userinputViewModel = new UserInputWindowViewModel(tournament, score);
+            userInputWindow.DataContext = userinputViewModel;
+            // Opening the UserInput Window
+            bool? res = userInputWindow.ShowDialog();
+            // If the UserInput Window is closed, open the next Window
+            if (res == true)
+            {
+                // Opening the MainWindow
+                MainWindow mainWindow = new();
+                mainWindow.ShowDialog();
+            }
+            else
+            {
+                Application.Current.Shutdown();
             }
         }
     }

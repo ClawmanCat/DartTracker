@@ -33,7 +33,22 @@ namespace DartTracker
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
-            App.Current.Shutdown();
+            ExitMessageBox();
+            //App.Current.Shutdown();
+        }
+
+        private void ExitMessageBox()
+        {
+            if(currentApp.tournament.Games.First().Winner == null)
+            {
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                EndgameView endgame = new EndgameView();
+                endgame.ShowDialog();
+            }
+            
         }
 
         public void setBindings()

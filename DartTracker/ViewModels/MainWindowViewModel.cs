@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace DartTracker.ViewModels 
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel :  INotifyPropertyChanged
     {
         private Queue<Player> players;
         private Queue<GameLeg> legs;
@@ -88,32 +88,47 @@ namespace DartTracker.ViewModels
             AverageInGamePlayerTwo = averages.ToArray()[1].Value.Item1;
         }
 
-        public void checkWinner(Player player)
+        public bool CheckWinner(Player player)
         {
             if (((int)player.score) == 0)
             {
                 gameLeg.Winner = player;
+                player.TotalLegsWon++;
                 player.legsWon = gameSet.legs.Count(x => x.Winner == gameLeg.CurrentTurn);
 
                 participatingPlayers[0].score = new Score(_standardScore);
                 participatingPlayers[1].score = new Score(_standardScore);
 
                 // ga naar volgende leg of set..
-                if (checkSetWinner(player, player.legsWon))
+                if (CheckSetWinner(player, player.legsWon))
                 {
+                    if(CheckGameWinner(player,player.setsWon)) return true;
                     gameSet = NextSet();
                     legs = new Queue<GameLeg>(gameSet.legs);
                 }
 
                 gameLeg = NextLeg();
             }
+
+            return false;
         }
 
-        public bool checkSetWinner(Player player, int legsWon)
+        public bool CheckGameWinner(Player player, int playerSetsWon)
+        {
+            if (playerSetsWon > (_game.setsAmount / 2))
+            {
+                _game.Winner = player;
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckSetWinner(Player player, int legsWon)
         {
             if (legsWon > (_game.legsAmount / 2))
             {
                 gameSet.Winner = player;
+                player.TotalSetsWon++;
 
                 foreach(Player p in _participatingPlayers)
                 {
@@ -124,10 +139,7 @@ namespace DartTracker.ViewModels
 
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public void RegisterShot()
@@ -143,7 +155,7 @@ namespace DartTracker.ViewModels
 
             CheckScore(totalScore);
             UpdateAverages();
-            checkWinner(_gameLeg.CurrentTurn);
+            if(CheckWinner(_gameLeg.CurrentTurn)) return;
 
             first = second = third = "";
 
@@ -264,5 +276,6 @@ namespace DartTracker.ViewModels
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }

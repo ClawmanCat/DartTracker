@@ -32,8 +32,14 @@ namespace DartTracker.Views
             SetSelectionBox.ItemsSource = _statsWindowViewModel.Sets;
             LegSelectionBox.ItemsSource = _statsWindowViewModel.Legs;
             LegSelectionBox.ItemsSource = _statsWindowViewModel.Legs;
-            
+            NumberOfSetsWonPlayerOne.Content = tournament.Players[0].TotalSetsWon;
+            NumberOfLegsWonPlayerOne.Content = tournament.Players[0].TotalLegsWon;
+            NumberOfSetsWonPlayerTwo.Content = tournament.Players[1].TotalSetsWon;
+            NumberOfLegsWonPlayerTwo.Content = tournament.Players[1].TotalLegsWon;
+
         }
+
+        
 
         private void SetSelectionBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {

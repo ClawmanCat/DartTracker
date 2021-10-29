@@ -104,10 +104,17 @@ namespace DartTracker.ViewModels
 
         public List<string> Sets { get; set; }
         public List<string> Legs { get; set; }
+        private List<Player> _players;
+        public List<Player> Players
+        {
+            get { return _players; }
+            set { _players = value; }
+        }
 
 
         public StatsWindowViewModel(Tournament tournament)
         {
+            Players = tournament.Players;
             Sets = new List<string>();
             Legs = new List<string>();
             _averagesScores = AveragesScores.Instantance;
