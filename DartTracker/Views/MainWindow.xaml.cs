@@ -27,8 +27,10 @@ namespace DartTracker
         public MainWindow()
         {
             InitializeComponent();
+            Input_First.Focus();
             Closed += MainWindow_Closed;
             setBindings();
+            
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -120,6 +122,12 @@ namespace DartTracker
                 tournament.Players[1].Name = textbox.Text;
             }
 
+            
+
+        }
+        private void ClickFocus(object sender, RoutedEventArgs e)
+        {
+            Input_First.Focus();
         }
 
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
