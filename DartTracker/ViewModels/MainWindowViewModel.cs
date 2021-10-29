@@ -93,6 +93,7 @@ namespace DartTracker.ViewModels
             if (((int)player.score) == 0)
             {
                 gameLeg.Winner = player;
+                player.TotalLegsWon++;
                 player.legsWon = gameSet.legs.Count(x => x.Winner == gameLeg.CurrentTurn);
 
                 participatingPlayers[0].score = new Score(_standardScore);
@@ -127,6 +128,7 @@ namespace DartTracker.ViewModels
             if (legsWon > (_game.legsAmount / 2))
             {
                 gameSet.Winner = player;
+                player.TotalSetsWon++;
 
                 foreach(Player p in _participatingPlayers)
                 {
