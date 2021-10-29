@@ -77,7 +77,6 @@ namespace DartTracker.ViewModels
             undoShotCommand = new UndoShotCommand(this);
             UpdateAverages();
 
-
             if (_gameLeg.HistoryPlayerOne.Count > 0)
             {
                 participatingPlayers[0].score.SetScore(_gameLeg.ScorePlayerOne.Last());
