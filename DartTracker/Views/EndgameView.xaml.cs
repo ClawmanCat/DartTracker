@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -21,6 +24,7 @@ namespace DartTracker.Views
     /// </summary>
     public partial class EndgameView : Window
     {
+        private bool check = false;
         public App currentApp = Application.Current as App;
         private const int GWL_STYLE = -16;
         private const int WS_SYSMENU = 0x80000;
@@ -33,8 +37,16 @@ namespace DartTracker.Views
             InitializeComponent();
             string message = string.Format("{0} heeft gewonnen! \nWil je een nieuw spel starten?", currentApp.tournament.Games.First().Winner.Name);
             introText.Text = message;
-            Closed += EndgameView_Closed;
             Loaded += EndgameView_Loaded;
+            Closed += EndgameView_Closed;
+        }
+
+        private void EndgameView_Closed(object sender, EventArgs e)
+        {
+            if(check == true)
+            {
+                EndGame();
+            }
         }
 
         /// <summary>
@@ -47,19 +59,45 @@ namespace DartTracker.Views
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
         }
-
-        private void EndgameView_Closed(object sender, EventArgs e)
+        public string Serialize()
         {
+            JsonSerializerSettings setting = new JsonSerializerSettings();
+            setting.TypeNameHandling = TypeNameHandling.Auto;
+            string jsonString = JsonConvert.SerializeObject(currentApp.tournament, Formatting.Indented,
+                new JsonSerializerSettings()
+                {
+                    TypeNameHandling = TypeNameHandling.All,
+                    TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
+                });
+            return jsonString;
+        }
+        public void SaveJson()
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "JSON-Formatted Data (*json)|*.json";
+
+            if (dialog.ShowDialog() ?? false)
+            {
+                string jsonString = Serialize();
+                File.WriteAllText(dialog.FileName, jsonString, Encoding.UTF8);
+            }
+        }
+
+        public void EndGame()
+        {
+            SaveJson();
             currentApp.StartNewTournament();
         }
 
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
+            check = true;
             Close();
         }
 
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
+            SaveJson();
             App.Current.Shutdown();
         }
 
