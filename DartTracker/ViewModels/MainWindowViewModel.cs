@@ -69,9 +69,6 @@ namespace DartTracker.ViewModels
 
             _standardScore = new Score(score);
 
-            participatingPlayers[0].score = new Score(score);
-            participatingPlayers[1].score = new Score(score);
-
             _gameLeg = NextLeg();
             _gameSet = NextSet();
             _game = game;
@@ -79,6 +76,15 @@ namespace DartTracker.ViewModels
             registerShotCommand = new RegisterShotCommand(this);
             undoShotCommand = new UndoShotCommand(this);
             UpdateAverages();
+
+            if (_gameLeg.HistoryPlayerOne.Count > 0)
+            {
+                participatingPlayers[0].score.SetScore(_gameLeg.ScorePlayerOne.Last());
+            }
+            if (_gameLeg.HistoryPlayerTwo.Count > 0)
+            {
+                participatingPlayers[1].score.SetScore(_gameLeg.ScorePlayerTwo.Last());
+            }
         }
 
         private void UpdateAverages()

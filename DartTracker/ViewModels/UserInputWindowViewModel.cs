@@ -137,6 +137,8 @@ namespace DartTracker.ViewModels
                         gameSets[i].legs[j].ScoreHistory.Add(p.Id, new ObservableCollection<int>());
                     }
                 }
+                p.score = new Score();
+                p.score.SetScore(NewGameType);
             }
 
             Game game = new Game()
